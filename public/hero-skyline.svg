@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c1a2f"/>
+      <stop offset="0.62" stop-color="#12233f"/>
+      <stop offset="1" stop-color="#16294a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1440" height="900" fill="url(#sky)"/>
+  <!-- far skyline -->
+  <g fill="#17304f">
+    <rect x="0"    y="640" width="90"  height="260"/>
+    <rect x="95"   y="600" width="70"  height="300"/>
+    <rect x="1180" y="620" width="90"  height="280"/>
+    <rect x="1300" y="660" width="140" height="240"/>
+  </g>
+  <!-- mid skyline -->
+  <g fill="#20406a">
+    <rect x="150" y="560" width="60" height="340"/>
+    <rect x="215" y="620" width="50" height="280"/>
+    <rect x="980" y="600" width="70" height="300"/>
+    <rect x="1055" y="560" width="55" height="340"/>
+    <!-- Gherkin -->
+    <path d="M905 900 L905 640 Q935 585 965 640 L965 900 Z"/>
+    <!-- Shard -->
+    <path d="M1120 900 L1150 470 L1180 900 Z"/>
+  </g>
+  <!-- London Eye -->
+  <g stroke="#c79a4b" stroke-width="3" fill="none" opacity="0.85">
+    <circle cx="360" cy="700" r="105"/>
+    <circle cx="360" cy="700" r="14" fill="#c79a4b"/>
+    <g>
+      <line x1="360" y1="595" x2="360" y2="805"/>
+      <line x1="255" y1="700" x2="465" y2="700"/>
+      <line x1="286" y1="626" x2="434" y2="774"/>
+      <line x1="434" y1="626" x2="286" y2="774"/>
+    </g>
+  </g>
+  <line x1="330" y1="805" x2="360" y2="700" stroke="#c79a4b" stroke-width="4"/>
+  <line x1="390" y1="805" x2="360" y2="700" stroke="#c79a4b" stroke-width="4"/>
+  <!-- Big Ben -->
+  <g fill="#26497a">
+    <rect x="560" y="500" width="52" height="400"/>
+    <rect x="566" y="470" width="40" height="40"/>
+    <polygon points="560,470 586,415 612,470"/>
+    <rect x="574" y="520" width="24" height="26" fill="#c79a4b"/>
+  </g>
+  <!-- foreground blocks -->
+  <g fill="#12233f">
+    <rect x="420" y="720" width="150" height="180"/>
+    <rect x="620" y="700" width="120" height="200"/>
+    <rect x="740" y="740" width="170" height="160"/>
+  </g>
+</svg>

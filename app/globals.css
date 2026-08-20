@@ -1,0 +1,100 @@
+/* Fonts: Latin (Inter/Newsreader) + Simplified Chinese (Noto Sans/Serif SC).
+   Loaded via @import so both scripts render properly in every browser. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600&display=swap');
+
+/* ---- Design tokens ------------------------------------------------ */
+:root {
+  --bg: #f7f4ec;          /* warm cream background */
+  --surface: #fffef9;     /* soft warm white for cards */
+  --ink: #14202e;         /* deep navy-ink text */
+  --muted: #5b6b7b;       /* secondary text */
+  --brand: #12233f;       /* midnight navy — the brand color */
+  --brand-2: #1c3a63;     /* lighter navy for hover */
+  --gold: #c79a4b;        /* refined gold accent */
+  --gold-soft: #e7d3a8;
+  --line: #e9e2d6;        /* warm hairlines */
+  --radius: 14px;
+  --maxw: 1140px;
+
+  /* per-glyph fallback: Latin face first, Chinese face fills CJK glyphs */
+  --font-display: "Newsreader", "Noto Serif SC", Georgia, serif;
+  --font-body: "Inter", "Noto Sans SC", system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+/* ---- Typography --------------------------------------------------- */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+}
+h1 { font-size: clamp(2.5rem, 5.5vw, 4rem); }
+h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); }
+h3 { font-size: 1.2rem; font-weight: 600; }
+
+.eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  font-family: var(--font-body);
+}
+:lang(zh) .eyebrow { letter-spacing: 0.1em; }
+
+/* ---- Layout helpers ---------------------------------------------- */
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+.section { padding: 100px 0; }
+.section--tight { padding: 64px 0; }
+.sec-head { max-width: 46ch; margin-bottom: 48px; }
+.sec-head h2 { margin-top: 14px; }
+.sec-head p.lead { margin-top: 14px; color: var(--muted); font-size: 1.1rem; }
+
+/* ---- Buttons ------------------------------------------------------ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 24px; border-radius: 999px;
+  font-weight: 600; font-size: 0.98rem; cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn--primary { background: var(--brand); color: #fff; }
+.btn--primary:hover { background: var(--brand-2); }
+.btn--gold { background: var(--gold); color: #21160a; }
+.btn--gold:hover { background: #d5ab5f; }
+.btn--ghost { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn--ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+/* ---- Scroll-reveal animation ------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  will-change: opacity, transform;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* ---- Accessibility floor ----------------------------------------- */
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
