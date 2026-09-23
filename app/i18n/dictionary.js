@@ -15,6 +15,8 @@ export const dict = {
       partners: "Partners",
       contact: "Contact",
       cta: "Talk to us",
+      login: "Login",
+      apply: "Apply now",
     },
 
     hero: {
@@ -237,6 +239,8 @@ export const dict = {
       partners: "合作伙伴",
       contact: "联系我们",
       cta: "立即咨询",
+      login: "登录",
+      apply: "立即申请",
     },
 
     hero: {

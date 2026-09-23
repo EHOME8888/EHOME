@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useI18n } from "../i18n/LanguageProvider";
 
+const PORTAL_URL = "https://ehome-portal.com";
+
 export default function Nav() {
   const { t, toggle } = useI18n();
   const [open, setOpen] = useState(false);
@@ -34,6 +36,12 @@ export default function Nav() {
           <button className="nav__lang" onClick={toggle} aria-label="Switch language">
             {t.langLabel}
           </button>
+          <a href={PORTAL_URL} className="btn btn--ghost nav__portal">
+            {t.nav.login}
+          </a>
+          <a href={PORTAL_URL} className="btn btn--gold nav__portal">
+            {t.nav.apply}
+          </a>
           <Link href="/contact" className="btn btn--primary nav__cta">
             {t.nav.cta}
           </Link>
@@ -53,6 +61,12 @@ export default function Nav() {
           {links.map((l) => (
             <Link key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</Link>
           ))}
+          <a href={PORTAL_URL} className="btn btn--ghost" onClick={() => setOpen(false)}>
+            {t.nav.login}
+          </a>
+          <a href={PORTAL_URL} className="btn btn--gold" onClick={() => setOpen(false)}>
+            {t.nav.apply}
+          </a>
           <Link href="/contact" className="btn btn--primary" onClick={() => setOpen(false)}>
             {t.nav.cta}
           </Link>
@@ -73,15 +87,17 @@ export default function Nav() {
           font-size: 1.3rem; color: var(--brand); white-space: nowrap;
         }
         .nav__mark { height: 36px; width: auto; }
-        .nav__links { display: flex; align-items: center; gap: 30px; font-weight: 500; font-size: 0.98rem; }
+        .nav__links { display: flex; align-items: center; gap: 20px; font-weight: 500; font-size: 0.94rem; white-space: nowrap; }
         .nav__links a:hover { color: var(--brand); }
-        .nav__right { display: flex; align-items: center; gap: 14px; }
+        .nav__right { display: flex; align-items: center; gap: 8px; }
         .nav__lang {
           border: 1px solid var(--line); background: transparent;
           border-radius: 999px; padding: 7px 14px; font-weight: 600;
           font-size: 0.9rem; cursor: pointer; color: var(--ink); min-width: 56px;
         }
         .nav__lang:hover { border-color: var(--gold); color: var(--brand); }
+        .nav__portal, .nav__cta { padding: 9px 16px; font-size: 0.9rem; white-space: nowrap; }
+        .nav__lang { padding: 7px 10px; min-width: 48px; }
         .nav__toggle {
           display: none; flex-direction: column; gap: 4px;
           background: transparent; border: none; cursor: pointer; padding: 6px;
@@ -92,8 +108,8 @@ export default function Nav() {
           padding: 20px 24px 28px; border-bottom: 1px solid var(--line);
           font-weight: 500;
         }
-        @media (max-width: 820px) {
-          .nav__links, .nav__cta { display: none; }
+        @media (max-width: 1080px) {
+          .nav__links, .nav__cta, .nav__portal { display: none; }
           .nav__toggle { display: flex; }
         }
       ` }} />
