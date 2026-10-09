@@ -5,12 +5,16 @@
 // titles and descriptions carry BOTH languages: that is the only Chinese text
 // Google sees, because the server-rendered body is always English.
 
-export const SITE = "https://ehomeuk.com";
+// The live site 308-redirects the apex to www, so www IS the canonical host.
+// Everything derived from SITE -- canonicals, sitemap <loc>, robots, OG urls --
+// must use it: a sitemap served from www listing apex URLs is cross-host, and
+// Google rejects it ("Couldn't fetch").
+export const SITE = "https://www.ehomeuk.com";
 export const OG_IMAGE = `${SITE}/logo.png`;
 export const SITE_NAME = "EHOME Properties 易家";
 
 export function pageMeta({ path, title, description }) {
-  const url = path === "/" ? SITE : `${SITE}${path}`;
+  const url = path === "/" ? `${SITE}/` : `${SITE}${path}`;
 
   return {
     title,
