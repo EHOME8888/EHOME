@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useI18n } from "../i18n/LanguageProvider";
 
 export default function QuoteEstimator() {
@@ -12,12 +12,27 @@ export default function QuoteEstimator() {
   const [rent, setRent] = useState("");
   const [uniIdx, setUniIdx] = useState(0); // index into unis, or -1 for "Other"
 
-  const isOther = uniIdx === -1;
-  const top50 = isOther ? false : unis[uniIdx].top50;
-  const rentNum = parseFloat(String(rent).replace(/[^0-9.]/g, "")) || 0;
-  const base = rentNum / 12;               // one month's rent
-  const fee = top50 ? base : base * 1.2;    // +20% outside QS Top 50
+  const [fee, setFee] = useState(0);
   const fmt = (n) => n.toLocaleString("en-GB", { maximumFractionDigits: 0 });
+
+  // The fee is calculated on the server (app/api/quote). Keeping it off the
+  // client means the pricing model is not readable in the browser bundle.
+  useEffect(() => {
+    const universityId = uniIdx === -1 ? null : unis[uniIdx]?.id ?? null;
+    const controller = new AbortController();
+    const timer = setTimeout(() => {
+      fetch("/api/quote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ annualRent: rent, universityId }),
+        signal: controller.signal,
+      })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => { if (d && typeof d.fee === "number") setFee(d.fee); })
+        .catch(() => { /* offline or aborted - leave the last figure showing */ });
+    }, 250);
+    return () => { clearTimeout(timer); controller.abort(); };
+  }, [rent, uniIdx, unis]);
 
   return (
     <div className="qe">
@@ -94,7 +109,6 @@ export default function QuoteEstimator() {
         .qe__result-label { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
         .qe__result-value { font-family: var(--font-display); font-size: 1.9rem; color: #fff; font-weight: 500; }
         .qe__basis { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
-        .qe__surcharge { color: var(--gold); font-weight: 600; }
         .qe__note { font-size: 0.78rem; color: var(--muted); margin-bottom: 16px; }
         .qe__cta { width: 100%; justify-content: center; }
       ` }} />

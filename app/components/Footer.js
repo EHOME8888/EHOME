@@ -17,9 +17,9 @@ export default function Footer() {
 
         <nav className="footer__col" aria-label="Footer">
           <span className="footer__head">{t.footer.company}</span>
-          <Link href="/#what">{t.nav.what}</Link>
+          <Link href="/students">{t.nav.students}</Link>
+          <Link href="/process">{t.nav.how}</Link>
           <Link href="/pricing">{t.nav.pricing}</Link>
-          <Link href="/#partners">{t.nav.partners}</Link>
           <Link href="/contact">{t.nav.contact}</Link>
         </nav>
 
@@ -31,6 +31,10 @@ export default function Footer() {
             </span>
           ))}
         </div>
+      </div>
+
+      <div className="container footer__legal">
+        <span>{t.footer.legal}</span>
       </div>
 
       <div className="container footer__base">
@@ -55,6 +59,9 @@ export default function Footer() {
         .footer__col a:hover { color: var(--brand); }
         .footer__chan { color: var(--muted); font-size: 0.94rem; }
         .footer__chan em { color: var(--ink); font-style: normal; font-weight: 600; }
+        .footer__legal {
+          padding: 18px 24px 0; color: var(--muted); font-size: 0.84rem;
+        }
         .footer__base {
           display: flex; justify-content: space-between;
           padding: 20px 24px 40px; border-top: 1px solid var(--line);

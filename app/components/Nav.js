@@ -11,10 +11,10 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   const links = [
-    { href: "/#what", label: t.nav.what },
+    { href: "/", label: t.nav.home },
+    { href: "/students", label: t.nav.students },
     { href: "/process", label: t.nav.how },
     { href: "/pricing", label: t.nav.pricing },
-    { href: "/#partners", label: t.nav.partners },
     { href: "/contact", label: t.nav.contact },
   ];
 
