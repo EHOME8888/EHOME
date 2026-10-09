@@ -33,6 +33,18 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Always rendered in both scripts, whatever the toggle is set to, so the
+          Chinese name exists in the HTML a crawler sees on every page. */}
+      <div className="container footer__brandline">
+        <span lang="en">EHOME Properties</span>
+        <span aria-hidden="true"> · </span>
+        <span lang="zh-Hans">易家 · 易家租房担保</span>
+        <span aria-hidden="true"> · </span>
+        <span lang="en">UK rent guarantor for international students</span>
+        <span aria-hidden="true"> · </span>
+        <span lang="zh-Hans">英国留学生租房担保</span>
+      </div>
+
       <div className="container footer__legal">
         <span>{t.footer.legal}</span>
       </div>
@@ -59,6 +71,9 @@ export default function Footer() {
         .footer__col a:hover { color: var(--brand); }
         .footer__chan { color: var(--muted); font-size: 0.94rem; }
         .footer__chan em { color: var(--ink); font-style: normal; font-weight: 600; }
+        .footer__brandline {
+          padding: 18px 24px 0; color: var(--muted); font-size: 0.84rem;
+        }
         .footer__legal {
           padding: 18px 24px 0; color: var(--muted); font-size: 0.84rem;
         }

@@ -37,3 +37,48 @@ export function pageMeta({ path, title, description }) {
     },
   };
 }
+
+// Structured data. This is the strongest signal available for "someone searches
+// our Chinese name and finds us": it tells search engines, explicitly and in a
+// machine-readable way, that 易家 and EHOME Properties are the same entity.
+// alternateName is exactly the field built for that.
+export const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${SITE}/#organization`,
+  name: "EHOME Properties Limited",
+  alternateName: [
+    "EHOME",
+    "EHOME Properties",
+    "Ehome Properties 易家",
+    "易家",
+    "易家租房担保",
+    "易家中国",
+  ],
+  legalName: "EHOME Properties Limited",
+  url: SITE,
+  logo: `${SITE}/logo.png`,
+  image: OG_IMAGE,
+  description:
+    "UK rent guarantor service for international students. 为英国留学生提供租房担保服务。",
+  knowsLanguage: ["en-GB", "zh-Hans"],
+  areaServed: [
+    { "@type": "Country", name: "United Kingdom" },
+    { "@type": "Country", name: "China" },
+  ],
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "GB",
+  },
+};
+
+export const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE}/#website`,
+  url: SITE,
+  name: "EHOME Properties 易家",
+  alternateName: ["易家租房担保", "EHOME rent guarantor"],
+  inLanguage: ["en-GB", "zh-Hans"],
+  publisher: { "@id": `${SITE}/#organization` },
+};

@@ -2,7 +2,7 @@ import "./globals.css";
 import { LanguageProvider } from "./i18n/LanguageProvider";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import { SITE, SITE_NAME, OG_IMAGE } from "./lib/seo";
+import { SITE, SITE_NAME, OG_IMAGE, organizationJsonLd, websiteJsonLd } from "./lib/seo";
 
 // Per-page title, description, canonical and hreflang live in each page.js via
 // pageMeta(). These are the site-wide defaults and fallbacks.
@@ -37,6 +37,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([organizationJsonLd, websiteJsonLd]),
+          }}
+        />
         <LanguageProvider>
           <Nav />
           <main>{children}</main>
