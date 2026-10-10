@@ -75,17 +75,24 @@ export default function QuoteEstimator() {
       <Link href="/contact" className="btn btn--gold qe__cta">{e.cta}</Link>
 
       <style dangerouslySetInnerHTML={{ __html: `
+        /* The estimator is the one surface on the page that lifts. Everything
+           else sits flat and bordered, so elevation means something. */
         .qe {
-          background: var(--surface); border: 1px solid var(--line);
-          border-radius: 20px; padding: 28px;
-          box-shadow: 0 24px 60px -34px rgba(18,35,63,0.45);
+          background: var(--surface);
+          border: 1px solid rgba(217,222,232,0.6);
+          border-radius: var(--radius); padding: var(--sp-6);
+          box-shadow: 0 1px 2px rgba(16,24,44,0.04),
+                      0 12px 28px -16px rgba(16,24,44,0.22),
+                      0 40px 64px -48px rgba(16,24,44,0.28);
+          animation: settleIn 700ms var(--ease) 320ms both;
         }
-        .qe__title { display: block; font-family: var(--font-display); font-size: 1.25rem; color: var(--brand); margin-bottom: 18px; }
-        .qe__label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--muted); margin: 0 0 8px; }
+        @media (prefers-reduced-motion: reduce) { .qe { animation: none; } }
+        .qe__title { display: block; font-family: var(--font-display); font-size: var(--step-2); color: var(--navy); margin-bottom: var(--sp-5); }
+        .qe__label { display: block; font-size: var(--step--1); font-weight: 600; color: var(--muted); margin: 0 0 var(--sp-2); }
         .qe__input {
           display: flex; align-items: center; gap: 6px;
-          border: 1px solid var(--line); border-radius: 12px;
-          padding: 10px 14px; background: var(--bg); margin-bottom: 18px;
+          border: 1px solid var(--mist); border-radius: var(--radius-field);
+          padding: 11px 14px; background: var(--paper); margin-bottom: var(--sp-5);
         }
         .qe__input:focus-within { border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 30%, transparent); }
         .qe__cur { color: var(--muted); font-weight: 600; }
@@ -97,17 +104,17 @@ export default function QuoteEstimator() {
         }
         .qe__select {
           width: 100%; appearance: none; -webkit-appearance: none;
-          border: 1px solid var(--line); border-radius: 12px; background: var(--bg);
+          border: 1px solid var(--mist); border-radius: var(--radius-field); background: var(--paper);
           padding: 12px 14px; font: inherit; font-weight: 600; color: var(--ink);
           cursor: pointer; outline: none;
         }
         .qe__select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 30%, transparent); }
         .qe__result {
           display: flex; align-items: baseline; justify-content: space-between;
-          padding: 16px 18px; background: var(--brand); border-radius: 12px; margin-bottom: 10px;
+          padding: var(--sp-4) var(--sp-5); background: var(--navy); border-radius: var(--radius-field); margin-bottom: var(--sp-3);
         }
         .qe__result-label { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
-        .qe__result-value { font-family: var(--font-display); font-size: 1.9rem; color: #fff; font-weight: 500; }
+        .qe__result-value { font-family: var(--font-display); font-size: var(--step-4); color: #fff; font-weight: 500; letter-spacing: -0.02em; }
         .qe__basis { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
         .qe__note { font-size: 0.78rem; color: var(--muted); margin-bottom: 16px; }
         .qe__cta { width: 100%; justify-content: center; }

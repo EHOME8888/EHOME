@@ -37,6 +37,7 @@ export default function Home() {
         <div className="hero__overlay" aria-hidden="true" />
         <div className="container hero__inner">
           <div className="hero__text">
+            <span className="hero__rule" aria-hidden="true" />
             <p className="eyebrow">{t.hero.eyebrow}</p>
             <h1><MultiLine text={t.hero.title} /></h1>
             <p className="hero__lead">{t.hero.lead}</p>
@@ -176,31 +177,84 @@ export default function Home() {
 
       <style dangerouslySetInnerHTML={{ __html: `
         /* ---- Hero ---- */
-        .hero { position: relative; min-height: 86vh; display: flex; align-items: center; overflow: hidden; background: #12233f; }
-        .hero__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-        .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
-        .hero__overlay { position: absolute; inset: 0; z-index: 2;
-          background: linear-gradient(90deg, rgba(9,18,33,0.88) 0%, rgba(9,18,33,0.74) 42%, rgba(9,18,33,0.42) 100%); }
-        .hero__inner { position: relative; z-index: 3; padding: 96px 24px; }
-        .hero__text { max-width: 660px; }
-        .hero .eyebrow { color: var(--gold); }
-        .hero h1 { color: #fff; margin: 16px 0 20px; }
-        .hero__lead { color: rgba(255,255,255,0.86); font-size: 1.2rem; max-width: 52ch; }
-        .hero__bullets { list-style: none; padding: 0; margin: 24px 0 32px; display: grid; gap: 10px; }
-        .hero__bullets li { position: relative; padding-left: 28px; color: #fff; }
-        .hero__bullets li::before { content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
-        .hero__actions { display: flex; gap: 14px; flex-wrap: wrap; }
-        .btn--hero-ghost { border-color: rgba(255,255,255,0.55); color: #fff; background: transparent; }
-        .btn--hero-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.10); }
+        /* The hero is the one place the site raises its voice. A deep navy
+           field, the footage held well back behind it, and a fine engraved
+           rule texture across the whole thing -- the visual language of a
+           deed or a banknote rather than a decorative gradient wash. */
+        .hero {
+          position: relative; min-height: 88vh;
+          display: flex; align-items: center; overflow: hidden;
+          background: var(--navy-deep);
+        }
+        .hero__bg, .hero__video {
+          position: absolute; inset: 0; width: 100%; height: 100%;
+          object-fit: cover;
+        }
+        .hero__bg { z-index: 0; }
+        .hero__video { z-index: 1; opacity: 0.5; }
+        .hero__overlay {
+          position: absolute; inset: 0; z-index: 2;
+          background:
+            repeating-linear-gradient(
+              104deg,
+              rgba(255,255,255,0.035) 0px,
+              rgba(255,255,255,0.035) 1px,
+              transparent 1px,
+              transparent 7px
+            ),
+            linear-gradient(94deg,
+              rgba(20,31,66,0.97) 0%,
+              rgba(20,31,66,0.90) 46%,
+              rgba(20,31,66,0.58) 100%);
+        }
+        .hero__inner { position: relative; z-index: 3; padding: var(--sp-10) var(--sp-5); }
+        .hero__text { max-width: 44ch; }
 
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-        .hero__text > * { animation: fadeUp 0.6s ease both; }
-        .hero__text > *:nth-child(1) { animation-delay: 0.05s; }
-        .hero__text > *:nth-child(2) { animation-delay: 0.13s; }
-        .hero__text > *:nth-child(3) { animation-delay: 0.21s; }
-        .hero__text > *:nth-child(4) { animation-delay: 0.29s; }
-        .hero__text > *:nth-child(5) { animation-delay: 0.37s; }
-        @media (prefers-reduced-motion: reduce) { .hero__text > * { animation: none; } }
+        .hero__rule {
+          display: block; width: 72px; height: 2px;
+          background: var(--gold); margin-bottom: var(--sp-6);
+          transform-origin: left center;
+        }
+        .hero h1 { color: #fff; margin: var(--sp-4) 0 var(--sp-5); }
+        .hero__lead {
+          color: rgba(255,255,255,0.82);
+          font-size: var(--step-1); max-width: 46ch;
+        }
+        .hero__bullets {
+          list-style: none; padding: 0; margin: var(--sp-6) 0 var(--sp-7);
+          display: grid; gap: var(--sp-3);
+          max-width: 44ch;
+        }
+        .hero__bullets li {
+          position: relative; padding-left: var(--sp-6);
+          color: rgba(255,255,255,0.92); font-size: 0.96rem;
+        }
+        /* a struck rule rather than a tick: quieter, and it echoes the
+           hairline texture behind it */
+        .hero__bullets li::before {
+          content: ""; position: absolute; left: 0; top: 0.72em;
+          width: 14px; height: 1px; background: var(--gold);
+        }
+        .hero__actions { display: flex; gap: var(--sp-3); flex-wrap: wrap; }
+        .btn--hero-ghost { border-color: rgba(255,255,255,0.4); color: #fff; background: transparent; }
+        .btn--hero-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+        /* One orchestrated entrance: the rule draws, then the text rises
+           behind it. Nothing else on the site animates on load. */
+        .hero__rule { animation: drawRule 620ms var(--ease) 80ms both; }
+        .hero__text > *:not(.hero__rule) { animation: riseIn 620ms var(--ease) both; }
+        .hero__text > *:nth-child(2) { animation-delay: 220ms; }
+        .hero__text > *:nth-child(3) { animation-delay: 310ms; }
+        .hero__text > *:nth-child(4) { animation-delay: 400ms; }
+        .hero__text > *:nth-child(5) { animation-delay: 480ms; }
+        .hero__text > *:nth-child(6) { animation-delay: 560ms; }
+        @media (prefers-reduced-motion: reduce) {
+          .hero__rule, .hero__text > * { animation: none; }
+        }
+        @media (max-width: 720px) {
+          .hero { min-height: 76vh; }
+          .hero__text { max-width: none; }
+        }
 
         /* ---- What ---- */
         .what__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }

@@ -1,4 +1,27 @@
+import { Newsreader, Instrument_Sans } from "next/font/google";
 import "./globals.css";
+
+// Self-hosted by next/font: no extra round trip, no layout shift.
+// Newsreader carries optical sizing, so headings gain contrast as they grow.
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-newsreader",
+  // next/font has no fallback-metrics table for Newsreader and warns on every
+  // build; our own serif stack handles the fallback.
+  adjustFontFallback: false,
+});
+
+// Instrument Sans in place of Inter: same clarity, without being the default
+// sans of every site built this decade.
+const instrument = Instrument_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-instrument",
+});
 import { LanguageProvider } from "./i18n/LanguageProvider";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
@@ -35,7 +58,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${newsreader.variable} ${instrument.variable}`}>
       <body>
         <script
           type="application/ld+json"

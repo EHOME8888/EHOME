@@ -1,99 +1,218 @@
-/* Fonts: Latin (Inter/Newsreader) + Simplified Chinese (Noto Sans/Serif SC).
-   Loaded via @import so both scripts render properly in every browser. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600&display=swap');
+/* Simplified-Chinese faces. Latin faces are self-hosted via next/font in
+   layout.js. Google serves these with unicode-range, so a reader who never
+   sees a CJK glyph never downloads one. PingFang SC and Microsoft YaHei are
+   preferred ahead of them because they are already on the reader's machine
+   and render Chinese better than any webfont we could ship. */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600&display=swap');
 
-/* ---- Design tokens ------------------------------------------------ */
+/* ====================================================================
+   DESIGN TOKENS
+   ==================================================================== */
 :root {
-  --bg: #f7f4ec;          /* warm cream background */
-  --surface: #fffef9;     /* soft warm white for cards */
-  --ink: #14202e;         /* deep navy-ink text */
-  --muted: #5b6b7b;       /* secondary text */
-  --brand: #12233f;       /* midnight navy — the brand color */
-  --brand-2: #1c3a63;     /* lighter navy for hover */
-  --gold: #c79a4b;        /* refined gold accent */
-  --gold-soft: #e7d3a8;
-  --line: #e9e2d6;        /* warm hairlines */
-  --radius: 14px;
-  --maxw: 1140px;
+  /* --- Colour -------------------------------------------------------
+     Navy and gold are the identity. Ink is deliberately deeper than navy
+     so navy stays a BRAND colour rather than becoming the text colour.
+     The ground is a cool paper neutral, not cream: against warm cream,
+     navy drifts towards grey and gold towards beige. */
+  --navy:       #1B2A57;
+  --gold:       #C8A24A;
+  --ink:        #10182C;
+  --paper:      #F3F5F8;
+  --surface:    #FFFFFF;
+  --mist:       #D9DEE8;
 
-  /* per-glyph fallback: Latin face first, Chinese face fills CJK glyphs */
-  --font-display: "Newsreader", "Noto Serif SC", Georgia, serif;
-  --font-body: "Inter", "Noto Sans SC", system-ui, sans-serif;
+  /* derived, not part of the core palette */
+  --navy-deep:  #141F42;
+  --navy-lift:  #26396E;
+  --muted:      #566076;
+  --gold-rule:  rgba(200, 162, 74, 0.55);
+  --gold-wash:  rgba(200, 162, 74, 0.10);
+
+  /* legacy aliases — older component CSS still references these */
+  --bg: var(--paper);
+  --brand: var(--navy);
+  --brand-2: var(--navy-lift);
+  --line: var(--mist);
+  --gold-soft: var(--gold-rule);
+
+  /* --- Type ---------------------------------------------------------
+     Newsreader: an editorial text serif with optical sizing, so it gains
+     contrast as it grows. Instrument Sans for UI and body.
+     GOLD CONTRAST RULE: #C8A24A on white is 2.6:1 and fails AA. Gold is
+     for rules, marks and fills, and for text ONLY on navy (5.3:1). */
+  --font-display: var(--font-newsreader), "Songti SC", "Noto Serif SC", Georgia, serif;
+  --font-body: var(--font-instrument), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+
+  --step--2: 0.75rem;
+  --step--1: 0.8125rem;
+  --step-0:  1rem;
+  --step-1:  1.0625rem;
+  --step-2:  clamp(1.2rem, 1.6vw, 1.35rem);
+  --step-3:  clamp(1.45rem, 2.2vw, 1.75rem);
+  --step-4:  clamp(1.9rem, 3.4vw, 2.6rem);
+  --step-5:  clamp(2.6rem, 5.6vw, 4.1rem);
+
+  /* --- Space (8px base) --------------------------------------------- */
+  --sp-1: 4px;   --sp-2: 8px;   --sp-3: 12px;  --sp-4: 16px;
+  --sp-5: 24px;  --sp-6: 32px;  --sp-7: 40px;  --sp-8: 56px;
+  --sp-9: 72px;  --sp-10: 96px; --sp-11: 128px;
+
+  --section-lg: clamp(88px, 9vw, 128px);
+  --section-md: clamp(64px, 6vw, 88px);
+
+  /* --- Form ---------------------------------------------------------
+     A small radius reads like a printed document; a pill reads like a
+     consumer app. This is a guarantee contract, so: small. */
+  --radius:      10px;
+  --radius-btn:  4px;
+  --radius-field: 3px;
+  --maxw: 1140px;
+  --maxw-prose: 64ch;
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--bg);
+  background: var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
+  font-size: var(--step-0);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 
-/* ---- Typography --------------------------------------------------- */
+/* ====================================================================
+   TYPOGRAPHY
+   ==================================================================== */
 h1, h2, h3 {
   font-family: var(--font-display);
-  line-height: 1.12;
-  letter-spacing: -0.01em;
   font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
 }
-h1 { font-size: clamp(2.5rem, 5.5vw, 4rem); }
-h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); }
-h3 { font-size: 1.2rem; font-weight: 600; }
+h1 { font-size: var(--step-5); line-height: 1.04; }
+h2 { font-size: var(--step-4); }
+h3 { font-size: var(--step-2); line-height: 1.25; letter-spacing: -0.005em; }
 
+/* Chinese needs no negative tracking and sits better slightly looser. */
+:lang(zh) h1, :lang(zh) h2, :lang(zh) h3 { letter-spacing: 0; line-height: 1.3; }
+:lang(zh) body { line-height: 1.85; }
+
+p { max-width: var(--maxw-prose); }
+.lead { font-size: var(--step-1); color: var(--muted); line-height: 1.6; }
+
+/* Section label. Deliberately NOT an all-caps tracked-out eyebrow: a short
+   gold rule and a sentence-case label in the body face, which reads as
+   editorial rather than as a template. */
 .eyebrow {
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
   font-family: var(--font-body);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--navy);
 }
-:lang(zh) .eyebrow { letter-spacing: 0.1em; }
+.eyebrow::before {
+  content: "";
+  width: 28px; height: 2px; flex: none;
+  background: var(--gold);
+}
+.hero .eyebrow { color: rgba(255, 255, 255, 0.85); }
 
-/* ---- Layout helpers ---------------------------------------------- */
-.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-.section { padding: 100px 0; }
-.section--tight { padding: 64px 0; }
-.sec-head { max-width: 46ch; margin-bottom: 48px; }
-.sec-head h2 { margin-top: 14px; }
-.sec-head p.lead { margin-top: 14px; color: var(--muted); font-size: 1.1rem; }
+/* ====================================================================
+   LAYOUT
+   ==================================================================== */
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--sp-5); }
+.section { padding: var(--section-lg) 0; }
+.section--tight { padding: var(--section-md) 0; }
+.sec-head { max-width: 50ch; margin-bottom: var(--sp-8); }
+.sec-head h1, .sec-head h2 { margin-top: var(--sp-4); }
+.sec-head p.lead { margin-top: var(--sp-4); }
 
-/* ---- Buttons ------------------------------------------------------ */
+/* ====================================================================
+   BUTTONS
+   ==================================================================== */
 .btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 13px 24px; border-radius: 999px;
-  font-weight: 600; font-size: 0.98rem; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2);
+  padding: 13px var(--sp-5);
+  border-radius: var(--radius-btn);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.005em;
+  cursor: pointer;
   border: 1px solid transparent;
-  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition: background 180ms var(--ease), color 180ms var(--ease),
+              border-color 180ms var(--ease), box-shadow 180ms var(--ease);
 }
-.btn:hover { transform: translateY(-1px); }
-.btn--primary { background: var(--brand); color: #fff; }
-.btn--primary:hover { background: var(--brand-2); }
-.btn--gold { background: var(--gold); color: #21160a; }
-.btn--gold:hover { background: #d5ab5f; }
-.btn--ghost { border-color: var(--line); color: var(--ink); background: transparent; }
-.btn--ghost:hover { border-color: var(--brand); color: var(--brand); }
+.btn--primary { background: var(--navy); color: #fff; }
+.btn--primary:hover { background: var(--navy-lift); box-shadow: 0 6px 18px -10px rgba(27,42,87,0.8); }
+.btn--gold { background: var(--gold); color: #26200E; }
+.btn--gold:hover { background: #D4B262; box-shadow: 0 6px 18px -10px rgba(200,162,74,0.9); }
+.btn--ghost { border-color: var(--mist); color: var(--navy); background: transparent; }
+.btn--ghost:hover { border-color: var(--navy); background: rgba(27,42,87,0.04); }
 
-/* ---- Scroll-reveal animation ------------------------------------- */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-  will-change: opacity, transform;
+/* ====================================================================
+   CARDS — three tiers, so elevation carries hierarchy instead of every
+   surface wearing the same rounded box and the same grey shadow.
+   ==================================================================== */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
 }
-.reveal.is-visible { opacity: 1; transform: none; }
+.card--raised {
+  background: var(--surface);
+  border: 1px solid rgba(217, 222, 232, 0.6);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 2px rgba(16,24,44,0.04),
+              0 12px 28px -16px rgba(16,24,44,0.22),
+              0 40px 64px -48px rgba(16,24,44,0.28);
+}
+.card--inset {
+  background: rgba(27,42,87,0.035);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+}
 
-/* ---- Accessibility floor ----------------------------------------- */
-:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+/* ====================================================================
+   MOTION
+   One orchestrated moment on the hero. Everywhere else is a quiet
+   opacity settle — the fade-and-slide-on-every-section pattern reads as
+   a template and fights the reader on a long page.
+   ==================================================================== */
+.reveal { opacity: 0; transition: opacity 450ms var(--ease); }
+.reveal.is-visible { opacity: 1; }
+.reveal--lift { transform: translateY(14px); transition: opacity 450ms var(--ease), transform 450ms var(--ease); }
+.reveal--lift.is-visible { transform: none; }
+
+@keyframes riseIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes drawRule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes settleIn { from { opacity: 0; transform: translateY(24px) scale(0.985); } to { opacity: 1; transform: none; } }
+
+/* ====================================================================
+   ACCESSIBILITY FLOOR
+   ==================================================================== */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal, .reveal--lift { opacity: 1; transform: none; transition: none; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
