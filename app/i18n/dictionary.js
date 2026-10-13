@@ -261,6 +261,10 @@ export const dict = {
     },
 
     footer: {
+      legalHead: "Legal",
+      privacy: "Privacy",
+      cookies: "Cookies",
+      terms: "Terms",
       tagline: "Rent guarantor services for international students in the UK.",
       company: "Company",
       getInTouch: "Get in touch",
@@ -530,6 +534,10 @@ export const dict = {
     },
 
     footer: {
+      legalHead: "法律",
+      privacy: "隐私",
+      cookies: "Cookie 政策",
+      terms: "条款",
       tagline: "为海外留学生提供租房担保服务。",
       company: "公司",
       getInTouch: "联系方式",

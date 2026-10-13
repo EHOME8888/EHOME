@@ -23,6 +23,13 @@ export default function Footer() {
           <Link href="/contact">{t.nav.contact}</Link>
         </nav>
 
+        <nav className="footer__col" aria-label="Legal">
+          <span className="footer__head">{t.footer.legalHead}</span>
+          <Link href="/privacy">{t.footer.privacy}</Link>
+          <Link href="/cookies">{t.footer.cookies}</Link>
+          <Link href="/terms">{t.footer.terms}</Link>
+        </nav>
+
         <div className="footer__col">
           <span className="footer__head">{t.footer.getInTouch}</span>
           {t.contact.channels.map((c) => (
@@ -59,7 +66,7 @@ export default function Footer() {
       <style dangerouslySetInnerHTML={{ __html: `
         .footer { border-top: 1px solid var(--line); background: var(--surface); margin-top: 40px; }
         .footer__inner {
-          display: grid; grid-template-columns: 2fr 1fr 1.3fr; gap: 40px;
+          display: grid; grid-template-columns: 1.8fr 1fr 0.8fr 1.3fr; gap: 40px;
           padding: 64px 24px 40px;
         }
         .footer__logo-img { height: 82px; width: auto; }
