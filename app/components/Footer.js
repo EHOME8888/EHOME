@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useI18n } from "../i18n/LanguageProvider";
+import NewsletterSignup from "./NewsletterSignup";
 
 export default function Footer() {
   const { t } = useI18n();
@@ -29,6 +30,8 @@ export default function Footer() {
           <Link href="/cookies">{t.footer.cookies}</Link>
           <Link href="/terms">{t.footer.terms}</Link>
         </nav>
+
+        <NewsletterSignup />
 
         <div className="footer__col">
           <span className="footer__head">{t.footer.getInTouch}</span>
@@ -66,7 +69,7 @@ export default function Footer() {
       <style dangerouslySetInnerHTML={{ __html: `
         .footer { border-top: 1px solid var(--line); background: var(--surface); margin-top: 40px; }
         .footer__inner {
-          display: grid; grid-template-columns: 1.8fr 1fr 0.8fr 1.3fr; gap: 40px;
+          display: grid; grid-template-columns: 1.5fr 0.8fr 0.7fr 1.2fr 1.1fr; gap: 36px;
           padding: 64px 24px 40px;
         }
         .footer__logo-img { height: 82px; width: auto; }
@@ -93,6 +96,9 @@ export default function Footer() {
           display: flex; justify-content: space-between;
           padding: 20px 24px 40px; border-top: 1px solid var(--line);
           color: var(--muted); font-size: 0.86rem;
+        }
+        @media (max-width: 1080px) {
+          .footer__inner { grid-template-columns: 1fr 1fr; gap: 32px; }
         }
         @media (max-width: 780px) {
           .footer__inner { grid-template-columns: 1fr; gap: 32px; }
