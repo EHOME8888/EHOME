@@ -42,7 +42,24 @@ export async function GET() {
     }
   }
 
+  // Shape only. A JWT's first three characters are always "eyJ" and its
+  // structure is public, so reporting them identifies a wrong paste without
+  // revealing anything usable.
+  const shape = {
+    length: key.length,
+    segments: key.split(".").length,
+    prefix: key.slice(0, 3),
+    verdict:
+      !key ? "empty"
+      : key.startsWith("sb_secret_") ? "looks like a new-format secret key — good"
+      : key.startsWith("sb_publishable_") ? "this is the PUBLISHABLE key — wrong one"
+      : key.split(".").length === 3 && key.startsWith("eyJ") ? "looks like a JWT — check it is service_role, not anon"
+      : key.length < 60 ? "too short for a Supabase key — likely the JWT Secret, project id, or a database password"
+      : "not a JWT and not an sb_ key — wrong value",
+  };
+
   return Response.json({
+    serviceKeyShape: shape,
     storageConfigured: storageConfigured(),
     senderConfigured: senderConfigured(),
     supabaseUrl: url ? url.replace(/^https:\/\/([a-z0-9]{6}).*/, "https://$1…supabase.co") : null,
