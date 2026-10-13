@@ -22,8 +22,17 @@ export async function POST(request) {
   // Nothing is stored and nothing is sent until both halves are configured.
   if (!newsletterLive()) return Response.json({ ok: true, inert: true });
 
+  // Report WHICH half failed. "storage" and "send" leak nothing useful to an
+  // attacker but turn a blind retry into a one-look diagnosis.
+  let token;
   try {
-    const token = await requestSubscription({ email, consentText, locale });
+    token = await requestSubscription({ email, consentText, locale });
+  } catch (e) {
+    console.error("[newsletter] STORAGE failed:", e instanceof Error ? e.message : e);
+    return Response.json({ error: "failed", stage: "storage" }, { status: 500 });
+  }
+
+  try {
     await sendConfirmationEmail({
       to: email.trim().toLowerCase(),
       confirmUrl: `${SITE}/api/newsletter/confirm?token=${encodeURIComponent(token)}`,
@@ -31,8 +40,8 @@ export async function POST(request) {
       locale,
     });
   } catch (e) {
-    console.error("[newsletter] subscribe failed:", e instanceof Error ? e.message : e);
-    return Response.json({ error: "failed" }, { status: 500 });
+    console.error("[newsletter] SEND failed:", e instanceof Error ? e.message : e);
+    return Response.json({ error: "failed", stage: "send" }, { status: 500 });
   }
 
   // Same answer whether or not the address was already on the list: the
