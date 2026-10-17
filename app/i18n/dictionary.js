@@ -265,6 +265,7 @@ export const dict = {
       policy: "Cookies Policy",
       privacy: "Privacy Notice",
       dismiss: "Got it",
+      settings: "Cookie settings",
       // used only if non-essential cookies are ever introduced
       accept: "Accept all",
       reject: "Essential only",
@@ -569,6 +570,7 @@ export const dict = {
       policy: "《Cookie 政策》",
       privacy: "《隐私声明》",
       dismiss: "我知道了",
+      settings: "Cookie 设置",
       accept: "全部接受",
       reject: "仅必要项",
     },

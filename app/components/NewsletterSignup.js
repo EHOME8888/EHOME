@@ -15,12 +15,13 @@ export default function NewsletterSignup() {
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState(null);
   const [done, setDone] = useState(false);
+  const [err, setErr] = useState(null);   // null | "email" | "consent"
 
   async function submit(e) {
     e.preventDefault();
-    setNote(null);
-    if (!consent) { setNote(n.errConsent); return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) { setNote(n.errEmail); return; }
+    setNote(null); setErr(null);
+    if (!consent) { setNote(n.errConsent); setErr("consent"); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) { setNote(n.errEmail); setErr("email"); return; }
 
     setBusy(true);
     try {
@@ -37,22 +38,17 @@ export default function NewsletterSignup() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setNote(
-          data?.error === "consent_required" ? n.errConsent
-          : data?.error === "invalid_email" ? n.errEmail
-          // Name the failing half on screen. Temporary, while the loop is
-          // being commissioned: "storage" or "send" is the whole diagnosis,
-          // and it saves a round trip through the server logs.
-          : data?.stage ? `${n.errFailed} (${data.stage})`
-          : n.errFailed
-        );
+        setNote(data?.error === "consent_required" ? n.errConsent
+              : data?.error === "invalid_email" ? n.errEmail
+              : n.errFailed);
+        setErr("email");
       } else {
-        setDone(true);
+        setDone(true); setErr(null);
         setNote(data?.inert ? n.inert : n.check);
         setEmail(""); setConsent(false);
       }
     } catch {
-      setNote(n.errFailed);
+      setNote(n.errFailed); setErr("email");
     }
     setBusy(false);
   }
@@ -67,12 +63,15 @@ export default function NewsletterSignup() {
           <label className="nl__sronly" htmlFor="nl-email">{n.placeholder}</label>
           <input
             id="nl-email" type="email" autoComplete="email" value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={n.placeholder} className="nl__input"
+            onChange={(e) => { setEmail(e.target.value); if (err) { setErr(null); setNote(null); } }}
+            placeholder={n.placeholder}
+            className={`nl__input ${err === "email" ? "nl__input--err" : ""}`}
+            aria-invalid={err === "email" || undefined}
           />
 
           <label className="nl__consent">
-            <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
+            <input type="checkbox" checked={consent} aria-invalid={err === "consent" || undefined}
+                onChange={(e) => { setConsent(e.target.checked); if (err === "consent") { setErr(null); setNote(null); } }} />
             <span>
               {n.consent}{" "}
               <Link href="/privacy" className="nl__link">{n.consentPrivacy}</Link>{" "}
@@ -86,7 +85,16 @@ export default function NewsletterSignup() {
         </form>
       )}
 
-      {note && <p className="nl__note" role="status">{note}</p>}
+      {done ? (
+        <div className="nl__done" role="status">
+          <span className="nl__tick" aria-hidden="true" />
+          <p>{note}</p>
+        </div>
+      ) : (
+        note && (
+          <p className={`nl__note ${err ? "nl__note--err" : ""}`} role="alert">{note}</p>
+        )
+      )}
 
       <style dangerouslySetInnerHTML={{ __html: `
         .nl { display: flex; flex-direction: column; gap: 10px; }
@@ -109,6 +117,24 @@ export default function NewsletterSignup() {
         .nl__link { color: var(--navy); font-weight: 600; text-decoration: underline; }
         .nl__btn { margin-top: 12px; align-self: flex-start; }
         .nl__note { margin-top: 10px; font-size: 0.84rem; color: var(--muted); max-width: 36ch; }
+        .nl__note--err { color: #8E2A2A; }
+        .nl__input--err { border-color: #8E2A2A; }
+        .nl__done {
+          display: flex; gap: 10px; align-items: flex-start;
+          padding: 14px 16px; border-radius: var(--radius);
+          background: rgba(27,42,87,0.04); max-width: 34ch;
+        }
+        .nl__done p { font-size: 0.84rem; color: var(--muted); margin: 0; }
+        .nl__tick {
+          flex: none; width: 18px; height: 18px; margin-top: 1px;
+          border-radius: 999px; background: var(--gold);
+          position: relative;
+        }
+        .nl__tick::after {
+          content: ""; position: absolute; left: 6px; top: 3px;
+          width: 4px; height: 9px; border: solid #26200E;
+          border-width: 0 2px 2px 0; transform: rotate(45deg);
+        }
       ` }} />
     </div>
   );

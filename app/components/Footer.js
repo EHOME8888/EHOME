@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useI18n } from "../i18n/LanguageProvider";
 import NewsletterSignup from "./NewsletterSignup";
+import { reopenCookieNotice } from "./CookieNotice";
 
 export default function Footer() {
   const { t } = useI18n();
@@ -29,6 +30,9 @@ export default function Footer() {
           <Link href="/privacy">{t.footer.privacy}</Link>
           <Link href="/cookies">{t.footer.cookies}</Link>
           <Link href="/terms">{t.footer.terms}</Link>
+          <button type="button" className="footer__linkbtn" onClick={reopenCookieNotice}>
+            {t.cookieNotice.settings}
+          </button>
         </nav>
 
         <NewsletterSignup />
@@ -80,6 +84,11 @@ export default function Footer() {
           color: var(--muted); margin-bottom: 4px; font-weight: 600;
         }
         .footer__col a:hover { color: var(--brand); }
+        .footer__linkbtn {
+          background: none; border: none; padding: 0; font: inherit;
+          color: inherit; cursor: pointer; text-align: left;
+        }
+        .footer__linkbtn:hover { color: var(--brand); }
         .footer__chan { color: var(--muted); font-size: 0.94rem; }
         .footer__chan em { color: var(--ink); font-style: normal; font-weight: 600; }
         .footer__brandline {

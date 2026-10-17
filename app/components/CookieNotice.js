@@ -23,8 +23,16 @@ import { useI18n } from "../i18n/LanguageProvider";
 const CONSENT_MODE = false;
 const KEY = "ehome-cookie-choice";
 
+export const REOPEN_EVENT = "ehome:cookie-reopen";
+
 export function hasAnalyticsConsent() {
   try { return window.localStorage.getItem(KEY) === "all"; } catch { return false; }
+}
+
+/** Lets the footer reopen the bar so a choice can be changed. */
+export function reopenCookieNotice() {
+  try { window.localStorage.removeItem(KEY); } catch { /* ignore */ }
+  window.dispatchEvent(new Event(REOPEN_EVENT));
 }
 
 export default function CookieNotice() {
@@ -37,7 +45,28 @@ export default function CookieNotice() {
   useEffect(() => {
     try { if (!window.localStorage.getItem(KEY)) setShow(true); }
     catch { setShow(true); }     // storage blocked: show it, remember nothing
+    const reopen = () => setShow(true);
+    window.addEventListener(REOPEN_EVENT, reopen);
+    return () => window.removeEventListener(REOPEN_EVENT, reopen);
   }, []);
+
+  // Escape dismisses, like any other transient layer. In consent mode it must
+  // not: a keypress is not a decision, and silently recording one would be
+  // the dark pattern this is meant to avoid.
+  useEffect(() => {
+    if (!show || CONSENT_MODE) return;
+    const onKey = (e) => { if (e.key === "Escape") choose("seen"); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [show]);
+
+  // Keep the bar from sitting on top of the last of the page.
+  useEffect(() => {
+    if (!show) return;
+    const prev = document.body.style.paddingBottom;
+    document.body.style.paddingBottom = "128px";
+    return () => { document.body.style.paddingBottom = prev; };
+  }, [show]);
 
   function choose(value) {
     try { window.localStorage.setItem(KEY, value); } catch { /* ignore */ }
