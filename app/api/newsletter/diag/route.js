@@ -70,8 +70,36 @@ export async function GET() {
       : "not a Resend key — Resend keys always start re_",
   };
 
+  // Ask Resend which domains are verified. This validates the key and shows
+  // whether NEWSLETTER_FROM's domain is actually allowed to send -- the usual
+  // cause of a send failure once the key is right. No email is sent.
+  let resendStatus = null, verifiedDomains = null, fromDomainOk = null;
+  if (resend.startsWith("re_")) {
+    try {
+      const r = await fetch("https://api.resend.com/domains", {
+        headers: { Authorization: `Bearer ${resend}` }, cache: "no-store",
+      });
+      resendStatus = r.status;
+      if (r.ok) {
+        const d = await r.json();
+        verifiedDomains = (d?.data ?? []).map((x) => `${x.name} [${x.status}]`);
+        const fromDomain = (from.match(/@([^>\s]+)/) || [])[1];
+        fromDomainOk = fromDomain
+          ? (d?.data ?? []).some((x) => x.name === fromDomain && x.status === "verified")
+          : null;
+      } else {
+        resendStatus = `${r.status}: ${(await r.text()).slice(0, 200)}`;
+      }
+    } catch (e) {
+      resendStatus = e instanceof Error ? e.message : String(e);
+    }
+  }
+
   return Response.json({
     serviceKeyShape: shape,
+    resendStatus,
+    verifiedDomains,
+    fromDomainVerified: fromDomainOk,
     resendKeyShape: resendShape,
     storageConfigured: storageConfigured(),
     senderConfigured: senderConfigured(),
