@@ -58,8 +58,21 @@ export async function GET() {
       : "not a JWT and not an sb_ key — wrong value",
   };
 
+  const resendShape = {
+    length: resend.length,
+    segments: resend.split(".").length,
+    prefix: resend.slice(0, 3),
+    verdict:
+      !resend ? "empty"
+      : resend.startsWith("re_") ? "looks like a Resend key — good"
+      : resend.startsWith("eyJ") && resend.split(".").length === 3 ? "this is a SUPABASE JWT in the Resend slot — the two values are swapped"
+      : resend.startsWith("sb_") ? "this is a Supabase key in the Resend slot"
+      : "not a Resend key — Resend keys always start re_",
+  };
+
   return Response.json({
     serviceKeyShape: shape,
+    resendKeyShape: resendShape,
     storageConfigured: storageConfigured(),
     senderConfigured: senderConfigured(),
     supabaseUrl: url ? url.replace(/^https:\/\/([a-z0-9]{6}).*/, "https://$1…supabase.co") : null,
