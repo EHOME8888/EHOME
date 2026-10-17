@@ -260,6 +260,15 @@ export const dict = {
       questionsCta: "Talk to us",
     },
 
+    cookieNotice: {
+      body: "We use only strictly necessary storage — to remember your language and to keep you signed in on the client portal. No analytics, no advertising, no tracking.",
+      policy: "Cookies Policy",
+      privacy: "Privacy Notice",
+      dismiss: "Got it",
+      // used only if non-essential cookies are ever introduced
+      accept: "Accept all",
+      reject: "Essential only",
+    },
     newsletter: {
       head: "Newsletter",
       blurb: "Occasional updates on UK renting for international students. No more than once a month.",
@@ -555,6 +564,14 @@ export const dict = {
       questionsCta: "联系我们",
     },
 
+    cookieNotice: {
+      body: "我们仅使用严格必要的存储 — 用于记住你的语言选择，以及在客户门户中保持登录状态。没有分析、没有广告、没有追踪。",
+      policy: "《Cookie 政策》",
+      privacy: "《隐私声明》",
+      dismiss: "我知道了",
+      accept: "全部接受",
+      reject: "仅必要项",
+    },
     newsletter: {
       head: "邮件通讯",
       blurb: "关于英国留学生租房的不定期更新，每月不超过一封。",

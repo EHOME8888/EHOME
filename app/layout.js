@@ -25,6 +25,7 @@ const instrument = Instrument_Sans({
 import { LanguageProvider } from "./i18n/LanguageProvider";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
+import CookieNotice from "./components/CookieNotice";
 import { SITE, SITE_NAME, OG_IMAGE, organizationJsonLd, websiteJsonLd } from "./lib/seo";
 
 // Per-page title, description, canonical and hreflang live in each page.js via
@@ -70,6 +71,7 @@ export default function RootLayout({ children }) {
           <Nav />
           <main>{children}</main>
           <Footer />
+          <CookieNotice />
         </LanguageProvider>
       </body>
     </html>
