@@ -37,9 +37,15 @@ export default function NewsletterSignup() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setNote(data?.error === "consent_required" ? n.errConsent
-              : data?.error === "invalid_email" ? n.errEmail
-              : n.errFailed);
+        setNote(
+          data?.error === "consent_required" ? n.errConsent
+          : data?.error === "invalid_email" ? n.errEmail
+          // Name the failing half on screen. Temporary, while the loop is
+          // being commissioned: "storage" or "send" is the whole diagnosis,
+          // and it saves a round trip through the server logs.
+          : data?.stage ? `${n.errFailed} (${data.stage})`
+          : n.errFailed
+        );
       } else {
         setDone(true);
         setNote(data?.inert ? n.inert : n.check);
