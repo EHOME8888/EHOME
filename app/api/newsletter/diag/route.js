@@ -95,8 +95,49 @@ export async function GET() {
     }
   }
 
+  // Exercise the real write path: the same upsert the signup uses, then clean
+  // up. A readable table does not prove an insertable one -- a missing column
+  // or a bad on_conflict target fails only on write.
+  let writeOk = null, writeError = null, rowCount = null;
+  if (storageConfigured()) {
+    const probeEmail = `diag-probe-${Date.now()}@example.invalid`;
+    try {
+      const w = await fetch(`${url}/rest/v1/newsletter_subscribers?on_conflict=email`, {
+        method: "POST",
+        headers: {
+          apikey: key, Authorization: `Bearer ${key}`,
+          "Content-Type": "application/json",
+          Prefer: "resolution=merge-duplicates,return=minimal",
+        },
+        body: JSON.stringify({
+          email: probeEmail, status: "pending", token: `diag-${Date.now()}`,
+          consent_text: "diagnostic probe", consent_locale: "en",
+        }),
+        cache: "no-store",
+      });
+      writeOk = w.ok;
+      if (!w.ok) writeError = `${w.status}: ${(await w.text()).slice(0, 300)}`;
+      await fetch(`${url}/rest/v1/newsletter_subscribers?email=eq.${encodeURIComponent(probeEmail)}`, {
+        method: "DELETE",
+        headers: { apikey: key, Authorization: `Bearer ${key}` },
+        cache: "no-store",
+      });
+      const cnt = await fetch(`${url}/rest/v1/newsletter_subscribers?select=id`, {
+        headers: { apikey: key, Authorization: `Bearer ${key}`, Prefer: "count=exact", Range: "0-0" },
+        cache: "no-store",
+      });
+      rowCount = cnt.headers.get("content-range");
+    } catch (e) {
+      writeOk = false;
+      writeError = e instanceof Error ? e.message : String(e);
+    }
+  }
+
   return Response.json({
     serviceKeyShape: shape,
+    writeOk,
+    writeError,
+    rowCount,
     resendStatus,
     verifiedDomains,
     fromDomainVerified: fromDomainOk,
