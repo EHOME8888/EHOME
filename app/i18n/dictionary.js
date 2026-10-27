@@ -211,6 +211,7 @@ export const dict = {
       social: {
         head: "Talk to us directly",
         phoneLabel: "UK / 英国",
+        phoneHours: "Mon–Fri, 9am–6pm",
         wechatLabel: "WeChat / 微信",
         wechatCaption: "Add us on WeChat / 添加微信",
         rednoteLabel: "RedNote / 小红书",
@@ -533,6 +534,7 @@ export const dict = {
       social: {
         head: "直接联系我们",
         phoneLabel: "英国 / UK",
+        phoneHours: "周一至周五 9:00–18:00",
         wechatLabel: "微信 / WeChat",
         wechatCaption: "添加微信 / Add us on WeChat",
         rednoteLabel: "小红书 / RedNote",

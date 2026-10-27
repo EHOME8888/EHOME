@@ -47,7 +47,9 @@ export default function Contact() {
 
             <div className="channels">
               {c.channels
-                .filter((ch) => ch.type !== "wechat" && ch.type !== "rednote")
+                // Phone, WeChat and RedNote all live in SocialContacts above; the
+                // card here would be a second copy of the same number.
+                .filter((ch) => ch.type === "email")
                 .map((ch) => (
                 <div key={ch.type} className="channel">
                   <span className="channel__icon"><ChannelIcon type={ch.type} /></span>

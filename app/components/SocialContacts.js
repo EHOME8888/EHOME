@@ -64,6 +64,7 @@ export default function SocialContacts({ variant = "full" }) {
       <div className="sc__row">
         <span className="sc__label">{s.phoneLabel}</span>
         <a href={`tel:${PHONE_TEL}`} className="sc__value sc__value--link">{PHONE}</a>
+        <span className="sc__hint">{s.phoneHours}</span>
       </div>
 
       {/* WeChat */}
@@ -139,6 +140,7 @@ export default function SocialContacts({ variant = "full" }) {
         .sc__value { color: var(--ink); font-weight: 600; }
         .sc__value--link { color: var(--navy); text-decoration: underline; }
         .sc__value--link:hover { color: var(--navy-lift); }
+        .sc__hint { font-size: var(--step--1); color: var(--muted); }
         .sc__actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; margin-top: 2px; }
         .sc__copy, .sc__open {
           font: inherit; font-size: var(--step--1); font-weight: 600;
