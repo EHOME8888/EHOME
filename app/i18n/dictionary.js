@@ -220,7 +220,8 @@ export const dict = {
         copied: "Copied / 已复制",
         copyFailed: "Press and hold to copy / 长按复制",
         openWechat: "Open WeChat / 打开微信",
-        desktopNote: "Neither WeChat nor RedNote can open a profile from a link — scan the code, or search the ID in the app.",
+        openRednote: "Open RedNote / 打开小红书",
+        desktopNote: "The RedNote link opens in the app on a phone; on a computer RedNote asks you to sign in first. WeChat has no profile link at all — scan the code or search the ID.",
         tapQr: "tap to enlarge / 点击放大",
       },
       form: {
@@ -540,7 +541,8 @@ export const dict = {
         copied: "已复制 / Copied",
         copyFailed: "请长按复制 / Press and hold to copy",
         openWechat: "打开微信 / Open WeChat",
-        desktopNote: "微信与小红书都无法通过链接直接打开主页，请扫描二维码，或在 App 内搜索号码。",
+        openRednote: "打开小红书 / Open RedNote",
+        desktopNote: "手机点击小红书链接可直接打开 App；电脑端小红书会要求先登录。微信没有主页链接，请扫码或搜索微信号。",
         tapQr: "点击放大 / tap to enlarge",
       },
       form: {

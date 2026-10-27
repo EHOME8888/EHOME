@@ -10,6 +10,10 @@ export const PHONE = "+44 20 3928 7666";
 export const PHONE_TEL = "+442039287666";
 export const WECHAT_ID = "LB17602155557";
 export const REDNOTE_ID = "63656290277";
+// Official share link from the RedNote app. Opens the profile in the app on a
+// phone; on a desktop browser RedNote puts a login wall in front of profiles,
+// which is why the QR stays the primary route.
+export const REDNOTE_URL = "https://xhslink.cn/m/APRandxKkSQ";
 
 function useIsMobile() {
   const [mobile, setMobile] = useState(false);
@@ -93,6 +97,9 @@ export default function SocialContacts({ variant = "full" }) {
             <span className="sc__value">{s.idLabel} {REDNOTE_ID}</span>
           </div>
           <div className="sc__actions">
+            <a href={REDNOTE_URL} target="_blank" rel="noopener noreferrer" className="sc__open">
+              {s.openRednote}
+            </a>
             <CopyId value={REDNOTE_ID} label={s.copy} />
           </div>
           <a href="/rednote-qr.jpg" target="_blank" rel="noopener noreferrer" className="sc__qrlink">
