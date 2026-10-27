@@ -89,25 +89,28 @@ export default function SocialContacts({ variant = "full" }) {
         )}
       </div>
 
-      {/* RedNote / 小红书 */}
-      {!compact && (
-        <div className="sc__block">
-          <div className="sc__row">
-            <span className="sc__label">{s.rednoteLabel}</span>
-            <span className="sc__value">{s.idLabel} {REDNOTE_ID}</span>
-          </div>
-          <div className="sc__actions">
-            <a href={REDNOTE_URL} target="_blank" rel="noopener noreferrer" className="sc__open">
-              {s.openRednote}
-            </a>
-            <CopyId value={REDNOTE_ID} label={s.copy} />
-          </div>
-          <a href="/rednote-qr.jpg" target="_blank" rel="noopener noreferrer" className="sc__qrlink">
-            <Image src="/rednote-qr.jpg" alt={s.rednoteCaption} width={150} height={150} className="sc__qr" />
-          </a>
-          <span className="sc__cap">{s.rednoteCaption} — {s.tapQr}</span>
+      {/* RedNote / 小红书 — present in both variants, so the footer does not
+          offer one platform and silently omit the other. */}
+      <div className="sc__block">
+        <div className="sc__row">
+          <span className="sc__label">{s.rednoteLabel}</span>
+          <span className="sc__value">{s.idLabel} {REDNOTE_ID}</span>
         </div>
-      )}
+        <div className="sc__actions">
+          <a href={REDNOTE_URL} target="_blank" rel="noopener noreferrer" className="sc__open">
+            {s.openRednote}
+          </a>
+          {!compact && <CopyId value={REDNOTE_ID} label={s.copy} />}
+        </div>
+        {!compact && (
+          <>
+            <a href="/rednote-qr.jpg" target="_blank" rel="noopener noreferrer" className="sc__qrlink">
+              <Image src="/rednote-qr.jpg" alt={s.rednoteCaption} width={150} height={150} className="sc__qr" />
+            </a>
+            <span className="sc__cap">{s.rednoteCaption} — {s.tapQr}</span>
+          </>
+        )}
+      </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
         .sc { display: flex; flex-direction: column; gap: var(--sp-5); }
