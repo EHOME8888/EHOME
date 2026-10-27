@@ -28,8 +28,6 @@ export default function Contact() {
     setSent(true);
   };
 
-  const showQR = (type) => type === "wechat" || type === "rednote";
-
   return (
     <>
       <section className="section">
@@ -48,7 +46,9 @@ export default function Contact() {
             </Reveal>
 
             <div className="channels">
-              {c.channels.map((ch) => (
+              {c.channels
+                .filter((ch) => ch.type !== "wechat" && ch.type !== "rednote")
+                .map((ch) => (
                 <div key={ch.type} className="channel">
                   <span className="channel__icon"><ChannelIcon type={ch.type} /></span>
                   <div className="channel__meta">
@@ -62,18 +62,13 @@ export default function Contact() {
                     )}
                     <span className="channel__hint">{ch.hint}</span>
                   </div>
-                  {showQR(ch.type) && (
-                    <div className="channel__qr" title={c.qrCaption}>
-                      <span>QR</span>
-                      <em>{c.qrCaption}</em>
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
 
-            {/* Form */}
             </div>
+
+            {/* Form */}
 
             <div className="form-wrap">
               {sent ? (
@@ -124,13 +119,6 @@ export default function Contact() {
         .channel__value { font-weight: 600; color: var(--ink); }
         a.channel__value:hover { color: var(--brand); }
         .channel__hint { font-size: 0.85rem; color: var(--muted); }
-        .channel__qr {
-          flex: none; width: 68px; height: 68px; border: 1px dashed var(--line);
-          border-radius: 10px; display: grid; place-items: center; text-align: center;
-          color: var(--muted); background: var(--bg);
-        }
-        .channel__qr span { font-weight: 700; font-size: 0.9rem; }
-        .channel__qr em { font-style: normal; font-size: 0.62rem; display: block; margin-top: 2px; }
 
         .form { display: flex; flex-direction: column; gap: 18px; }
         .form label { display: flex; flex-direction: column; gap: 8px; font-weight: 600; font-size: 0.95rem; }

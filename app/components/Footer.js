@@ -41,11 +41,15 @@ export default function Footer() {
         <div className="footer__col">
           <span className="footer__head">{t.footer.getInTouch}</span>
           <SocialContacts variant="compact" />
-          {t.contact.channels.map((c) => (
-            <span key={c.type} className="footer__chan">
-              <em>{c.label}</em> {c.value}
-            </span>
-          ))}
+          {/* SocialContacts already carries phone, WeChat and RedNote; only the
+              channels it does not cover belong here. */}
+          {t.contact.channels
+            .filter((c) => c.type === "email")
+            .map((c) => (
+              <span key={c.type} className="footer__chan">
+                <em>{c.label}</em> {c.value}
+              </span>
+            ))}
         </div>
       </div>
 
