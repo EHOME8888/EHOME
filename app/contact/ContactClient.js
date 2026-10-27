@@ -42,6 +42,7 @@ export default function Contact() {
 
           <div className="contact__grid">
             {/* Channels */}
+            <div className="contact__left">
             <Reveal className="contact__social">
               <SocialContacts variant="full" />
             </Reveal>
@@ -72,6 +73,8 @@ export default function Contact() {
             </div>
 
             {/* Form */}
+            </div>
+
             <div className="form-wrap">
               {sent ? (
                 <div className="thanks" role="status">
@@ -104,7 +107,8 @@ export default function Contact() {
         .sec-head h1 { margin-top: 12px; }
         .contact__grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 48px; align-items: start; }
         .channels { display: flex; flex-direction: column; gap: 16px; }
-        .contact__social { margin-bottom: var(--sp-6); }
+        .contact__left { display: flex; flex-direction: column; gap: var(--sp-6); min-width: 0; }
+        .contact__social { min-width: 0; }
         .channel {
           display: flex; align-items: center; gap: 16px;
           background: var(--surface); border: 1px solid var(--line);

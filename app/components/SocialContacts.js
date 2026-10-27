@@ -76,9 +76,11 @@ export default function SocialContacts({ variant = "full" }) {
         </div>
         {!compact && (
           <>
-            <Image src="/wechat-qr.jpg" alt={s.wechatCaption} width={150} height={150} className="sc__qr" />
-            <span className="sc__cap">{s.wechatCaption}</span>
-            {!isMobile && <span className="sc__note">{s.desktopNote}</span>}
+            <a href="/wechat-qr.jpg" target="_blank" rel="noopener noreferrer" className="sc__qrlink">
+              <Image src="/wechat-qr.jpg" alt={s.wechatCaption} width={150} height={150} className="sc__qr" />
+            </a>
+            <span className="sc__cap">{s.wechatCaption} — {s.tapQr}</span>
+            <span className="sc__note">{s.desktopNote}</span>
           </>
         )}
       </div>
@@ -93,8 +95,10 @@ export default function SocialContacts({ variant = "full" }) {
           <div className="sc__actions">
             <CopyId value={REDNOTE_ID} label={s.copy} />
           </div>
-          <Image src="/rednote-qr.jpg" alt={s.rednoteCaption} width={150} height={150} className="sc__qr" />
-          <span className="sc__cap">{s.rednoteCaption}</span>
+          <a href="/rednote-qr.jpg" target="_blank" rel="noopener noreferrer" className="sc__qrlink">
+            <Image src="/rednote-qr.jpg" alt={s.rednoteCaption} width={150} height={150} className="sc__qr" />
+          </a>
+          <span className="sc__cap">{s.rednoteCaption} — {s.tapQr}</span>
         </div>
       )}
 
@@ -128,7 +132,9 @@ export default function SocialContacts({ variant = "full" }) {
           border: 1px solid var(--mist); background: #fff; padding: 6px;
           width: 150px; height: auto;
         }
-        .sc__cap { font-size: var(--step--1); color: var(--muted); }
+        .sc__qrlink { display: inline-block; line-height: 0; }
+        .sc__qrlink:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+        .sc__cap { font-size: var(--step--1); color: var(--muted); max-width: 32ch; }
         .sc__note {
           font-size: var(--step--2); color: var(--muted);
           border-left: 2px solid var(--gold-rule); padding-left: var(--sp-3);
