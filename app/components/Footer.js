@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useI18n } from "../i18n/LanguageProvider";
 import NewsletterSignup from "./NewsletterSignup";
+import SocialContacts from "./SocialContacts";
 import { reopenCookieNotice } from "./CookieNotice";
 
 export default function Footer() {
@@ -39,6 +40,7 @@ export default function Footer() {
 
         <div className="footer__col">
           <span className="footer__head">{t.footer.getInTouch}</span>
+          <SocialContacts variant="compact" />
           {t.contact.channels.map((c) => (
             <span key={c.type} className="footer__chan">
               <em>{c.label}</em> {c.value}

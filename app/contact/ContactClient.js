@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useI18n } from "../i18n/LanguageProvider";
 import Reveal from "../components/Reveal";
+import SocialContacts from "../components/SocialContacts";
 
 // Simple inline icons per channel.
 function ChannelIcon({ type }) {
@@ -41,6 +42,10 @@ export default function Contact() {
 
           <div className="contact__grid">
             {/* Channels */}
+            <Reveal className="contact__social">
+              <SocialContacts variant="full" />
+            </Reveal>
+
             <div className="channels">
               {c.channels.map((ch) => (
                 <div key={ch.type} className="channel">
@@ -99,6 +104,7 @@ export default function Contact() {
         .sec-head h1 { margin-top: 12px; }
         .contact__grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 48px; align-items: start; }
         .channels { display: flex; flex-direction: column; gap: 16px; }
+        .contact__social { margin-bottom: var(--sp-6); }
         .channel {
           display: flex; align-items: center; gap: 16px;
           background: var(--surface); border: 1px solid var(--line);
