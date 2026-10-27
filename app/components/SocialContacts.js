@@ -75,7 +75,17 @@ export default function SocialContacts({ variant = "full" }) {
         <div className="sc__actions">
           <CopyId value={WECHAT_ID} label={s.copyWechat} />
           {isMobile && (
-            <a href="weixin://" className="sc__open">{s.openWechat}</a>
+            <a
+              href="weixin://"
+              className="sc__open"
+              onClick={() => {
+                // Best effort: if the clipboard is unavailable the app still
+                // opens, and the copy button beside it remains.
+                navigator.clipboard?.writeText(WECHAT_ID).catch(() => {});
+              }}
+            >
+              {s.openWechat}
+            </a>
           )}
         </div>
         {!compact && (
