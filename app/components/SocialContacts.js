@@ -27,7 +27,7 @@ function useIsMobile() {
   return mobile;
 }
 
-function CopyId({ value, label }) {
+function CopyId({ value, label }) {   // label is the button text AND its accessible name
   const { t } = useI18n();
   const s = t.contact.social;
   const [state, setState] = useState("idle");
@@ -44,7 +44,7 @@ function CopyId({ value, label }) {
 
   return (
     <button type="button" onClick={copy} className="sc__copy" aria-label={label}>
-      {state === "ok" ? s.copied : state === "fail" ? s.copyFailed : s.copy}
+      {state === "ok" ? s.copied : state === "fail" ? s.copyFailed : label}
     </button>
   );
 }
@@ -73,7 +73,7 @@ export default function SocialContacts({ variant = "full" }) {
           <span className="sc__value">{s.idLabel} {WECHAT_ID}</span>
         </div>
         <div className="sc__actions">
-          <CopyId value={WECHAT_ID} label={s.copy} />
+          <CopyId value={WECHAT_ID} label={s.copyWechat} />
           {isMobile && (
             <a href="weixin://" className="sc__open">{s.openWechat}</a>
           )}
@@ -100,7 +100,7 @@ export default function SocialContacts({ variant = "full" }) {
           <a href={REDNOTE_URL} target="_blank" rel="noopener noreferrer" className="sc__open">
             {s.openRednote}
           </a>
-          {!compact && <CopyId value={REDNOTE_ID} label={s.copy} />}
+          {!compact && <CopyId value={REDNOTE_ID} label={s.copyRednote} />}
         </div>
         {!compact && (
           <>
