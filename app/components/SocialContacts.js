@@ -74,7 +74,7 @@ export default function SocialContacts({ variant = "full" }) {
           <span className="sc__value">{s.idLabel} {WECHAT_ID}</span>
         </div>
         <div className="sc__actions">
-          <CopyId value={WECHAT_ID} label={s.copyWechat} />
+          <CopyId value={WECHAT_ID} label={compact ? s.copyShort : s.copyWechat} />
           {isMobile && (
             <a
               href="weixin://"
@@ -109,7 +109,7 @@ export default function SocialContacts({ variant = "full" }) {
         </div>
         <div className="sc__actions">
           <a href={REDNOTE_URL} target="_blank" rel="noopener noreferrer" className="sc__open">
-            {s.openRednote}
+            {compact ? s.openShort : s.openRednote}
           </a>
           {!compact && <CopyId value={REDNOTE_ID} label={s.copyRednote} />}
         </div>
@@ -162,6 +162,23 @@ export default function SocialContacts({ variant = "full" }) {
           border-left: 2px solid var(--gold-rule); padding-left: var(--sp-3);
           margin-top: var(--sp-2); max-width: 44ch;
         }
+
+        /* In the footer this block sits beside .footer__chan in a column about
+           200px wide, so it takes that column's type rather than the contact
+           page's: bold ink label, regular muted value, one size throughout.
+           At the page size the ids were both heavier than everything around
+           them and too wide to sit on one line. */
+        .sc--compact .sc__label,
+        .sc--compact .sc__value,
+        .sc--compact .sc__hint,
+        .sc--compact .sc__copy,
+        .sc--compact .sc__open { font-size: 0.94rem; }
+        .sc--compact .sc__label { color: var(--ink); }
+        .sc--compact .sc__value { font-weight: 400; color: var(--muted); }
+        .sc--compact .sc__value--link { color: var(--muted); }
+        .sc--compact .sc__value--link:hover { color: var(--brand); }
+        .sc--compact .sc__copy,
+        .sc--compact .sc__open { font-weight: 400; padding: 5px 12px; }
       ` }} />
     </div>
   );
