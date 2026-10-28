@@ -27,6 +27,7 @@ export const dict = {
       title: "Your guarantor,\nso the answer is yes.",
       lead: "Landlords abroad ask for a local guarantor most international students don't have. Ehome stands in as your rent guarantor — so you get the home, and your family gets peace of mind.",
       ctaPrimary: "Talk to us",
+      ctaApply: "Start your application",
       ctaGhost: "See pricing",
       bullets: [
         "Unlock more rental options — landlords say yes",
@@ -208,6 +209,14 @@ export const dict = {
         { type: "phone", label: "Phone — UK / 英国", value: "+44 20 3928 7666", hint: "Mon–Fri, 9am–6pm" },
       ],
       qrCaption: "Scan to add",
+      reach: {
+        head: "Talk to us",
+        phone: "Call us / 致电",
+        whatsapp: "WhatsApp",
+        email: "Email / 邮件",
+        wechat: "WeChat / 微信",
+        rednote: "RedNote / 小红书",
+      },
       social: {
         head: "Talk to us directly",
         findUs: "Find us / 关注我们",
@@ -353,6 +362,7 @@ export const dict = {
       title: "我们为你担保，\n让房东安心说“可以”。",
       lead: "海外租房，房东往往要求提供本地担保人——这正是留学生最难解决的一环。易家作为你的租房担保人，帮你顺利拿下心仪的住处，也让家人放心。",
       ctaPrimary: "立即咨询",
+      ctaApply: "立即开始申请",
       ctaGhost: "查看收费",
       bullets: [
         "解锁更多房源，房东更愿意点头",
@@ -534,6 +544,14 @@ export const dict = {
         { type: "phone", label: "电话 — 英国 / UK", value: "+44 20 3928 7666", hint: "周一至周五 9:00–18:00" },
       ],
       qrCaption: "扫码添加",
+      reach: {
+        head: "联系我们",
+        phone: "致电 / Call us",
+        whatsapp: "WhatsApp",
+        email: "邮件 / Email",
+        wechat: "微信 / WeChat",
+        rednote: "小红书 / RedNote",
+      },
       social: {
         head: "直接联系我们",
         findUs: "关注我们 / Find us",

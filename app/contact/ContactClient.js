@@ -3,18 +3,8 @@
 import { useState } from "react";
 import { useI18n } from "../i18n/LanguageProvider";
 import Reveal from "../components/Reveal";
-import SocialContacts from "../components/SocialContacts";
+import ContactChannels from "../components/ContactChannels";
 import SocialIcons from "../components/SocialIcons";
-
-// Simple inline icons per channel.
-function ChannelIcon({ type }) {
-  const common = { width: 22, height: 22, stroke: "currentColor", strokeWidth: 1.7, fill: "none", strokeLinecap: "round", strokeLinejoin: "round" };
-  if (type === "email") return <svg viewBox="0 0 24 24" {...common}><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>;
-  if (type === "phone") return <svg viewBox="0 0 24 24" {...common}><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" /></svg>;
-  if (type === "rednote") return <svg viewBox="0 0 24 24" {...common}><rect x="3" y="3" width="18" height="18" rx="4" /><path d="M8 9v6M8 9h2.5a1.5 1.5 0 0 1 0 3H8m4.5-3v6m3-6v6m0-3h1.5" /></svg>;
-  // wechat
-  return <svg viewBox="0 0 24 24" {...common}><path d="M9 4C5 4 2 6.7 2 10c0 1.8.9 3.4 2.4 4.5L4 17l2.7-1.3c.7.2 1.5.3 2.3.3" /><path d="M22 15c0-2.8-2.7-5-6-5s-6 2.2-6 5 2.7 5 6 5c.7 0 1.4-.1 2-.3L20 21l-.4-1.8A4.7 4.7 0 0 0 22 15z" /></svg>;
-}
 
 export default function Contact() {
   const { t } = useI18n();
@@ -43,35 +33,13 @@ export default function Contact() {
             {/* Channels */}
             <div className="contact__left">
             <Reveal className="contact__social">
-              <SocialContacts variant="full" />
+              <span className="contact__head">{c.reach.head}</span>
+              <ContactChannels variant="buttons" />
             </Reveal>
 
             <Reveal className="contact__social">
               <SocialIcons />
             </Reveal>
-
-            <div className="channels">
-              {c.channels
-                // Phone, WeChat and RedNote all live in SocialContacts above; the
-                // card here would be a second copy of the same number.
-                .filter((ch) => ch.type === "email")
-                .map((ch) => (
-                <div key={ch.type} className="channel">
-                  <span className="channel__icon"><ChannelIcon type={ch.type} /></span>
-                  <div className="channel__meta">
-                    <span className="channel__label">{ch.label}</span>
-                    {ch.type === "email" ? (
-                      <a href={`mailto:${ch.value}`} className="channel__value">{ch.value}</a>
-                    ) : ch.type === "phone" ? (
-                      <a href={`tel:${ch.value.replace(/\s/g, "")}`} className="channel__value">{ch.value}</a>
-                    ) : (
-                      <span className="channel__value">{ch.value}</span>
-                    )}
-                    <span className="channel__hint">{ch.hint}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
 
             </div>
 
@@ -107,25 +75,14 @@ export default function Contact() {
 
       <style dangerouslySetInnerHTML={{ __html: `
         .sec-head h1 { margin-top: 12px; }
+        .contact__head {
+          display: block; margin-bottom: 12px;
+          font-size: 0.72rem; letter-spacing: 0.13em; text-transform: uppercase;
+          color: var(--muted); font-weight: 600;
+        }
         .contact__grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 48px; align-items: start; }
-        .channels { display: flex; flex-direction: column; gap: 16px; }
         .contact__left { display: flex; flex-direction: column; gap: var(--sp-6); min-width: 0; }
         .contact__social { min-width: 0; }
-        .channel {
-          display: flex; align-items: center; gap: 16px;
-          background: var(--surface); border: 1px solid var(--line);
-          border-radius: var(--radius); padding: 18px 20px;
-        }
-        .channel__icon {
-          flex: none; width: 44px; height: 44px; border-radius: 12px;
-          display: grid; place-items: center; color: var(--brand);
-          background: color-mix(in srgb, var(--gold) 16%, transparent);
-        }
-        .channel__meta { display: flex; flex-direction: column; gap: 2px; flex: 1; }
-        .channel__label { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-        .channel__value { font-weight: 600; color: var(--ink); }
-        a.channel__value:hover { color: var(--brand); }
-        .channel__hint { font-size: 0.85rem; color: var(--muted); }
 
         .form { display: flex; flex-direction: column; gap: 18px; }
         .form label { display: flex; flex-direction: column; gap: 8px; font-weight: 600; font-size: 0.95rem; }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useI18n } from "../i18n/LanguageProvider";
 
-const PORTAL_URL = "https://ehome-portal.com";
+import { PORTAL_SIGNUP_URL, PORTAL_LOGIN_URL } from "../lib/site";
 
 export default function Nav() {
   const { t, toggle } = useI18n();
@@ -36,10 +36,10 @@ export default function Nav() {
           <button className="nav__lang" onClick={toggle} aria-label="Switch language">
             {t.langLabel}
           </button>
-          <a href={PORTAL_URL} className="btn btn--ghost nav__portal">
+          <a href={PORTAL_LOGIN_URL} className="btn btn--ghost nav__portal">
             {t.nav.login}
           </a>
-          <a href={PORTAL_URL} className="btn btn--gold nav__portal">
+          <a href={PORTAL_SIGNUP_URL} className="btn btn--gold nav__portal">
             {t.nav.apply}
           </a>
           <Link href="/contact" className="btn btn--primary nav__cta">
@@ -61,10 +61,10 @@ export default function Nav() {
           {links.map((l) => (
             <Link key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</Link>
           ))}
-          <a href={PORTAL_URL} className="btn btn--ghost" onClick={() => setOpen(false)}>
+          <a href={PORTAL_LOGIN_URL} className="btn btn--ghost" onClick={() => setOpen(false)}>
             {t.nav.login}
           </a>
-          <a href={PORTAL_URL} className="btn btn--gold" onClick={() => setOpen(false)}>
+          <a href={PORTAL_SIGNUP_URL} className="btn btn--gold" onClick={() => setOpen(false)}>
             {t.nav.apply}
           </a>
           <Link href="/contact" className="btn btn--primary" onClick={() => setOpen(false)}>

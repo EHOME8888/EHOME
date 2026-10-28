@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { PORTAL_SIGNUP_URL } from "./lib/site";
 import { useI18n } from "./i18n/LanguageProvider";
 import Reveal from "./components/Reveal";
 import QuoteEstimator from "./components/QuoteEstimator";
@@ -45,7 +46,11 @@ export default function Home() {
               {t.hero.bullets.map((b) => (<li key={b}>{b}</li>))}
             </ul>
             <div className="hero__actions">
-              <Link href="/contact" className="btn btn--gold">{t.hero.ctaPrimary}</Link>
+              {/* The first thing on the first page is the thing we want them
+                  to do. It leaves for the portal rather than routing through
+                  an enquiry form: someone who has decided should not have to
+                  ask us first. */}
+              <a href={PORTAL_SIGNUP_URL} className="btn btn--gold">{t.hero.ctaApply}</a>
               <Link href="/pricing" className="btn btn--hero-ghost">{t.hero.ctaGhost}</Link>
             </div>
           </div>
@@ -170,7 +175,10 @@ export default function Home() {
           <Reveal className="cta">
             <h2>{t.contact.title}</h2>
             <p>{t.contact.lead}</p>
-            <Link href="/contact" className="btn btn--primary">{t.hero.ctaPrimary}</Link>
+            <div className="cta__actions">
+              <a href={PORTAL_SIGNUP_URL} className="btn btn--primary">{t.hero.ctaApply}</a>
+              <Link href="/contact" className="btn btn--ghost">{t.hero.ctaPrimary}</Link>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -206,6 +214,9 @@ export default function Home() {
               rgba(20,31,66,0.97) 0%,
               rgba(20,31,66,0.90) 46%,
               rgba(20,31,66,0.58) 100%);
+        }
+        .cta__actions {
+          display: flex; gap: var(--sp-3); flex-wrap: wrap; justify-content: center;
         }
         .hero__inner { position: relative; z-index: 3; padding: var(--sp-10) var(--sp-5); }
         .hero__text { max-width: 44ch; }

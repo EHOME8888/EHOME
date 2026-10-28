@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useI18n } from "../i18n/LanguageProvider";
 import NewsletterSignup from "./NewsletterSignup";
-import SocialContacts from "./SocialContacts";
+import ContactChannels from "./ContactChannels";
 import SocialIcons from "./SocialIcons";
 import { reopenCookieNotice } from "./CookieNotice";
 
@@ -64,16 +64,7 @@ export default function Footer() {
 
         <div className="footer__col footer__col--contact">
           <span className="footer__head">{t.footer.getInTouch}</span>
-          <SocialContacts variant="compact" />
-          {/* SocialContacts already carries phone, WeChat and RedNote; only the
-              channels it does not cover belong here. */}
-          {t.contact.channels
-            .filter((c) => c.type === "email")
-            .map((c) => (
-              <span key={c.type} className="footer__chan">
-                <em>{c.label}</em> {c.value}
-              </span>
-            ))}
+          <ContactChannels variant="links" />
         </div>
       </div>
 
@@ -170,26 +161,6 @@ export default function Footer() {
           background: none; border: none; padding: 0; font: inherit;
           font-size: 0.9rem; cursor: pointer; text-align: left;
         }
-        .footer__chan { color: var(--muted); font-size: 0.9rem; }
-        .footer__chan em { color: var(--ink); font-style: normal; font-weight: 600; }
-
-        /* The contact block ships as a card-ish component for the Contact
-           page. In here it is a list, so its buttons become text actions:
-           bordered pills in a footer read as primary UI and pull the eye
-           straight past the navigation. */
-        .footer .sc--compact .sc__copy,
-        .footer .sc--compact .sc__open {
-          border: none;
-          background: none;
-          padding: 0;
-          font-size: 0.85rem;
-          color: var(--muted);
-          text-decoration: underline;
-          text-underline-offset: 3px;
-        }
-        .footer .sc--compact .sc__copy:hover,
-        .footer .sc--compact .sc__open:hover { color: var(--brand); }
-        .footer .sc--compact .sc__actions { gap: 16px; }
 
         /* ---- 2. act ----------------------------------------------------- */
         .footer__act {

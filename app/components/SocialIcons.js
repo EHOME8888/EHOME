@@ -3,9 +3,8 @@
 // the account — no reveal step, no copy step, no interstitial.
 //
 // These are the real accounts EHOME runs; nothing here is invented. WeChat and
-// RedNote are NOT in this row: they are IDs rather than web profiles, so they
-// keep the copy-and-open treatment in SocialContacts, which is the only thing
-// that actually works for them.
+// RedNote are NOT in this row: they are ways of reaching us rather than feeds
+// to follow, so they sit with the phone and the email in ContactChannels.
 //
 // Tracking parameters are stripped from every link. The URLs arrived from
 // share sheets and QR codes carrying utm_source, si and s values that identify
