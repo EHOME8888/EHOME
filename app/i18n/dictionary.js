@@ -210,6 +210,7 @@ export const dict = {
       qrCaption: "Scan to add",
       social: {
         head: "Talk to us directly",
+        findUs: "Find us / 关注我们",
         phoneLabel: "UK / 英国",
         phoneHours: "Mon–Fri, 9am–6pm",
         wechatLabel: "WeChat / 微信",
@@ -535,6 +536,7 @@ export const dict = {
       qrCaption: "扫码添加",
       social: {
         head: "直接联系我们",
+        findUs: "关注我们 / Find us",
         phoneLabel: "英国 / UK",
         phoneHours: "周一至周五 9:00–18:00",
         wechatLabel: "微信 / WeChat",

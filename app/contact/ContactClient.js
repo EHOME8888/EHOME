@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useI18n } from "../i18n/LanguageProvider";
 import Reveal from "../components/Reveal";
 import SocialContacts from "../components/SocialContacts";
+import SocialIcons from "../components/SocialIcons";
 
 // Simple inline icons per channel.
 function ChannelIcon({ type }) {
@@ -43,6 +44,10 @@ export default function Contact() {
             <div className="contact__left">
             <Reveal className="contact__social">
               <SocialContacts variant="full" />
+            </Reveal>
+
+            <Reveal className="contact__social">
+              <SocialIcons />
             </Reveal>
 
             <div className="channels">
