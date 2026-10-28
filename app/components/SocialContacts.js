@@ -27,7 +27,7 @@ function useIsMobile() {
   return mobile;
 }
 
-function CopyId({ value, label }) {   // label is the button text AND its accessible name
+function CopyId({ value, label, ariaLabel }) {   // label is the button text; ariaLabel names which ID
   const { t } = useI18n();
   const s = t.contact.social;
   const [state, setState] = useState("idle");
@@ -43,7 +43,7 @@ function CopyId({ value, label }) {   // label is the button text AND its access
   }
 
   return (
-    <button type="button" onClick={copy} className="sc__copy" aria-label={label}>
+    <button type="button" onClick={copy} className="sc__copy" aria-label={ariaLabel || label}>
       {state === "ok" ? s.copied : state === "fail" ? s.copyFailed : label}
     </button>
   );
@@ -71,10 +71,17 @@ export default function SocialContacts({ variant = "full" }) {
       <div className="sc__block">
         <div className="sc__row">
           <span className="sc__label">{s.wechatLabel}</span>
-          <span className="sc__value">{s.idLabel} {WECHAT_ID}</span>
+          {/* The ID itself is only shown where there is room to use it. In the
+              footer it is a 17-character string nobody transcribes by eye —
+              the copy button is the whole of what it was for. */}
+          {!compact && <span className="sc__value">{s.idLabel} {WECHAT_ID}</span>}
         </div>
         <div className="sc__actions">
-          <CopyId value={WECHAT_ID} label={compact ? s.copyShort : s.copyWechat} />
+          <CopyId
+            value={WECHAT_ID}
+            label={compact ? s.copyShort : s.copyWechat}
+            ariaLabel={s.copyWechat}
+          />
           {isMobile && (
             <a
               href="weixin://"
@@ -105,13 +112,21 @@ export default function SocialContacts({ variant = "full" }) {
       <div className="sc__block">
         <div className="sc__row">
           <span className="sc__label">{s.rednoteLabel}</span>
-          <span className="sc__value">{s.idLabel} {REDNOTE_ID}</span>
+          {!compact && <span className="sc__value">{s.idLabel} {REDNOTE_ID}</span>}
         </div>
         <div className="sc__actions">
           <a href={REDNOTE_URL} target="_blank" rel="noopener noreferrer" className="sc__open">
             {compact ? s.openShort : s.openRednote}
           </a>
-          {!compact && <CopyId value={REDNOTE_ID} label={s.copyRednote} />}
+          {/* Copy belongs in the footer too, now that the ID is not printed
+              there: on a desktop browser RedNote puts a login wall in front of
+              profiles, so Open alone can be a dead end and the ID is the way
+              through. */}
+          <CopyId
+            value={REDNOTE_ID}
+            label={compact ? s.copyShort : s.copyRednote}
+            ariaLabel={s.copyRednote}
+          />
         </div>
         {!compact && (
           <>

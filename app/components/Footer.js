@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useI18n } from "../i18n/LanguageProvider";
 import NewsletterSignup from "./NewsletterSignup";
 import SocialContacts from "./SocialContacts";
+import SocialIcons from "./SocialIcons";
 import { reopenCookieNotice } from "./CookieNotice";
 
 export default function Footer() {
@@ -50,6 +51,10 @@ export default function Footer() {
                 <em>{c.label}</em> {c.value}
               </span>
             ))}
+
+          {/* Every page, not just Contact: the footer is where people look for
+              these, and it is the only part of the site on all of them. */}
+          <SocialIcons />
         </div>
       </div>
 
