@@ -216,6 +216,7 @@ export const dict = {
         email: "Email / 邮件",
         wechat: "WeChat / 微信",
         rednote: "RedNote / 小红书",
+        hours: "Mon–Fri, 9am–6pm UK time · 周一至周五 9:00–18:00（英国时间）",
       },
       social: {
         head: "Talk to us directly",
@@ -551,6 +552,7 @@ export const dict = {
         email: "邮件 / Email",
         wechat: "微信 / WeChat",
         rednote: "小红书 / RedNote",
+        hours: "周一至周五 9:00–18:00（英国时间）· Mon–Fri, 9am–6pm UK time",
       },
       social: {
         head: "直接联系我们",

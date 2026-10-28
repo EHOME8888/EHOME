@@ -13,6 +13,7 @@
 // Nothing here explains itself. A button says WeChat and opens WeChat.
 import { useEffect, useState } from "react";
 import { useI18n } from "../i18n/LanguageProvider";
+import { BRAND, GLYPH } from "./brand-icons";
 
 export const PHONE = "+44 20 3928 7666";
 export const PHONE_TEL = "+442039287666";
@@ -34,37 +35,21 @@ function useIsMobile() {
   return mobile;
 }
 
-const S = {
-  viewBox: "0 0 24 24", width: 20, height: 20, fill: "none",
-  stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round",
-};
+/**
+ * The real marks, at their own colours. A WhatsApp glyph someone drew is a
+ * glyph; the WhatsApp mark is recognised before it is read, which is the
+ * entire job of an icon in a list of five.
+ */
+function Mark({ icon, size = 20 }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} fill={icon.hex} aria-hidden="true" focusable="false">
+      <path d={icon.path} />
+    </svg>
+  );
+}
 
-const ICONS = {
-  phone: (
-    <svg {...S}><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" /></svg>
-  ),
-  whatsapp: (
-    <svg {...S}>
-      <path d="M20.5 11.7a8.4 8.4 0 0 1-12.3 7.5L3.5 20.5l1.4-4.6A8.4 8.4 0 1 1 20.5 11.7z" />
-      <path d="M9.2 8.6c.5-.1.8 0 1 .4l.6 1.2c.1.3 0 .5-.2.7l-.5.5a5.6 5.6 0 0 0 2.5 2.5l.5-.5c.2-.2.4-.3.7-.2l1.2.6c.4.2.5.5.4 1a2 2 0 0 1-1.9 1.3 7.6 7.6 0 0 1-5.6-5.6 2 2 0 0 1 1.3-1.9z" />
-    </svg>
-  ),
-  email: (
-    <svg {...S}><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
-  ),
-  wechat: (
-    <svg {...S}>
-      <path d="M9 4C5 4 2 6.7 2 10c0 1.8.9 3.4 2.4 4.5L4 17l2.7-1.3c.7.2 1.5.3 2.3.3" />
-      <path d="M22 15c0-2.8-2.7-5-6-5s-6 2.2-6 5 2.7 5 6 5c.7 0 1.4-.1 2-.3L20 21l-.4-1.8A4.7 4.7 0 0 0 22 15z" />
-    </svg>
-  ),
-  rednote: (
-    <svg {...S}>
-      <rect x="3" y="3" width="18" height="18" rx="4" />
-      <path d="M8 9v6M8 9h2.5a1.5 1.5 0 0 1 0 3H8m4.5-3v6m3-6v6m0-3h1.5" />
-    </svg>
-  ),
-};
+// Phone and Email have no brand, so they take the house navy.
+const NAVY = "var(--brand)";
 
 export default function ContactChannels({ variant = "buttons" }) {
   const { t } = useI18n();
@@ -72,9 +57,11 @@ export default function ContactChannels({ variant = "buttons" }) {
   const isMobile = useIsMobile();
 
   const channels = [
-    { key: "phone", label: c.phone, href: `tel:${PHONE_TEL}`, external: false },
-    { key: "whatsapp", label: c.whatsapp, href: WHATSAPP_URL, external: true },
-    { key: "email", label: c.email, href: `mailto:${EMAIL}`, external: false },
+    { key: "phone", label: c.phone, href: `tel:${PHONE_TEL}`, external: false,
+      icon: { path: GLYPH.phone, hex: NAVY } },
+    { key: "whatsapp", label: c.whatsapp, href: WHATSAPP_URL, external: true, icon: BRAND.whatsapp },
+    { key: "email", label: c.email, href: `mailto:${EMAIL}`, external: false,
+      icon: { path: GLYPH.email, hex: NAVY } },
     {
       key: "wechat",
       label: c.wechat,
@@ -83,11 +70,12 @@ export default function ContactChannels({ variant = "buttons" }) {
       // does rather than something explained beside it.
       href: isMobile ? "weixin://" : WECHAT_QR,
       external: !isMobile,
+      icon: BRAND.wechat,
       // The ID lands on the clipboard either way, so WeChat's search box can
       // be pasted into without anyone having read a number off the screen.
       onClick: () => navigator.clipboard?.writeText(WECHAT_ID).catch(() => {}),
     },
-    { key: "rednote", label: c.rednote, href: REDNOTE_URL, external: true },
+    { key: "rednote", label: c.rednote, href: REDNOTE_URL, external: true, icon: BRAND.rednote },
   ];
 
   const links = variant === "links";
@@ -102,11 +90,15 @@ export default function ContactChannels({ variant = "buttons" }) {
             onClick={ch.onClick}
             {...(ch.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
           >
-            <span className="cc__icon" aria-hidden="true">{ICONS[ch.key]}</span>
+            <span className="cc__icon"><Mark icon={ch.icon} size={links ? 16 : 20} /></span>
             <span className="cc__label">{ch.label}</span>
           </a>
         </li>
       ))}
+
+      {/* When we actually answer. It belongs with the ways of reaching us,
+          not three sections away. */}
+      <li className="cc__hours">{c.hours}</li>
 
       <style dangerouslySetInnerHTML={{ __html: `
         .cc { list-style: none; margin: 0; padding: 0; }
@@ -128,7 +120,11 @@ export default function ContactChannels({ variant = "buttons" }) {
           background: var(--gold-wash);
           transform: translateY(-1px);
         }
-        .cc--buttons .cc__icon { color: var(--brand); display: grid; place-items: center; }
+        .cc--buttons .cc__icon { display: grid; place-items: center; }
+        .cc__hours {
+          list-style: none; color: var(--muted); font-size: 0.82rem;
+          margin-top: 14px; line-height: 1.6;
+        }
 
         /* Footer: the same channels with the chrome taken off. */
         .cc--links { display: flex; flex-direction: column; gap: 11px; }
@@ -139,8 +135,8 @@ export default function ContactChannels({ variant = "buttons" }) {
         }
         .cc--links .cc__item:hover,
         .cc--links .cc__item:focus-visible { color: var(--brand); }
-        .cc--links .cc__icon { display: grid; place-items: center; opacity: 0.75; }
-        .cc--links svg { width: 16px; height: 16px; }
+        .cc--links .cc__icon { display: grid; place-items: center; }
+        .cc--links .cc__hours { margin-top: 10px; font-size: 0.78rem; }
       ` }} />
     </ul>
   );
