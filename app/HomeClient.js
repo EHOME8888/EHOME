@@ -51,7 +51,7 @@ export default function Home() {
                   an enquiry form: someone who has decided should not have to
                   ask us first. */}
               <a href={PORTAL_SIGNUP_URL} className="btn btn--gold">{t.hero.ctaApply}</a>
-              <Link href="/pricing" className="btn btn--hero-ghost">{t.hero.ctaGhost}</Link>
+              <Link href="/pricing" className="btn btn--on-dark">{t.hero.ctaGhost}</Link>
             </div>
           </div>
         </div>
@@ -177,7 +177,11 @@ export default function Home() {
             <p>{t.contact.lead}</p>
             <div className="cta__actions">
               <a href={PORTAL_SIGNUP_URL} className="btn btn--primary">{t.hero.ctaApply}</a>
-              <Link href="/contact" className="btn btn--ghost">{t.hero.ctaPrimary}</Link>
+              {/* btn--ghost is navy text on a transparent background. The
+                  panel behind this one is also navy, so that button rendered
+                  as an empty outline with invisible words in it. Anything on
+                  a dark panel takes the on-dark variant. */}
+              <Link href="/contact" className="btn btn--on-dark">{t.hero.ctaPrimary}</Link>
             </div>
           </Reveal>
         </div>
@@ -247,8 +251,9 @@ export default function Home() {
           width: 14px; height: 1px; background: var(--gold);
         }
         .hero__actions { display: flex; gap: var(--sp-3); flex-wrap: wrap; }
-        .btn--hero-ghost { border-color: rgba(255,255,255,0.4); color: #fff; background: transparent; }
-        .btn--hero-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+        /* Ghost on a dark panel: the hero and the closing call to action. */
+        .btn--on-dark { border-color: rgba(255,255,255,0.4); color: #fff; background: transparent; }
+        .btn--on-dark:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
 
         /* One orchestrated entrance: the rule draws, then the text rises
            behind it. Nothing else on the site animates on load. */
