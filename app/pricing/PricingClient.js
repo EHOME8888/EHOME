@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useI18n } from "../i18n/LanguageProvider";
 import Reveal from "../components/Reveal";
+import { IconCheck } from "../components/icons";
 
 export default function Pricing() {
   const { t } = useI18n();
@@ -33,7 +34,12 @@ export default function Pricing() {
                   </div>
                   <ul>
                     {tier.features.map((f) => (
-                      <li key={f}>{f}</li>
+                      <li key={f}>
+                        {/* Drawn, not typed: a "✓" character is a different
+                            glyph on every phone and inside WeChat. */}
+                        <span className="tier__tick" aria-hidden="true"><IconCheck size={16} /></span>
+                        <span>{f}</span>
+                      </li>
                     ))}
                   </ul>
                   <Link
@@ -74,10 +80,8 @@ export default function Pricing() {
         .tier__price strong { font-family: var(--font-display); font-size: 3rem; color: var(--ink); font-weight: 500; }
         .tier__price span { color: var(--muted); font-size: 0.95rem; }
         .tier ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; flex: 1; }
-        .tier li { position: relative; padding-left: 26px; color: var(--ink); }
-        .tier li::before {
-          content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: 700;
-        }
+        .tier li { display: flex; align-items: flex-start; gap: 10px; color: var(--ink); }
+        .tier__tick { flex: none; color: var(--gold); display: inline-grid; place-items: center; margin-top: 3px; }
         .tier__cta { justify-content: center; }
         .tiers__note { margin-top: 26px; color: var(--muted); font-size: 0.9rem; }
         @media (max-width: 860px) { .tiers { grid-template-columns: 1fr; } }

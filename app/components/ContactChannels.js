@@ -14,6 +14,8 @@
 import { useEffect, useState } from "react";
 import { useI18n } from "../i18n/LanguageProvider";
 import { BRAND, GLYPH } from "./brand-icons";
+import IconDisc from "./IconDisc";
+import { IconFast } from "./icons";
 
 export const PHONE = "+44 20 3928 7666";
 export const PHONE_TEL = "+442039287666";
@@ -98,7 +100,14 @@ export default function ContactChannels({ variant = "buttons" }) {
 
       {/* When we actually answer. It belongs with the ways of reaching us,
           not three sections away. */}
-      <li className="cc__hours">{c.hours}</li>
+      <li className="cc__hours">
+        {/* The clock is the site's own icon set; the brand marks above are
+            the services' own. The footer variant stays text-only — it is a
+            quiet list and the disc is not — and it has no enclosing Reveal
+            to settle in from. */}
+        {!links && <IconDisc icon={IconFast} size="sm" enter={false} />}
+        <span>{c.hours}</span>
+      </li>
 
       <style dangerouslySetInnerHTML={{ __html: `
         .cc { list-style: none; margin: 0; padding: 0; }
@@ -124,6 +133,7 @@ export default function ContactChannels({ variant = "buttons" }) {
         .cc__hours {
           list-style: none; color: var(--muted); font-size: 0.82rem;
           margin-top: 14px; line-height: 1.6;
+          display: flex; align-items: center; gap: 12px;
         }
 
         /* Footer: the same channels with the chrome taken off. */

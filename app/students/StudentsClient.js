@@ -3,6 +3,14 @@
 import Link from "next/link";
 import { useI18n } from "../i18n/LanguageProvider";
 import Reveal from "../components/Reveal";
+import IconDisc from "../components/IconDisc";
+import { IconDocument, IconFinance, IconFee, IconSign, IconBilingual, IconPeople } from "../components/icons";
+
+// Why landlords ask: a box on their form, foreign income, paying up front.
+const WHY_ICONS = [IconDocument, IconFinance, IconFee];
+// What Ehome does: a formal deed, your existing documents, two languages,
+// dealing with us directly.
+const DO_ICONS = [IconSign, IconDocument, IconBilingual, IconPeople];
 
 export default function Students() {
   const { t } = useI18n();
@@ -22,6 +30,7 @@ export default function Students() {
           <div className="stu-grid">
             {s.why.map((w, i) => (
               <Reveal key={w.t} delay={i * 70} className="stu-card">
+                <IconDisc icon={WHY_ICONS[i % WHY_ICONS.length]} size="md" className="stu-card__icon" />
                 <h3>{w.t}</h3>
                 <p>{w.d}</p>
               </Reveal>
@@ -31,7 +40,12 @@ export default function Students() {
           <Reveal className="stu-do">
             <h2 className="stu-h">{s.doTitle}</h2>
             <ul className="stu-list">
-              {s.do.map((d) => (<li key={d}>{d}</li>))}
+              {s.do.map((d, i) => (
+                <li key={d}>
+                  <IconDisc icon={DO_ICONS[i % DO_ICONS.length]} size="sm" />
+                  <span>{d}</span>
+                </li>
+              ))}
             </ul>
             <p className="stu-note">{s.guaranteeNote}</p>
           </Reveal>
@@ -54,8 +68,10 @@ export default function Students() {
         .stu-do { margin-top: 16px; background: var(--surface); border: 1px solid var(--line);
           border-radius: var(--radius); padding: 8px 28px 28px; }
         .stu-do .stu-h { margin-top: 28px; }
-        .stu-list { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 12px; max-width: 72ch; }
-        .stu-list li::marker { color: var(--gold); }
+        .stu-card__icon { margin-bottom: 16px; }
+        .stu-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; max-width: 72ch; }
+        .stu-list li { display: flex; align-items: flex-start; gap: 14px; }
+        .stu-list li .icon-disc { margin-top: -2px; }
         .stu-note { margin-top: 20px; font-size: 0.86rem; color: var(--muted);
           border-left: 2px solid var(--gold-soft); padding-left: 12px; }
         .stu-cta { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; }

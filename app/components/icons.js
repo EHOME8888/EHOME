@@ -89,3 +89,76 @@ export const HERO_ICONS = [IconAccess, IconFast, IconBilingual, IconStudent];
 
 /** In the order the four Why-Ehome cards are written. */
 export const TRUST_ICONS = [IconStudent, IconFee, IconBilingual, IconConfidential];
+
+/* ---- The set grows for the inner pages. Same grid, same stroke, same
+   restraint: nothing below reads as insurance either. ---- */
+
+/** A document — the form, the deed, the evidence. */
+export const IconDocument = (p) => (
+  <Svg {...p}>
+    <path d="M7 3.6h6.6L18.4 8.4v10.4a1.6 1.6 0 0 1-1.6 1.6H7a1.6 1.6 0 0 1-1.6-1.6V5.2A1.6 1.6 0 0 1 7 3.6z" />
+    <path d="M13.4 3.6v5h5" />
+    <path d="M8.6 12.2h6.8M8.6 15.6h6.8" />
+  </Svg>
+);
+
+/** An ID card — passport, national ID, who you are. */
+export const IconIdentity = (p) => (
+  <Svg {...p}>
+    <rect x="3" y="5.4" width="18" height="13.2" rx="2" />
+    <circle cx="8.6" cy="11" r="2" />
+    <path d="M5.9 15.8c.5-1.5 1.5-2.2 2.7-2.2s2.2.7 2.7 2.2" />
+    <path d="M14 10h4M14 13.4h4" />
+  </Svg>
+);
+
+/** A magnifier — review, cross-check, assess. */
+export const IconAssess = (p) => (
+  <Svg {...p}>
+    <circle cx="10.6" cy="10.6" r="6" />
+    <path d="m15.2 15.2 5 5" />
+  </Svg>
+);
+
+/** A pen on a line — we sign. */
+export const IconSign = (p) => (
+  <Svg {...p}>
+    <path d="m14.6 5.4 4 4-9.4 9.4H5.2v-4z" />
+    <path d="m12.8 7.2 4 4" />
+    <path d="M4 20.4h16" />
+  </Svg>
+);
+
+/** A house with a door — the home itself. */
+export const IconHome = (p) => (
+  <Svg {...p}>
+    <path d="m3.6 11.2 8.4-7 8.4 7" />
+    <path d="M5.8 9.6v9.2a1 1 0 0 0 1 1h10.4a1 1 0 0 0 1-1V9.6" />
+    <path d="M10 19.8v-5.6h4v5.6" />
+  </Svg>
+);
+
+/** Three bars — financial strength, read as a chart rather than a coin. */
+export const IconFinance = (p) => (
+  <Svg {...p}>
+    <path d="M4.4 19.6h15.2" />
+    <path d="M7.4 16V11.2M12 16V7M16.6 16v-3.2" />
+  </Svg>
+);
+
+/** Two people — a sponsor, a family, dealing with us directly. */
+export const IconPeople = (p) => (
+  <Svg {...p}>
+    <circle cx="9" cy="8.4" r="3.1" />
+    <path d="M3.6 19.2c.6-3.2 2.7-4.9 5.4-4.9s4.8 1.7 5.4 4.9" />
+    <path d="M15.2 5.6a3.1 3.1 0 0 1 0 5.6" />
+    <path d="M16.8 14.5c2 .5 3.3 2.1 3.7 4.7" />
+  </Svg>
+);
+
+/** A tick — drawn, so it is the same tick on every phone and in WeChat. */
+export const IconCheck = (p) => (
+  <Svg {...p}>
+    <path d="m5 12.6 4.3 4.2L19 7.4" />
+  </Svg>
+);
