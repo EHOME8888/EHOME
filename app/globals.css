@@ -266,43 +266,48 @@ p { max-width: var(--maxw-prose); }
    the last frame; .sa--static (reduced motion, set by the component) and the
    media query below jump straight to that last frame. Durations are scaled
    by --sa-speed so phones get the same sequence, shorter. */
-.sa { --sa-speed: 1; --sa-delay: 0ms; display: block; width: 100%; aspect-ratio: 4 / 3; }
+.sa { --sa-speed: 1; --sa-delay: 0ms; display: block; width: 100%; aspect-ratio: 4 / 3; position: relative; }
 .sa svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.sa-ghost, .sa-live { position: absolute; inset: 0; }
+.sa-ghost { opacity: .16; }
+/* until its turn, the live copy is at its first frame — which for most of a
+   scene is nothing — and the ghost shows what is coming */
 
 /* first frame */
-.sa .sa-draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
-.sa .sa-rise { transform: translateY(6px); opacity: 0; }
-.sa .sa-glide { transform: translateY(0); }
-.sa .sa-hand { transform-box: fill-box; transform-origin: 50% 100%; transform: rotate(0deg); }
-.sa .sa-pen { transform: translate(44px, -6px); opacity: 0; }
-.sa .sa-seal { transform-box: fill-box; transform-origin: center; transform: scale(0); opacity: 0; }
-.sa .sa-light { opacity: 0; }
-.sa .sa-door { transform-box: fill-box; transform-origin: left center; }
-.sa .sa-key { transform: translateX(-30px); opacity: 0; }
-.sa .sa-keyturn { transform-box: fill-box; transform-origin: 20% 50%; transform: rotate(0deg); }
+.sa .sa-draw { stroke-dasharray: 1; }
+.sa .sa-live .sa-draw { stroke-dashoffset: 1; }
+.sa .sa-live .sa-rise { transform: translateY(6px); opacity: 0; }
+.sa .sa-live .sa-glide { transform: translateY(0); }
+.sa .sa-live .sa-hand { transform-box: fill-box; transform-origin: 50% 100%; transform: rotate(0deg); }
+.sa .sa-live .sa-pen { transform: translate(44px, -6px); opacity: 0; }
+.sa .sa-live .sa-seal { transform-box: fill-box; transform-origin: center; transform: scale(0); opacity: 0; }
+.sa .sa-live .sa-light { opacity: 0; }
+.sa .sa-live .sa-door { transform-box: fill-box; transform-origin: left center; }
+.sa .sa-live .sa-key { transform: translateX(-30px); opacity: 0; }
+.sa .sa-live .sa-keyturn { transform-box: fill-box; transform-origin: 20% 50%; transform: rotate(0deg); }
 
 /* the sequence — t0..t6 are beats, roughly 0.45s apart, after the row's own delay */
-.sa--play .sa-draw { animation: saDraw calc(.7s * var(--sa-speed)) var(--ease) forwards; }
-.sa--play .t0 { animation-delay: calc(var(--sa-delay) + .0s * var(--sa-speed)); }
-.sa--play .t1 { animation-delay: calc(var(--sa-delay) + .45s * var(--sa-speed)); }
-.sa--play .t2 { animation-delay: calc(var(--sa-delay) + .9s * var(--sa-speed)); }
-.sa--play .t3 { animation-delay: calc(var(--sa-delay) + 1.35s * var(--sa-speed)); }
-.sa--play .t4 { animation-delay: calc(var(--sa-delay) + 1.8s * var(--sa-speed)); }
-.sa--play .t5 { animation-delay: calc(var(--sa-delay) + 2.25s * var(--sa-speed)); }
-.sa--play .t6 { animation-delay: calc(var(--sa-delay) + 2.7s * var(--sa-speed)); }
+.sa--play .sa-live .sa-draw { animation: saDraw calc(.7s * var(--sa-speed)) var(--ease) forwards; }
+.sa--play .sa-live .t0 { animation-delay: calc(var(--sa-delay) + .0s * var(--sa-speed)); }
+.sa--play .sa-live .t1 { animation-delay: calc(var(--sa-delay) + .45s * var(--sa-speed)); }
+.sa--play .sa-live .t2 { animation-delay: calc(var(--sa-delay) + .9s * var(--sa-speed)); }
+.sa--play .sa-live .t3 { animation-delay: calc(var(--sa-delay) + 1.35s * var(--sa-speed)); }
+.sa--play .sa-live .t4 { animation-delay: calc(var(--sa-delay) + 1.8s * var(--sa-speed)); }
+.sa--play .sa-live .t5 { animation-delay: calc(var(--sa-delay) + 2.25s * var(--sa-speed)); }
+.sa--play .sa-live .t6 { animation-delay: calc(var(--sa-delay) + 2.7s * var(--sa-speed)); }
 
-.sa--play .sa-rise   { animation: saRise calc(.6s * var(--sa-speed)) var(--ease) calc(var(--sa-delay)) forwards; }
-.sa--play .sa-send   { animation: saDraw calc(.5s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 2.7s * var(--sa-speed)) forwards,
+.sa--play .sa-live .sa-rise   { animation: saRise calc(.6s * var(--sa-speed)) var(--ease) calc(var(--sa-delay)) forwards; }
+.sa--play .sa-live .sa-send   { animation: saDraw calc(.5s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 2.7s * var(--sa-speed)) forwards,
                                   saSend calc(.9s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 3.1s * var(--sa-speed)) forwards; }
-.sa--play .sa-glide  { animation: saGlide calc(1.1s * var(--sa-speed)) ease-in-out calc(var(--sa-delay) + 1.5s * var(--sa-speed)) forwards; }
-.sa--play .sa-hand   { animation: saHand calc(1.1s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.9s * var(--sa-speed)) forwards; }
-.sa--play .sa-sig    { animation-duration: calc(1.3s * var(--sa-speed)); }
-.sa--play .sa-pen    { animation: saPen calc(1.3s * var(--sa-speed)) linear calc(var(--sa-delay) + 1.35s * var(--sa-speed)) forwards; }
-.sa--play .sa-seal   { animation: saSeal calc(.55s * var(--sa-speed)) cubic-bezier(.2,1.4,.4,1) calc(var(--sa-delay) + 2.9s * var(--sa-speed)) forwards; }
-.sa--play .sa-key    { animation: saKey calc(.6s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + .6s * var(--sa-speed)) forwards; }
-.sa--play .sa-keyturn{ animation: saKeyTurn calc(.5s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.35s * var(--sa-speed)) forwards; }
-.sa--play .sa-door   { animation: saDoor calc(.9s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.9s * var(--sa-speed)) forwards; }
-.sa--play .sa-light  { animation: saLight calc(.8s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 2.2s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-glide  { animation: saGlide calc(1.1s * var(--sa-speed)) ease-in-out calc(var(--sa-delay) + 1.5s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-hand   { animation: saHand calc(1.1s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.9s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-sig    { animation-duration: calc(1.3s * var(--sa-speed)); }
+.sa--play .sa-live .sa-pen    { animation: saPen calc(1.3s * var(--sa-speed)) linear calc(var(--sa-delay) + 1.35s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-seal   { animation: saSeal calc(.55s * var(--sa-speed)) cubic-bezier(.2,1.4,.4,1) calc(var(--sa-delay) + 2.9s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-key    { animation: saKey calc(.6s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + .6s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-keyturn{ animation: saKeyTurn calc(.5s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.35s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-door   { animation: saDoor calc(.9s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.9s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-light  { animation: saLight calc(.8s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 2.2s * var(--sa-speed)) forwards; }
 
 @keyframes saDraw   { to { stroke-dashoffset: 0; } }
 @keyframes saRise   { to { transform: none; opacity: 1; } }
@@ -317,35 +322,37 @@ p { max-width: var(--maxw-prose); }
 @keyframes saLight  { to { opacity: .22; } }
 
 /* last frame, drawn: reduced motion, or no scripting */
-.sa--static .sa-draw, .sa--static .sa-sig { stroke-dashoffset: 0; }
-.sa--static .sa-rise { transform: none; opacity: 1; }
-.sa--static .sa-send { opacity: 0; }
-.sa--static .sa-glide { transform: translateY(14px); }
-.sa--static .sa-hand { transform: rotate(120deg); }
-.sa--static .sa-pen { transform: translate(37px, 0); opacity: 1; }
-.sa--static .sa-seal { transform: scale(1); opacity: 1; }
-.sa--static .sa-key { transform: none; opacity: 1; }
-.sa--static .sa-keyturn { transform: rotate(80deg); }
-.sa--static .sa-door { transform: skewY(-7deg) scaleX(.18); }
-.sa--static .sa-light { opacity: .22; }
+.sa--static .sa-live .sa-draw, .sa-ghost .sa-draw { stroke-dashoffset: 0; }
+.sa--static .sa-live .sa-rise, .sa-ghost .sa-rise{ transform: none; opacity: 1; }
+.sa--static .sa-live .sa-send, .sa-ghost .sa-send{ opacity: 0; }
+.sa--static .sa-live .sa-glide, .sa-ghost .sa-glide{ transform: translateY(14px); }
+.sa--static .sa-live .sa-hand, .sa-ghost .sa-hand{ transform: rotate(120deg); }
+.sa--static .sa-live .sa-pen, .sa-ghost .sa-pen{ transform: translate(37px, 0); opacity: 1; }
+.sa--static .sa-live .sa-seal, .sa-ghost .sa-seal{ transform: scale(1); opacity: 1; }
+.sa--static .sa-live .sa-key, .sa-ghost .sa-key{ transform: none; opacity: 1; }
+.sa--static .sa-live .sa-keyturn, .sa-ghost .sa-keyturn{ transform: rotate(80deg); }
+.sa--static .sa-live .sa-door, .sa-ghost .sa-door{ transform: skewY(-7deg) scaleX(.18); }
+.sa--static .sa-live .sa-light, .sa-ghost .sa-light{ opacity: .22; }
 
 @media (prefers-reduced-motion: reduce) {
   .sa * { animation: none !important; }
+  .sa-ghost { display: none; }
   .sa .sa-draw, .sa .sa-sig { stroke-dashoffset: 0; }
-  .sa .sa-rise { transform: none; opacity: 1; }
+  .sa .sa-live .sa-rise { transform: none; opacity: 1; }
   .sa .sa-send { opacity: 0; }
-  .sa .sa-glide { transform: translateY(14px); }
-  .sa .sa-hand { transform: rotate(120deg); }
-  .sa .sa-pen { transform: translate(37px, 0); opacity: 1; }
-  .sa .sa-seal { transform: scale(1); opacity: 1; }
-  .sa .sa-key { transform: none; opacity: 1; }
-  .sa .sa-keyturn { transform: rotate(80deg); }
-  .sa .sa-door { transform: skewY(-7deg) scaleX(.18); }
-  .sa .sa-light { opacity: .22; }
+  .sa .sa-live .sa-glide { transform: translateY(14px); }
+  .sa .sa-live .sa-hand { transform: rotate(120deg); }
+  .sa .sa-live .sa-pen { transform: translate(37px, 0); opacity: 1; }
+  .sa .sa-live .sa-seal { transform: scale(1); opacity: 1; }
+  .sa .sa-live .sa-key { transform: none; opacity: 1; }
+  .sa .sa-live .sa-keyturn { transform: rotate(80deg); }
+  .sa .sa-live .sa-door { transform: skewY(-7deg) scaleX(.18); }
+  .sa .sa-live .sa-light { opacity: .22; }
 }
 
 /* phones: the same sequence at three-quarter length, and no row stagger —
    the cards stack, so each one is scrolled to on its own */
 @media (max-width: 768px) {
   .sa { --sa-speed: .75; --sa-delay: 0ms !important; }
+  .sa-ghost { display: none; }
 }

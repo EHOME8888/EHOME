@@ -126,7 +126,6 @@ export default function StepScene({ step = 0, delay = 0, className = "" }) {
   // under a resting pointer, which would restart a scene mid-sequence every
   // time the page moved; a replay is only offered once a run has finished.
   const startedAt = useRef(0);
-  const RUN_MS = 4800;
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -156,12 +155,26 @@ export default function StepScene({ step = 0, delay = 0, className = "" }) {
       style={{ "--sa-delay": `${delay}ms` }}
       onMouseEnter={
         hoverable && mode === "play"
-          ? () => { if (Date.now() - startedAt.current > RUN_MS) { startedAt.current = Date.now(); setRun((r) => r + 1); } }
+          ? () => {
+              // this scene's run ends a slot after it started, plus its wait
+              if (Date.now() - startedAt.current > StepScene.SLOT_MS + delay) {
+                startedAt.current = Date.now(); setRun((r) => r + 1);
+              }
+            }
           : undefined
       }
       aria-hidden="true"
     >
-      <Scene key={run} />
+      {/* While a scene waits its turn, a faint sketch of its finished frame
+          sits underneath, so the row is never a line of empty boxes. The
+          live drawing then goes over it. Hidden on phones, where nothing
+          waits, and under reduced motion, where the top copy is already
+          the finished frame. */}
+      <div className="sa-ghost"><Scene /></div>
+      <div className="sa-live"><Scene key={run} /></div>
     </div>
   );
 }
+
+/** One scene's turn: its longest sequence plus a beat, at desktop speed. */
+StepScene.SLOT_MS = 4300;

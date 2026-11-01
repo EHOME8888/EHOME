@@ -102,11 +102,11 @@ export default function Home() {
           <ol className="steps">
             {t.how.steps.map((s, i) => (
               <Reveal as="li" key={s.n} delay={i * 90} className="step">
-                {/* The scene plays itself when it scrolls in. On desktop the
-                    four sit in one row and would arrive together, so each
-                    waits a little longer than the last and they play as a
-                    sequence; on a phone they stack and the stagger is off. */}
-                <StepScene step={i} delay={i * 380} className="step__scene" />
+                {/* The scenes play one at a time: each waits a full slot for
+                    the one before it, so the row reads 01 → 02 → 03 → 04
+                    rather than four things moving at once. On a phone the
+                    cards stack and each plays as it is scrolled to. */}
+                <StepScene step={i} delay={i * StepScene.SLOT_MS} className="step__scene" />
                 <span className="step__n">{s.n}</span>
                 <h3>{s.t}</h3>
                 <p>{s.d}</p>
