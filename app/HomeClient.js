@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { PORTAL_SIGNUP_URL } from "./lib/site";
+import HeroPhoto from "./components/HeroPhoto";
 import { useI18n } from "./i18n/LanguageProvider";
 import Reveal from "./components/Reveal";
 import QuoteEstimator from "./components/QuoteEstimator";
@@ -24,35 +25,27 @@ export default function Home() {
     <>
       {/* ---------- Hero (London intro) ---------- */}
       <section className="hero">
-        <img src="/hero-skyline.svg" alt="" className="hero__bg" aria-hidden="true" />
-        <video
-          className="hero__video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/hero-skyline.svg"
-        >
-          <source src="/videos/london.mp4" type="video/mp4" />
-        </video>
-        <div className="hero__overlay" aria-hidden="true" />
+        <HeroPhoto />
         <div className="container hero__inner">
           <div className="hero__text">
             <span className="hero__rule" aria-hidden="true" />
-            <p className="eyebrow">{t.hero.eyebrow}</p>
-            <h1><MultiLine text={t.hero.title} /></h1>
-            <p className="hero__lead">{t.hero.lead}</p>
-            <ul className="hero__bullets">
+            {/* Staggered entrance: 90ms apart, in reading order. Reveal
+                handles prefers-reduced-motion, so this degrades to the text
+                simply being there. */}
+            <Reveal immediate className="reveal--lift"><p className="eyebrow">{t.hero.eyebrow}</p></Reveal>
+            <Reveal immediate className="reveal--lift" delay={90}><h1><MultiLine text={t.hero.title} /></h1></Reveal>
+            <Reveal immediate className="reveal--lift" delay={180}><p className="hero__lead">{t.hero.lead}</p></Reveal>
+            <Reveal immediate className="reveal--lift hero__bullets" delay={270} as="ul">
               {t.hero.bullets.map((b) => (<li key={b}>{b}</li>))}
-            </ul>
-            <div className="hero__actions">
+            </Reveal>
+            <Reveal immediate className="reveal--lift hero__actions" delay={360}>
               {/* The first thing on the first page is the thing we want them
                   to do. It leaves for the portal rather than routing through
                   an enquiry form: someone who has decided should not have to
                   ask us first. */}
               <a href={PORTAL_SIGNUP_URL} className="btn btn--gold">{t.hero.ctaApply}</a>
               <Link href="/pricing" className="btn btn--on-dark">{t.hero.ctaGhost}</Link>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -198,12 +191,10 @@ export default function Home() {
           display: flex; align-items: center; overflow: hidden;
           background: var(--navy-deep);
         }
-        .hero__bg, .hero__video {
+        .hero__bg {
           position: absolute; inset: 0; width: 100%; height: 100%;
-          object-fit: cover;
+          object-fit: cover; z-index: 0;
         }
-        .hero__bg { z-index: 0; }
-        .hero__video { z-index: 1; opacity: 0.5; }
         .hero__overlay {
           position: absolute; inset: 0; z-index: 2;
           background:
