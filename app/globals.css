@@ -57,8 +57,8 @@
   --sp-5: 24px;  --sp-6: 32px;  --sp-7: 40px;  --sp-8: 56px;
   --sp-9: 72px;  --sp-10: 96px; --sp-11: 128px;
 
-  --section-lg: clamp(88px, 9vw, 128px);
-  --section-md: clamp(64px, 6vw, 88px);
+  --section-lg: clamp(104px, 11vw, 168px);
+  --section-md: clamp(76px, 7.5vw, 112px);
 
   /* --- Form ---------------------------------------------------------
      A small radius reads like a printed document; a pill reads like a
@@ -99,6 +99,9 @@ h1, h2, h3 {
 }
 h1 { font-size: var(--step-5); line-height: 1.04; }
 h2 { font-size: var(--step-4); }
+/* Section headings a step larger than the body scale's h2, for presence.
+   Scoped to .section so it cannot reach legal pages or the logo wall. */
+.section h2 { font-size: clamp(2.1rem, 4vw, 3.05rem); line-height: 1.08; }
 h3 { font-size: var(--step-2); line-height: 1.25; letter-spacing: -0.005em; }
 
 /* Chinese needs no negative tracking and sits better slightly looser. */
@@ -135,9 +138,16 @@ p { max-width: var(--maxw-prose); }
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--sp-5); }
 .section { padding: var(--section-lg) 0; }
 .section--tight { padding: var(--section-md) 0; }
-.sec-head { max-width: 50ch; margin-bottom: var(--sp-8); }
-.sec-head h1, .sec-head h2 { margin-top: var(--sp-4); }
-.sec-head p.lead { margin-top: var(--sp-4); }
+
+/* Logo wall: the values it had before this pass, pinned so the global
+   increases above cannot move it. */
+.section.partners { padding: clamp(88px, 9vw, 128px) 0; }
+.section.partners .sec-head { margin-bottom: var(--sp-8); }
+.section.partners .sec-head h2 { margin-top: var(--sp-4); font-size: var(--step-4); }
+.section.partners .sec-head p.lead { margin-top: var(--sp-4); }
+.sec-head { max-width: 50ch; margin-bottom: var(--sp-9); }
+.sec-head h1, .sec-head h2 { margin-top: var(--sp-5); }
+.sec-head p.lead { margin-top: var(--sp-5); }
 
 /* ====================================================================
    BUTTONS
@@ -191,10 +201,23 @@ p { max-width: var(--maxw-prose); }
    opacity settle — the fade-and-slide-on-every-section pattern reads as
    a template and fights the reader on a long page.
    ==================================================================== */
-.reveal { opacity: 0; transition: opacity 450ms var(--ease); }
-.reveal.is-visible { opacity: 1; }
-.reveal--lift { transform: translateY(14px); transition: opacity 450ms var(--ease), transform 450ms var(--ease); }
+/* Fade AND lift, everywhere. The lift was opt-in via .reveal--lift and
+   almost nothing opted in, so sections appeared by brightening rather than
+   arriving. 14px and 450ms: enough to read as movement, not enough to make
+   anyone wait for it. transform and opacity only, so it stays on the
+   compositor. */
+.reveal {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 450ms var(--ease), transform 450ms var(--ease);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+.reveal--lift { transform: translateY(14px); }
 .reveal--lift.is-visible { transform: none; }
+
+/* The university logo wall is deliberately left exactly as it was: it keeps
+   the plain opacity fade it has always had, and none of the spacing or
+   typography changes below reach it either. */
+.partners .reveal, .partners .reveal.is-visible { transform: none; }
 
 @keyframes riseIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 @keyframes drawRule { from { transform: scaleX(0); } to { transform: scaleX(1); } }

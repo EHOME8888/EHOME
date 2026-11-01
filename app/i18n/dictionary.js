@@ -115,7 +115,6 @@ export const dict = {
         { q: "Is my personal information safe?", a: "We collect only what we need to make a fair decision, always with your consent, and handle it securely and confidentially. Ehome is registered with the UK Information Commissioner's Office (ICO) under registration number CSN1405657." },
         { q: "Do you cover house shares, HMOs, and student halls?", a: "We work across common student tenancy types, including shared houses and student accommodation. If you're unsure whether your tenancy qualifies, just ask — we'll tell you honestly." },
         { q: "What happens if my application isn't approved?", a: "We'll explain why wherever we can, and where possible suggest what might help. Not every application can be approved, but we aim to be clear and quick either way." },
-        { q: "What exactly does the guarantee cover?", a: "[Add your exact coverage terms here — what the guarantee includes, any limits, and what the tenant remains responsible for. We strongly recommend having this wording reviewed by your legal adviser before publishing.]" },
       ],
     },
 
@@ -324,6 +323,11 @@ export const dict = {
       expiredBody: "The link may have expired or already been used. Please subscribe again, or contact us if you need help.",
       backHome: "Back to the homepage",
     },
+    footerCta: {
+      line: "Any questions? Please don't hesitate to contact us.",
+      button: "Contact Us",
+      home: "Back to home",
+    },
     footer: {
       legalHead: "Legal",
       privacy: "Privacy",
@@ -452,7 +456,6 @@ export const dict = {
         { q: "我的个人信息安全吗？", a: "我们只在你同意的前提下收集作出公平判断所必需的信息，并安全、保密地处理。易家已在英国信息专员办公室（ICO）注册，注册号 CSN1405657。" },
         { q: "合租、HMO 与学生公寓是否涵盖？", a: "我们支持常见的学生租约类型，包括合租房与学生公寓。如不确定你的租约是否符合，欢迎直接询问，我们会如实告知。" },
         { q: "如果申请未通过怎么办？", a: "我们会尽量说明原因，并在可能的情况下给出改进建议。并非每份申请都能通过，但无论结果如何，我们都力求清晰、快速地答复。" },
-        { q: "担保具体涵盖哪些内容？", a: "［请在此填写你的具体担保条款——涵盖范围、限额，以及租客仍需承担的责任。强烈建议在发布前请法律顾问审阅措辞。］" },
       ],
     },
 
@@ -659,6 +662,11 @@ export const dict = {
       expiredTitle: "该链接已失效",
       expiredBody: "链接可能已过期或已被使用。请重新订阅，或联系我们获取帮助。",
       backHome: "返回首页",
+    },
+    footerCta: {
+      line: "有任何问题，请随时联系我们。",
+      button: "联系我们",
+      home: "返回首页",
     },
     footer: {
       legalHead: "法律",

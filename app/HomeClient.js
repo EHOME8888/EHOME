@@ -208,13 +208,6 @@ export default function Home() {
              against anything the photograph can do, including the pale sky.
              The right-hand side stays clear so the bridge is actually seen. */
           background:
-            repeating-linear-gradient(
-              104deg,
-              rgba(255,255,255,0.035) 0px,
-              rgba(255,255,255,0.035) 1px,
-              transparent 1px,
-              transparent 7px
-            ),
             linear-gradient(to top,
               rgba(20,31,66,0.92) 0%,
               rgba(20,31,66,0.42) 46%,
@@ -284,7 +277,7 @@ export default function Home() {
         }
 
         /* ---- What ---- */
-        .what__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+        .what__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
         .what__grid h2 { margin-top: 14px; }
         .what__body { color: var(--muted); font-size: 1.12rem; }
         .guarantee-note { margin-top: 18px; font-size: 0.86rem; color: var(--muted);
@@ -292,13 +285,13 @@ export default function Home() {
 
         /* ---- Estimator section ---- */
         .estimate-sec { background: var(--surface); border-block: 1px solid var(--line); }
-        .estimate__grid { display: grid; grid-template-columns: 1fr 0.92fr; gap: 48px; align-items: center; }
+        .estimate__grid { display: grid; grid-template-columns: 1fr 0.92fr; gap: 72px; align-items: center; }
         .estimate__intro h2 { margin-top: 12px; }
         .estimate__intro .lead { margin-top: 14px; color: var(--muted); font-size: 1.1rem; max-width: 46ch; }
 
         /* ---- How ---- */
         .how { background: var(--surface); border-block: 1px solid var(--line); }
-        .steps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+        .steps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 44px 36px; }
         .step__n { display: inline-grid; place-items: center; width: 46px; height: 46px;
           border: 1px solid var(--gold-soft); border-radius: 999px;
           font-family: var(--font-display); color: var(--gold); font-size: 1.05rem; margin-bottom: 16px; }
@@ -306,7 +299,7 @@ export default function Home() {
         .step p { color: var(--muted); }
 
         /* ---- Trust ---- */
-        .trust__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px 48px; }
+        .trust__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 52px 72px; }
         .trust__item { padding-left: 22px; position: relative; }
         .trust__dot { position: absolute; left: 0; top: 9px; width: 9px; height: 9px; background: var(--gold); border-radius: 999px; }
         .trust__item h3 { margin-bottom: 6px; }
@@ -314,7 +307,7 @@ export default function Home() {
 
         /* ---- Testimonials ---- */
         .testimonials { background: var(--surface); border-block: 1px solid var(--line); }
-        .tm__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .tm__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
         .tm { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
           padding: 28px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; }
         .tm__quote { font-size: 1.05rem; color: var(--ink); }

@@ -6,6 +6,7 @@ import NewsletterSignup from "./NewsletterSignup";
 import ContactChannels from "./ContactChannels";
 import SocialIcons from "./SocialIcons";
 import { reopenCookieNotice } from "./CookieNotice";
+import FooterCta from "./FooterCta";
 
 /**
  * Three bands, each with one job.
@@ -33,6 +34,10 @@ export default function Footer() {
 
   return (
     <footer className="footer">
+      {/* Above everything else in the footer, and above the hairline that
+          starts it: this is a call to action, not small print. */}
+      <FooterCta />
+
       {/* ---------------------------------------------------- 1. navigate */}
       <div className="container footer__nav">
         <div className="footer__brand">
