@@ -24,10 +24,11 @@ export const dict = {
 
     hero: {
       eyebrow: "For international students renting in the UK",
-      title: "Your guarantor,\nso the answer is yes.",
+      title: "Your No.1 guarantor\nfor renting in the UK",
       lead: "Landlords abroad ask for a local guarantor most international students don't have. Ehome stands in as your rent guarantor — so you get the home, and your family gets peace of mind.",
       ctaPrimary: "Talk to us",
-      ctaApply: "Start your application",
+      ctaApply: "Apply",
+      ctaLearn: "Learn more",
       ctaGhost: "See pricing",
       bullets: [
         "Unlock more rental options — landlords say yes",
@@ -360,10 +361,11 @@ export const dict = {
 
     hero: {
       eyebrow: "为海外求学的留学生而设",
-      title: "我们为你担保，\n让房东安心说“可以”。",
+      title: "你的首选\n英国租房担保",
       lead: "海外租房，房东往往要求提供本地担保人——这正是留学生最难解决的一环。易家作为你的租房担保人，帮你顺利拿下心仪的住处，也让家人放心。",
       ctaPrimary: "立即咨询",
-      ctaApply: "立即开始申请",
+      ctaApply: "立即申请",
+      ctaLearn: "了解更多",
       ctaGhost: "查看收费",
       bullets: [
         "解锁更多房源，房东更愿意点头",

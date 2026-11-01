@@ -44,7 +44,10 @@ export default function Home() {
                   an enquiry form: someone who has decided should not have to
                   ask us first. */}
               <a href={PORTAL_SIGNUP_URL} className="btn btn--gold">{t.hero.ctaApply}</a>
-              <Link href="/pricing" className="btn btn--on-dark">{t.hero.ctaGhost}</Link>
+              {/* Down to the next screen, not away to another page. #what
+                  already exists and globals.css already has smooth scrolling
+                  with a reduced-motion override. */}
+              <a href="#what" className="btn btn--on-dark">{t.hero.ctaLearn}</a>
             </Reveal>
           </div>
         </div>
@@ -197,6 +200,13 @@ export default function Home() {
         }
         .hero__overlay {
           position: absolute; inset: 0; z-index: 2;
+          /* Two scrims, not one. The brief asks for darkening from the
+             bottom up, and that alone would not carry left-aligned text
+             sitting at mid-height — so the bottom-up pass sets the mood and
+             a left-hand pass does the contrast work. Behind the headline the
+             two combine to about 0.96 navy, which puts white text over 10:1
+             against anything the photograph can do, including the pale sky.
+             The right-hand side stays clear so the bridge is actually seen. */
           background:
             repeating-linear-gradient(
               104deg,
@@ -205,16 +215,26 @@ export default function Home() {
               transparent 1px,
               transparent 7px
             ),
-            linear-gradient(94deg,
-              rgba(20,31,66,0.97) 0%,
-              rgba(20,31,66,0.90) 46%,
-              rgba(20,31,66,0.58) 100%);
+            linear-gradient(to top,
+              rgba(20,31,66,0.92) 0%,
+              rgba(20,31,66,0.42) 46%,
+              rgba(20,31,66,0.12) 100%),
+            linear-gradient(96deg,
+              rgba(20,31,66,0.95) 0%,
+              rgba(20,31,66,0.82) 40%,
+              rgba(20,31,66,0.34) 72%,
+              rgba(20,31,66,0.04) 100%);
         }
         .cta__actions {
           display: flex; gap: var(--sp-3); flex-wrap: wrap; justify-content: center;
         }
         .hero__inner { position: relative; z-index: 3; padding: var(--sp-10) var(--sp-5); }
-        .hero__text { max-width: 44ch; }
+        /* 44ch is a reading measure, and the headline is not reading matter.
+           At 44ch the display face broke "for renting in the UK" again and
+           left "UK" alone on a fourth line. The lead and the bullets keep
+           their own narrower caps, so widening the column only affects the
+           headline. */
+        .hero__text { max-width: 760px; }
 
         .hero__rule {
           display: block; width: 72px; height: 2px;
