@@ -5,6 +5,7 @@ import { PORTAL_SIGNUP_URL } from "./lib/site";
 import HeroPhoto from "./components/HeroPhoto";
 import { HERO_ICONS, TRUST_ICONS } from "./components/icons";
 import IconDisc from "./components/IconDisc";
+import StepScene from "./components/StepScene";
 import { useI18n } from "./i18n/LanguageProvider";
 import Reveal from "./components/Reveal";
 import QuoteEstimator from "./components/QuoteEstimator";
@@ -101,6 +102,11 @@ export default function Home() {
           <ol className="steps">
             {t.how.steps.map((s, i) => (
               <Reveal as="li" key={s.n} delay={i * 90} className="step">
+                {/* The scene plays itself when it scrolls in. On desktop the
+                    four sit in one row and would arrive together, so each
+                    waits a little longer than the last and they play as a
+                    sequence; on a phone they stack and the stagger is off. */}
+                <StepScene step={i} delay={i * 380} className="step__scene" />
                 <span className="step__n">{s.n}</span>
                 <h3>{s.t}</h3>
                 <p>{s.d}</p>
@@ -297,9 +303,13 @@ export default function Home() {
         /* ---- How ---- */
         .how { background: var(--surface); border-block: 1px solid var(--line); }
         .steps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 44px 36px; }
-        .step__n { display: inline-grid; place-items: center; width: 46px; height: 46px;
-          border: 1px solid var(--gold-soft); border-radius: 999px;
-          font-family: var(--font-display); color: var(--gold); font-size: 1.05rem; margin-bottom: 16px; }
+        .step__scene {
+          background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+          padding: 10px; margin-bottom: 18px;
+        }
+        /* The scene is the picture now; the number is a caption above the
+           title, as on the process page. */
+        .step__n { display: block; font-size: 0.76rem; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 6px; }
         .step h3 { margin-bottom: 8px; }
         .step p { color: var(--muted); }
 
@@ -339,6 +349,9 @@ export default function Home() {
         .cta .btn--primary:hover { background: #d5ab5f; }
 
         @media (max-width: 960px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+        /* A phone gets one card per row. Two across at 375px leaves each
+           scene 146px wide, which is a thumbnail, not an explainer. */
+        @media (max-width: 600px) { .steps { grid-template-columns: 1fr; gap: 36px; } }
         @media (max-width: 820px) {
           .what__grid, .estimate__grid { grid-template-columns: 1fr; }
           .trust__grid { grid-template-columns: 1fr; }
