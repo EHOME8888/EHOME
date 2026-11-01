@@ -101,30 +101,52 @@ export default function HeroPhoto() {
       <div className="hero__overlay" aria-hidden="true" />
 
       <style dangerouslySetInnerHTML={{ __html: `
+        /* The layer is taller than the hero and sits above it, so the
+           parallax drift never exposes a gap. Every percent of that
+           overhang is a percent of the photograph hidden off the top of the
+           screen, though — and the top of this photograph is where the
+           spires are. 8% hid them; 3% does not. */
         .hero__parallax {
-          position: absolute; inset: -8% 0 0 0; z-index: 1;
+          position: absolute; inset: -3% 0 0 0; z-index: 1;
           will-change: transform;
         }
         .hero__ken { position: absolute; inset: 0; }
-        .hero__photo { object-fit: cover; }
+        .hero__photo {
+          object-fit: cover;
+          /* Bias the frame upward: sky and spires in, a band of water out.
+             The water is the least interesting part of the picture and the
+             part the scrim darkens anyway. */
+          object-position: 50% 34%;
+        }
 
         /* Slow, and alternate rather than looping, so it breathes instead of
            snapping back to the start every cycle. The range is deliberately
            under 8%: at this speed the eye should never catch it moving. */
+        /* Scaled about a point near the top, not the centre. Zooming from
+           the centre eats the top and bottom equally, which costs the
+           spires; from 50% 12% the zoom takes its crop out of the water
+           instead and the skyline stays where it is. Range reduced too:
+           1.12 was another 5% off the top. */
         @keyframes heroKenBurns {
-          from { transform: scale(1.04) translate3d(0, 0, 0); }
-          to   { transform: scale(1.12) translate3d(-1.4%, -1.2%, 0); }
+          from { transform: scale(1.02) translate3d(0, 0, 0); }
+          to   { transform: scale(1.07) translate3d(-1.1%, -0.6%, 0); }
         }
         .hero__ken {
+          transform-origin: 50% 12%;
           animation: heroKenBurns 22s ease-in-out infinite alternate;
           will-change: transform;
         }
 
         /* Phones: no drift, no parallax, one static slightly-cropped frame.
            Nothing to composite on every scroll frame. */
+        /* Phones crop the photograph sideways, not vertically — the hero is
+           portrait and the picture is landscape — so the whole height is in
+           frame and the question is which tower. Nudged left of centre so
+           the near tower and the span are both held. */
         @media (max-width: 768px) {
-          .hero__ken { animation: none; transform: scale(1.03); }
+          .hero__ken { animation: none; transform: scale(1.02); transform-origin: 50% 50%; }
           .hero__parallax { inset: 0; will-change: auto; }
+          .hero__photo { object-position: 42% 38%; }
         }
 
         @media (prefers-reduced-motion: reduce) {

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { PORTAL_SIGNUP_URL } from "./lib/site";
 import HeroPhoto from "./components/HeroPhoto";
+import { HERO_ICONS, TRUST_ICONS } from "./components/icons";
 import { useI18n } from "./i18n/LanguageProvider";
 import Reveal from "./components/Reveal";
 import QuoteEstimator from "./components/QuoteEstimator";
@@ -36,7 +37,15 @@ export default function Home() {
             <Reveal immediate className="reveal--lift" delay={90}><h1><MultiLine text={t.hero.title} /></h1></Reveal>
             <Reveal immediate className="reveal--lift" delay={180}><p className="hero__lead">{t.hero.lead}</p></Reveal>
             <Reveal immediate className="reveal--lift hero__bullets" delay={270} as="ul">
-              {t.hero.bullets.map((b) => (<li key={b}>{b}</li>))}
+              {t.hero.bullets.map((b, i) => {
+                const Icon = HERO_ICONS[i % HERO_ICONS.length];
+                return (
+                  <li key={b}>
+                    <span className="hero__bulletIcon"><Icon size={18} /></span>
+                    <span>{b}</span>
+                  </li>
+                );
+              })}
             </Reveal>
             <Reveal immediate className="reveal--lift hero__actions" delay={360}>
               {/* The first thing on the first page is the thing we want them
@@ -110,7 +119,9 @@ export default function Home() {
           <div className="trust__grid">
             {t.trust.items.map((it, i) => (
               <Reveal key={it.t} delay={i * 90} className="trust__item">
-                <span className="trust__dot" aria-hidden="true" />
+                <span className="trust__icon" aria-hidden="true">
+                  {(() => { const Icon = TRUST_ICONS[i % TRUST_ICONS.length]; return <Icon size={26} />; })()}
+                </span>
                 <h3>{it.t}</h3>
                 <p>{it.d}</p>
               </Reveal>
@@ -245,14 +256,18 @@ export default function Home() {
           max-width: 44ch;
         }
         .hero__bullets li {
-          position: relative; padding-left: var(--sp-6);
+          display: flex; align-items: center; gap: var(--sp-3);
           color: rgba(255,255,255,0.92); font-size: 0.96rem;
         }
-        /* a struck rule rather than a tick: quieter, and it echoes the
-           hairline texture behind it */
-        .hero__bullets li::before {
-          content: ""; position: absolute; left: 0; top: 0.72em;
-          width: 14px; height: 1px; background: var(--gold);
+        /* The same icons as the cards below, at a size that sits with text
+           rather than competing with it. Cards over the photograph would
+           fight the headline; a list with icons does not. */
+        .hero__bulletIcon {
+          flex: none; display: grid; place-items: center;
+          width: 30px; height: 30px; border-radius: 999px;
+          color: var(--gold);
+          background: rgba(200,162,74,0.14);
+          border: 1px solid rgba(200,162,74,0.26);
         }
         .hero__actions { display: flex; gap: var(--sp-3); flex-wrap: wrap; }
         /* Ghost on a dark panel: the hero and the closing call to action. */
@@ -300,10 +315,25 @@ export default function Home() {
 
         /* ---- Trust ---- */
         .trust__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 52px 72px; }
-        .trust__item { padding-left: 22px; position: relative; }
-        .trust__dot { position: absolute; left: 0; top: 9px; width: 9px; height: 9px; background: var(--gold); border-radius: 999px; }
-        .trust__item h3 { margin-bottom: 6px; }
+        .trust__item { position: relative; }
+        .trust__icon {
+          display: grid; place-items: center;
+          width: 56px; height: 56px; border-radius: 999px;
+          color: var(--brand);
+          background: color-mix(in srgb, var(--navy) 7%, transparent);
+          margin-bottom: var(--sp-5);
+          /* The entrance: the card lifts (global .reveal) and the disc
+             settles a beat later. Transform and opacity only. */
+          opacity: 0; transform: scale(0.9);
+          transition: opacity 420ms var(--ease) 120ms, transform 420ms var(--ease) 120ms;
+        }
+        .trust__item.is-visible .trust__icon { opacity: 1; transform: none; }
+        .trust__item h3 { margin-bottom: 8px; }
         .trust__item p { color: var(--muted); }
+
+        @media (prefers-reduced-motion: reduce) {
+          .trust__icon { opacity: 1; transform: none; transition: none; }
+        }
 
         /* ---- Testimonials ---- */
         .testimonials { background: var(--surface); border-block: 1px solid var(--line); }
