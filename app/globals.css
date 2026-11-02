@@ -287,27 +287,28 @@ p { max-width: var(--maxw-prose); }
 .sa .sa-live .sa-keyturn { transform-box: fill-box; transform-origin: 20% 50%; transform: rotate(0deg); }
 
 /* the sequence — t0..t6 are beats, roughly 0.45s apart, after the row's own delay */
-.sa--play .sa-live .sa-draw { animation: saDraw calc(.7s * var(--sa-speed)) var(--ease) forwards; }
+.sa--play .sa-live .sa-draw { animation: saDraw calc(.5s * var(--sa-speed)) var(--ease) forwards; }
 .sa--play .sa-live .t0 { animation-delay: calc(var(--sa-delay) + .0s * var(--sa-speed)); }
-.sa--play .sa-live .t1 { animation-delay: calc(var(--sa-delay) + .45s * var(--sa-speed)); }
-.sa--play .sa-live .t2 { animation-delay: calc(var(--sa-delay) + .9s * var(--sa-speed)); }
-.sa--play .sa-live .t3 { animation-delay: calc(var(--sa-delay) + 1.35s * var(--sa-speed)); }
-.sa--play .sa-live .t4 { animation-delay: calc(var(--sa-delay) + 1.8s * var(--sa-speed)); }
-.sa--play .sa-live .t5 { animation-delay: calc(var(--sa-delay) + 2.25s * var(--sa-speed)); }
-.sa--play .sa-live .t6 { animation-delay: calc(var(--sa-delay) + 2.7s * var(--sa-speed)); }
+.sa--play .sa-live .t1 { animation-delay: calc(var(--sa-delay) + .3s * var(--sa-speed)); }
+.sa--play .sa-live .t2 { animation-delay: calc(var(--sa-delay) + .6s * var(--sa-speed)); }
+.sa--play .sa-live .t3 { animation-delay: calc(var(--sa-delay) + .9s * var(--sa-speed)); }
+.sa--play .sa-live .t4 { animation-delay: calc(var(--sa-delay) + 1.2s * var(--sa-speed)); }
+.sa--play .sa-live .t5 { animation-delay: calc(var(--sa-delay) + 1.5s * var(--sa-speed)); }
+.sa--play .sa-live .t6 { animation-delay: calc(var(--sa-delay) + 1.8s * var(--sa-speed)); }
 
-.sa--play .sa-live .sa-rise   { animation: saRise calc(.6s * var(--sa-speed)) var(--ease) calc(var(--sa-delay)) forwards; }
-.sa--play .sa-live .sa-send   { animation: saDraw calc(.5s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 2.7s * var(--sa-speed)) forwards,
-                                  saSend calc(.9s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 3.1s * var(--sa-speed)) forwards; }
-.sa--play .sa-live .sa-glide  { animation: saGlide calc(1.1s * var(--sa-speed)) ease-in-out calc(var(--sa-delay) + 1.5s * var(--sa-speed)) forwards; }
-.sa--play .sa-live .sa-hand   { animation: saHand calc(1.1s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.9s * var(--sa-speed)) forwards; }
-.sa--play .sa-live .sa-sig    { animation-duration: calc(1.3s * var(--sa-speed)); }
-.sa--play .sa-live .sa-pen    { animation: saPen calc(1.3s * var(--sa-speed)) linear calc(var(--sa-delay) + 1.35s * var(--sa-speed)) forwards; }
-.sa--play .sa-live .sa-seal   { animation: saSeal calc(.55s * var(--sa-speed)) cubic-bezier(.2,1.4,.4,1) calc(var(--sa-delay) + 2.9s * var(--sa-speed)) forwards; }
-.sa--play .sa-live .sa-key    { animation: saKey calc(.6s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + .6s * var(--sa-speed)) forwards; }
-.sa--play .sa-live .sa-keyturn{ animation: saKeyTurn calc(.5s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.35s * var(--sa-speed)) forwards; }
-.sa--play .sa-live .sa-door   { animation: saDoor calc(.9s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.9s * var(--sa-speed)) forwards; }
-.sa--play .sa-live .sa-light  { animation: saLight calc(.8s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 2.2s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-rise   { animation: saRise calc(.4s * var(--sa-speed)) var(--ease) calc(var(--sa-delay)) forwards; }
+.sa--play .sa-live .sa-send   { animation: saDraw calc(.35s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.2s * var(--sa-speed)) forwards,
+                                  saSend calc(.6s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 2.1s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-glide  { animation: saGlide calc(.8s * var(--sa-speed)) ease-in-out calc(var(--sa-delay) + 1.0s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-hand   { animation: saHand calc(.8s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.3s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-sig    { animation-duration: calc(1.0s * var(--sa-speed)); }
+.sa--play .sa-live .sa-pen    { animation: saPen calc(1.0s * var(--sa-speed)) linear calc(var(--sa-delay) + .6s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-seal   { animation: saSeal calc(.45s * var(--sa-speed)) cubic-bezier(.2,1.4,.4,1) calc(var(--sa-delay) + 2.0s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-key    { animation: saKey calc(.45s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + .5s * var(--sa-speed)) forwards,
+                                  saKeyOut calc(.4s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.5s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-keyturn{ animation: saKeyTurn calc(.4s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.0s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-door   { animation: saDoor calc(.7s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.5s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-light  { animation: saLight calc(.6s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.7s * var(--sa-speed)) forwards; }
 
 @keyframes saDraw   { to { stroke-dashoffset: 0; } }
 @keyframes saRise   { to { transform: none; opacity: 1; } }
@@ -316,7 +317,8 @@ p { max-width: var(--maxw-prose); }
 @keyframes saHand   { to { transform: rotate(120deg); } }
 @keyframes saPen    { from { transform: translate(0, 0); opacity: 1; } to { transform: translate(37px, 0); opacity: 1; } }
 @keyframes saSeal   { to { transform: scale(1); opacity: 1; } }
-@keyframes saKey    { to { transform: translateX(0); opacity: 1; } }
+@keyframes saKey    { to { transform: translateX(28px); opacity: 1; } }
+@keyframes saKeyOut { to { opacity: 0; } }
 @keyframes saKeyTurn{ to { transform: rotate(80deg); } }
 @keyframes saDoor   { to { transform: skewY(-7deg) scaleX(.18); } }
 @keyframes saLight  { to { opacity: .22; } }
@@ -329,7 +331,7 @@ p { max-width: var(--maxw-prose); }
 .sa--static .sa-live .sa-hand, .sa-ghost .sa-hand{ transform: rotate(120deg); }
 .sa--static .sa-live .sa-pen, .sa-ghost .sa-pen{ transform: translate(37px, 0); opacity: 1; }
 .sa--static .sa-live .sa-seal, .sa-ghost .sa-seal{ transform: scale(1); opacity: 1; }
-.sa--static .sa-live .sa-key, .sa-ghost .sa-key{ transform: none; opacity: 1; }
+.sa--static .sa-live .sa-key, .sa-ghost .sa-key{ transform: translateX(28px); opacity: 0; }
 .sa--static .sa-live .sa-keyturn, .sa-ghost .sa-keyturn{ transform: rotate(80deg); }
 .sa--static .sa-live .sa-door, .sa-ghost .sa-door{ transform: skewY(-7deg) scaleX(.18); }
 .sa--static .sa-live .sa-light, .sa-ghost .sa-light{ opacity: .22; }
@@ -344,7 +346,7 @@ p { max-width: var(--maxw-prose); }
   .sa .sa-live .sa-hand { transform: rotate(120deg); }
   .sa .sa-live .sa-pen { transform: translate(37px, 0); opacity: 1; }
   .sa .sa-live .sa-seal { transform: scale(1); opacity: 1; }
-  .sa .sa-live .sa-key { transform: none; opacity: 1; }
+  .sa .sa-live .sa-key { transform: translateX(28px); opacity: 0; }
   .sa .sa-live .sa-keyturn { transform: rotate(80deg); }
   .sa .sa-live .sa-door { transform: skewY(-7deg) scaleX(.18); }
   .sa .sa-live .sa-light { opacity: .22; }

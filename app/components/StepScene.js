@@ -60,7 +60,7 @@ function SceneAssess() {
       </g>
       {/* 48 hours: the hand sweeps, the ring draws */}
       <circle className="sa-draw t3" pathLength="1" stroke={NAVY} cx="88" cy="42" r="15" />
-      <path className="sa-hand t3" stroke={NAVY} d="M88 42V31" />
+      <path className="sa-draw sa-hand t3" pathLength="1" stroke={NAVY} d="M88 42V31" />
       <path className="sa-draw t3" pathLength="1" stroke={NAVY} d="M88 27v2M103 42h-2M88 57v-2M73 42h2" />
       {/* passed */}
       <path className="sa-draw t5" pathLength="1" stroke={GOLD} strokeWidth="2" d="M80 70l5 5 11-11" />
@@ -101,10 +101,10 @@ function SceneMoveIn() {
       <path className="sa-draw t0" pathLength="1" stroke={NAVY} d="M30 76h60" />
       {/* the door, hinged on its left edge */}
       <g className="sa-door">
-        <rect stroke={NAVY} fill="var(--surface)" x="46" y="22" width="28" height="54" rx="1" />
-        <circle stroke={NAVY} cx="68" cy="50" r="1.6" />
+        <rect className="sa-draw t1" pathLength="1" stroke={NAVY} fill="var(--surface)" x="46" y="22" width="28" height="54" rx="1" />
+        <circle className="sa-draw t1" pathLength="1" stroke={NAVY} cx="68" cy="50" r="1.6" />
       </g>
-      {/* the key arrives, then turns */}
+      {/* the key arrives at the lock, turns, and goes as the door opens */}
       <g className="sa-key">
         <g className="sa-keyturn">
           <circle className="sa-draw t1" pathLength="1" stroke={GOLD} cx="18" cy="50" r="4.5" />
@@ -177,4 +177,4 @@ export default function StepScene({ step = 0, delay = 0, className = "" }) {
 }
 
 /** One scene's turn: its longest sequence plus a beat, at desktop speed. */
-StepScene.SLOT_MS = 4300;
+StepScene.SLOT_MS = 2900;
