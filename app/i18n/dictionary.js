@@ -101,6 +101,21 @@ export const dict = {
       ],
     },
 
+    story: {
+      title: "One thread, from your desk to your front door.",
+      lead: "How a guarantee comes together, in four moments.",
+      marks: "Steps",
+      pause: "Pause the story",
+      play: "Play the story",
+      // t and d are shown on the page. alt describes the drawing for screen readers.
+      steps: [
+        { t: "Apply", d: "Send us your details, your tenancy, and who will support the rent.", alt: "A student sits at a desk with a laptop open. A passport, an offer letter and a tenancy agreement settle into one folder, and a gold thread leaves the screen." },
+        { t: "Family confirms", d: "A parent or sponsor at home confirms their support from a phone.", alt: "The gold thread crosses the sky from London terraces to a city in China and comes down into a home, where a parent at a round table signs on a phone." },
+        { t: "Agreement signed", d: "We sign as your official guarantor to the landlord or agent.", alt: "The thread lands on one document on a table. The student, the landlord and Ehome sign in turn, and the page folds into a guarantee letter with a small gold emblem." },
+        { t: "Move in", d: "Complete your tenancy and settle in with confidence.", alt: "The thread becomes a key and turns in a front door. The door opens, warm light spreads across the floor and an upstairs window lights." },
+      ],
+    },
+
     faq: {
       eyebrow: "FAQ",
       title: "Common questions.",
@@ -439,6 +454,20 @@ export const dict = {
         { quote: "房东要求提供英国本地担保人，而我父母在国内。易家两天就办妥，我按时入住。", name: "L. Chen", role: "UCL 硕士在读" },
         { quote: "所有内容都用中文向我父母解释、用英文向我说明——这让他们很放心。", name: "Y. Wang", role: "曼彻斯特大学 本科在读" },
         { quote: "流程简单、速度快，费用也没有意外。正是我们在海外最需要的。", name: "KCL 学生家长", role: "" },
+      ],
+    },
+
+    story: {
+      title: "一条金线，从书桌到家门。",
+      lead: "一份担保如何办成，分四步看。",
+      marks: "步骤",
+      pause: "暂停动画",
+      play: "播放动画",
+      steps: [
+        { t: "提交申请", d: "向我们提供你的信息、租约，以及为租金提供支持的人。", alt: "学生坐在书桌前，电脑开着。护照、录取通知书和租约收进同一个文件夹，一条金线从屏幕边缘出发。" },
+        { t: "家长确认", d: "家长或担保人在国内用手机确认支持。", alt: "金线越过天空，从伦敦的联排房屋到中国的城市，落进家中。家长坐在圆桌旁，在手机上签名确认。" },
+        { t: "签署担保", d: "我们作为你的正式担保人，与房东或中介签署协议。", alt: "金线落在桌子中央的一份文件上。学生、房东和易家依次签名，文件折成一封带金色徽记的担保函。" },
+        { t: "安心入住", d: "顺利签约，安心开启留学生活。", alt: "金线收成一把钥匙，转开家门。门向内打开，暖光铺在地上，楼上一扇窗亮起。" },
       ],
     },
 

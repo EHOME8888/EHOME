@@ -6,6 +6,7 @@ import HeroPhoto from "./components/HeroPhoto";
 import { HERO_ICONS, TRUST_ICONS } from "./components/icons";
 import IconDisc from "./components/IconDisc";
 import StepScene from "./components/StepScene";
+import ProcessStory from "./components/ProcessStory";
 import { useI18n } from "./i18n/LanguageProvider";
 import Reveal from "./components/Reveal";
 import QuoteEstimator from "./components/QuoteEstimator";
@@ -180,6 +181,9 @@ export default function Home() {
 
       {/* ---------- FAQ ---------- */}
       <Faq />
+
+      {/* ---------- The Golden Thread: the four steps as one story ---------- */}
+      <ProcessStory />
 
       {/* ---------- Final CTA ---------- */}
       <section className="section">
