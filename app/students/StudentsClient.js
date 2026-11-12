@@ -21,17 +21,20 @@ export default function Students() {
     <>
       <section className="section">
         <div className="container">
-          {/* Heading on the left, the twenty-second story on the right.
-              On a phone the story sits directly under the paragraph. */}
-          <div className="stu-hero">
-            <Reveal className="sec-head">
-              <p className="eyebrow">{s.eyebrow}</p>
-              <h1>{s.title}</h1>
-              <p className="lead">{s.intro}</p>
-            </Reveal>
-            <StudentStory />
-          </div>
+          <Reveal className="sec-head stu-head">
+            <p className="eyebrow">{s.eyebrow}</p>
+            <h1>{s.title}</h1>
+            <p className="lead">{s.intro}</p>
+          </Reveal>
+        </div>
 
+        {/* The twenty-second story, as one panel across the whole page:
+            a wide cut on desktop, a tall cut on a phone. */}
+        <div className="stu-film">
+          <StudentStory />
+        </div>
+
+        <div className="container">
           <Reveal><h2 className="stu-h">{s.whyTitle}</h2></Reveal>
           <div className="stu-grid">
             {s.why.map((w, i) => (
@@ -65,9 +68,9 @@ export default function Students() {
 
       <style dangerouslySetInnerHTML={{ __html: `
         .sec-head h1 { margin-top: 12px; }
-        .stu-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-          gap: var(--sp-8); align-items: center; margin-bottom: var(--sp-9); }
-        .stu-hero .sec-head { margin-bottom: 0; }
+        .stu-head { max-width: 62ch; margin-bottom: var(--sp-7); }
+        .stu-film { padding: 0 var(--sp-5); margin-bottom: var(--sp-9); }
+        .stu-film + .container > :first-child .stu-h { margin-top: 0; }
         .stu-h { font-size: 1.5rem; margin: 56px 0 24px; }
         .stu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .stu-card { background: var(--surface); border: 1px solid var(--line);
@@ -86,7 +89,8 @@ export default function Students() {
         .stu-cta { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; }
         @media (max-width: 820px) {
           .stu-grid { grid-template-columns: 1fr; }
-          .stu-hero { grid-template-columns: 1fr; gap: var(--sp-6); margin-bottom: var(--sp-8); }
+          .stu-head { margin-bottom: var(--sp-6); }
+          .stu-film { padding: 0 16px; margin-bottom: var(--sp-8); }
         }
       ` }} />
     </>

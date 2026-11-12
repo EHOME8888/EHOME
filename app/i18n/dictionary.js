@@ -253,11 +253,11 @@ export const dict = {
       eyebrow: "For international students",
       title: "A UK rent guarantor for international students",
       intro: "Most UK landlords ask for a guarantor who owns property in the UK. If your family is overseas, that is a requirement you cannot meet — however strong your finances are. Ehome steps into that role.",
-      // The twenty-second animation beside the heading (StudentStory.js).
+      // The twenty-second animation under the heading (StudentStory.js).
       // Five captions, one per four-second beat, in the order they play.
       story: {
         title: "Winnie gets her keys",
-        desc: "A 20-second silent animation. Winnie, a student, arrives at a navy front door with her suitcase. The landlord, Arthur, asks for a UK guarantor, and one box on the tenancy form stays empty. Alex from Ehome arrives with a guarantee letter and hands it to Arthur. The empty box turns gold, Arthur hands Winnie the keys, and the door opens.",
+        desc: "A 20-second silent animation. Winnie, a student, arrives at a navy front door with her suitcase and hands her rental application to the landlord, Arthur. Passport, university offer and proof of funds are ticked, but the UK guarantor box is empty. Alex from Ehome arrives with a guarantee letter and hands it to Arthur. The empty box turns gold, Arthur hands Winnie the keys, and the door opens.",
         captions: [
           "Found the flat. The landlord asks for a UK guarantor.",
           "Family overseas cannot fill that box. It is routine, not a judgement on you.",
@@ -612,7 +612,7 @@ export const dict = {
       intro: "英国房东通常要求提供在英国拥有房产的担保人。如果你的家人在海外，无论经济状况多好，这个条件都无法满足。易家正是来承担这个角色。",
       story: {
         title: "Winnie 拿到钥匙",
-        desc: "20 秒无声动画：留学生 Winnie 拖着行李箱来到一扇深蓝色的门前。房东 Arthur 要求英国担保人，租房表格上有一栏空着。易家顾问 Alex 带着担保函到来，交给 Arthur。空着的那一栏变成金色，Arthur 把钥匙交给 Winnie，门打开了。",
+        desc: "20 秒无声动画：留学生 Winnie 拖着行李箱来到一扇深蓝色的门前，把租房申请材料交给房东 Arthur。护照、大学录取通知书和资金证明都已打勾，只有「英国担保人」一栏空着。易家顾问 Alex 带着担保函到来，交给 Arthur。空着的那一栏变成金色，Arthur 把钥匙交给 Winnie，门打开了。",
         captions: [
           "找到了喜欢的房子，但房东要求英国担保人。",
           "家人在海外，这一栏填不上。这是惯例，不是对你的评价。",
