@@ -43,8 +43,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { useI18n } from "../i18n/LanguageProvider";
 
-const BEAT_SECONDS = 4;
-const BEATS = 5;
 const PHONE = "(max-width: 820px)"; // keep in step with the media query in the styles below
 const FILE = "/videos/student-story";
 
@@ -68,7 +66,6 @@ export default function StudentStory({ className = "" }) {
   const [still, setStill] = useState(false); // reduced motion
   const [playing, setPlaying] = useState(false);
   const [sound, setSound] = useState(false);
-  const [beat, setBeat] = useState(0);
 
   useEffect(() => {
     const phone = mq(PHONE);
@@ -173,24 +170,6 @@ export default function StudentStory({ className = "" }) {
     };
   }, []);
 
-  // The five marks follow the picture. Read once a frame while playing;
-  // React only re-renders on the five moments the beat changes.
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    const read = () =>
-      setBeat(Math.min(BEATS - 1, Math.max(0, Math.floor(video.currentTime / BEAT_SECONDS))));
-    read();
-    if (!playing) return;
-    let id;
-    const tick = () => {
-      read();
-      id = requestAnimationFrame(tick);
-    };
-    id = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(id);
-  }, [playing]);
-
   const toggle = () => {
     const video = videoRef.current;
     if (!video) return;
@@ -273,12 +252,6 @@ export default function StudentStory({ className = "" }) {
           <span>{sound ? s.soundOff : s.soundOn}</span>
         </button>
 
-        <div className="ss__steps" aria-hidden="true">
-          {s.captions.map((c, i) => (
-            <span key={c} className={i <= beat ? "is-on" : ""} />
-          ))}
-        </div>
-
         {/* All five. The film has its own subtitles, so these are for screen readers, and are the caption list under reduced motion. */}
         <ol className="ss__all">
           {s.captions.map((c) => (
@@ -300,8 +273,7 @@ export default function StudentStory({ className = "" }) {
         .ss__poster, .ss__video, .ss__still { position: absolute; inset: 0; width: 100%; height: 100%;
           object-fit: cover; display: block; }
 
-        .ss__bar { position: relative; display: grid; grid-template-columns: auto auto minmax(0, 1fr);
-          align-items: center; column-gap: 12px; padding: 14px 22px 14px 16px;
+        .ss__bar { position: relative; display: flex; align-items: center; gap: 12px; padding: 14px 22px 14px 16px;
           border-top: 1px solid var(--line); }
         .ss__btn { width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border: 0;
           border-radius: 50%; background: var(--brand); color: #fff; cursor: pointer;
@@ -315,10 +287,6 @@ export default function StudentStory({ className = "" }) {
         .ss__snd:hover, .ss__snd.is-on { border-color: var(--brand); }
         .ss__snd.is-on { background: rgba(20, 33, 61, 0.06); }
         .ss__snd:focus-visible { border-radius: 999px; }
-        .ss__steps { display: flex; gap: 6px; justify-self: end; }
-        .ss__steps span { width: 28px; height: 3px; border-radius: 2px; background: var(--line);
-          transition: background-color 200ms var(--ease); }
-        .ss__steps span.is-on { background: var(--brand); }
 
         .ss__sr, .ss__all { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
           overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
@@ -329,15 +297,11 @@ export default function StudentStory({ className = "" }) {
           @supports not (aspect-ratio: 1) {
             .ss__frame { padding-top: 125%; }
           }
-          .ss__bar { grid-template-columns: auto minmax(0, 1fr); row-gap: 12px; column-gap: 10px;
-            padding: 12px 16px 14px 12px; }
-          .ss__snd { justify-self: start; }
-          .ss__steps { grid-column: 1 / -1; justify-self: stretch; }
-          .ss__steps span { flex: 1; width: auto; }
+          .ss__bar { gap: 10px; padding: 12px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .ss__poster, .ss__video, .ss__btn, .ss__snd, .ss__steps { display: none; }
+          .ss__poster, .ss__video, .ss__btn, .ss__snd { display: none; }
           .ss__bar { display: block; padding: 18px 22px 20px; }
           .ss__all { position: static; width: auto; height: auto; margin: 0; padding: 0 0 0 1.4em;
             overflow: visible; clip: auto; clip-path: none; white-space: normal;
