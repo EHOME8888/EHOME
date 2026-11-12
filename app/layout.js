@@ -61,12 +61,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${newsreader.variable} ${instrument.variable}`}>
       <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify([organizationJsonLd, websiteJsonLd]),
-          }}
-        />
+        {/* One object per tag. Some browser add-ons read these and assume an
+            object with its own @context; a top-level array makes them throw. */}
+        {[organizationJsonLd, websiteJsonLd].map((data) => (
+          <script
+            key={data["@id"]}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+          />
+        ))}
         <LanguageProvider>
           <Nav />
           <main>{children}</main>

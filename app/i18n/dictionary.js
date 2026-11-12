@@ -94,6 +94,10 @@ export const dict = {
     testimonials: {
       eyebrow: "What students say",
       title: "Trusted with the part that matters most.",
+      pause: "Pause reviews",
+      play: "Play reviews",
+      starsLabel: "{n} out of 5 stars",
+      // Each item may carry `stars: 1..5`, the rating that reviewer gave.
       items: [
         { quote: "The landlord needed a UK guarantor and my parents were back in China. Ehome sorted it in two days and I moved in on time.", name: "L. Chen", role: "MSc student, UCL" },
         { quote: "Everything was explained in Chinese for my parents and in English for me — that's what made them comfortable.", name: "Y. Wang", role: "Undergraduate, University of Manchester" },
@@ -181,6 +185,8 @@ export const dict = {
       ],
       cta: "Interested in partnering with us?",
       ctaLink: "Get in touch",
+      pause: "Pause logos",
+      play: "Play logos",
     },
 
     pricing: {
@@ -450,6 +456,9 @@ export const dict = {
     testimonials: {
       eyebrow: "学生怎么说",
       title: "把最重要的事，放心交给我们。",
+      pause: "暂停滚动",
+      play: "继续滚动",
+      starsLabel: "{n} 星（满分 5 星）",
       items: [
         { quote: "房东要求提供英国本地担保人，而我父母在国内。易家两天就办妥，我按时入住。", name: "L. Chen", role: "UCL 硕士在读" },
         { quote: "所有内容都用中文向我父母解释、用英文向我说明——这让他们很放心。", name: "Y. Wang", role: "曼彻斯特大学 本科在读" },
@@ -536,6 +545,8 @@ export const dict = {
       ],
       cta: "有意与我们合作？",
       ctaLink: "欢迎联系",
+      pause: "暂停滚动",
+      play: "继续滚动",
     },
 
     pricing: {

@@ -12,9 +12,9 @@
 // be measured.
 //
 // Playback is the component's business, not the page's:
-//   · plays once, when 55% of it has scrolled into view
+//   · plays once, when a third of it has scrolled into view
 //   · desktop with a real pointer: hover replays it (the scene re-mounts,
-//     which restarts every CSS animation at zero)
+//     which restarts every CSS animation at zero, without the row's wait)
 //   · prefers-reduced-motion: the final frame, drawn, no animation
 //   · no IntersectionObserver at all: plays immediately
 // The styles live once in globals.css.
@@ -122,21 +122,25 @@ export default function StepScene({ step = 0, delay = 0, className = "" }) {
   const [mode, setMode] = useState("idle"); // idle → play | static
   const [run, setRun] = useState(0);
   const [hoverable, setHoverable] = useState(false);
-  // When the current run started. mouseenter also fires when a card scrolls
+  // When the current run ends. mouseenter also fires when a card scrolls
   // under a resting pointer, which would restart a scene mid-sequence every
   // time the page moved; a replay is only offered once a run has finished.
-  const startedAt = useRef(0);
+  const endsAt = useRef(0);
+  // The row's stagger belongs to the first run only. A replay is one card
+  // answering one pointer: it starts at once. Left on, the fourth card went
+  // blank for most of nine seconds before it drew again.
+  const wait = run === 0 ? delay : 0;
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setHoverable(!reduced && window.matchMedia("(hover: hover)").matches);
     if (reduced) { setMode("static"); return; }
-    if (typeof IntersectionObserver === "undefined") { setMode("play"); return; }
+    if (typeof IntersectionObserver === "undefined") { endsAt.current = Date.now() + delay + StepScene.SLOT_MS; setMode("play"); return; }
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
       (entries) => {
-        if (entries.some((e) => e.isIntersecting)) { startedAt.current = Date.now(); setMode("play"); io.disconnect(); }
+        if (entries.some((e) => e.isIntersecting)) { endsAt.current = Date.now() + delay + StepScene.SLOT_MS; setMode("play"); io.disconnect(); }
       },
       // 0.35, not 0.55: a scene a thumb-flick has left a third on screen
       // should still play. One that is scrolled straight past is not
@@ -145,20 +149,19 @@ export default function StepScene({ step = 0, delay = 0, className = "" }) {
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [delay]);
 
   const Scene = SCENES[step % SCENES.length];
   return (
     <div
       ref={ref}
       className={`sa sa--${step} sa--${mode} ${className}`.trim()}
-      style={{ "--sa-delay": `${delay}ms` }}
+      style={{ "--sa-delay": `${wait}ms` }}
       onMouseEnter={
         hoverable && mode === "play"
           ? () => {
-              // this scene's run ends a slot after it started, plus its wait
-              if (Date.now() - startedAt.current > StepScene.SLOT_MS + delay) {
-                startedAt.current = Date.now(); setRun((r) => r + 1);
+              if (Date.now() > endsAt.current) {
+                endsAt.current = Date.now() + StepScene.SLOT_MS; setRun((r) => r + 1);
               }
             }
           : undefined

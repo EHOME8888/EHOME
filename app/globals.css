@@ -59,6 +59,7 @@
 
   --section-lg: clamp(104px, 11vw, 168px);
   --section-md: clamp(76px, 7.5vw, 112px);
+  --section-join: clamp(56px, 6vw, 88px);
 
   /* --- Form ---------------------------------------------------------
      A small radius reads like a printed document; a pill reads like a
@@ -139,8 +140,8 @@ p { max-width: var(--maxw-prose); }
 .section { padding: var(--section-lg) 0; }
 .section--tight { padding: var(--section-md) 0; }
 
-/* Logo wall: the values it had before this pass, pinned so the global
-   increases above cannot move it. */
+/* University logos: their own spacing, set apart from the global
+   section values above. */
 .section.partners { padding: clamp(88px, 9vw, 128px) 0; }
 .section.partners .sec-head { margin-bottom: var(--sp-8); }
 .section.partners .sec-head h2 { margin-top: var(--sp-4); font-size: var(--step-4); }
@@ -148,6 +149,16 @@ p { max-width: var(--maxw-prose); }
 .sec-head { max-width: 50ch; margin-bottom: var(--sp-9); }
 .sec-head h1, .sec-head h2 { margin-top: var(--sp-5); }
 .sec-head p.lead { margin-top: var(--sp-5); }
+
+/* The logos, the questions and the closing panel all sit on the same paper.
+   Neighbours like that share one gap; left alone, each brings its own
+   section padding and the two stack into an empty screen. Plain selectors
+   on purpose: :has() is not safe in the in-app browsers this audience uses. */
+.section.partners,
+.section.faq { padding-bottom: 0; }
+.section.faq,
+.section.closing { padding-top: var(--section-join); }
+.faq__item:last-child { margin-bottom: 0; }
 
 /* ====================================================================
    BUTTONS
@@ -233,9 +244,8 @@ p { max-width: var(--maxw-prose); }
 }
 .reveal.is-visible .icon-disc--enter { opacity: 1; transform: none; }
 
-/* The university logo wall is deliberately left exactly as it was: it keeps
-   the plain opacity fade it has always had, and none of the spacing or
-   typography changes below reach it either. */
+/* The university logos fade in and nothing more: the row has its own
+   sideways motion, and a lift on top of that would be two movements. */
 .partners .reveal, .partners .reveal.is-visible { transform: none; }
 
 @keyframes riseIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
@@ -271,20 +281,37 @@ p { max-width: var(--maxw-prose); }
 .sa-ghost, .sa-live { position: absolute; inset: 0; }
 .sa-ghost { opacity: .16; }
 /* until its turn, the live copy is at its first frame — which for most of a
-   scene is nothing — and the ghost shows what is coming */
+   scene is nothing — and the ghost shows what is coming. When the turn
+   comes the ghost goes, so a moving part (the pen, the magnifier, the door)
+   is never on the card twice: once resting, once travelling. */
+.sa--play .sa-ghost { animation: saGhostOut calc(.35s * var(--sa-speed)) linear var(--sa-delay) forwards; }
+
+/* Where each moving part turns. On both copies, not just the live one: the
+   ghost holds the finished frame, and a rotate or a scale without its own
+   origin turns about the corner of the drawing — which threw the ghost's
+   clock hand onto the card to its left and its door to the card's edge. */
+.sa .sa-hand    { transform-box: fill-box; transform-origin: 50% 100%; }
+.sa .sa-seal    { transform-box: fill-box; transform-origin: center; }
+.sa .sa-door    { transform-box: fill-box; transform-origin: left center; }
+.sa .sa-keyturn { transform-box: fill-box; transform-origin: 20% 50%; }
 
 /* first frame */
-.sa .sa-draw { stroke-dasharray: 1; }
-.sa .sa-live .sa-draw { stroke-dashoffset: 1; }
+/* A line not yet drawn is hidden outright, not only dashed away: with round
+   caps WebKit paints a dot where a zero-length dash falls, so every undrawn
+   line left a speck at its far end. The gap is longer than the line for the
+   same reason — no dash boundary ever lands on the path. */
+.sa .sa-draw { stroke-dasharray: 1 2; }
+.sa .sa-live .sa-draw { stroke-dashoffset: 1; opacity: 0; }
 .sa .sa-live .sa-rise { transform: translateY(6px); opacity: 0; }
 .sa .sa-live .sa-glide { transform: translateY(0); }
-.sa .sa-live .sa-hand { transform-box: fill-box; transform-origin: 50% 100%; transform: rotate(0deg); }
+.sa .sa-live .sa-hand { transform: rotate(0deg); }
 .sa .sa-live .sa-pen { transform: translate(44px, -6px); opacity: 0; }
-.sa .sa-live .sa-seal { transform-box: fill-box; transform-origin: center; transform: scale(0); opacity: 0; }
+.sa .sa-live .sa-seal { transform: scale(0); opacity: 0; }
 .sa .sa-live .sa-light { opacity: 0; }
-.sa .sa-live .sa-door { transform-box: fill-box; transform-origin: left center; }
+/* the door is filled, so hiding its outline is not enough to hide it */
+.sa .sa-live .sa-door { opacity: 0; }
 .sa .sa-live .sa-key { transform: translateX(-30px); opacity: 0; }
-.sa .sa-live .sa-keyturn { transform-box: fill-box; transform-origin: 20% 50%; transform: rotate(0deg); }
+.sa .sa-live .sa-keyturn { transform: rotate(0deg); }
 
 /* the sequence — t0..t6 are beats, roughly 0.45s apart, after the row's own delay */
 .sa--play .sa-live .sa-draw { animation: saDraw calc(.5s * var(--sa-speed)) var(--ease) forwards; }
@@ -300,19 +327,23 @@ p { max-width: var(--maxw-prose); }
 .sa--play .sa-live .sa-send   { animation: saDraw calc(.35s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.2s * var(--sa-speed)) forwards,
                                   saSend calc(.6s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 2.1s * var(--sa-speed)) forwards; }
 .sa--play .sa-live .sa-glide  { animation: saGlide calc(.8s * var(--sa-speed)) ease-in-out calc(var(--sa-delay) + 1.0s * var(--sa-speed)) forwards; }
-.sa--play .sa-live .sa-hand   { animation: saHand calc(.8s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.3s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-hand   { animation: saDraw calc(.5s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + .9s * var(--sa-speed)) forwards,
+                                  saHand calc(.8s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.3s * var(--sa-speed)) forwards; }
 .sa--play .sa-live .sa-sig    { animation-duration: calc(1.0s * var(--sa-speed)); }
 .sa--play .sa-live .sa-pen    { animation: saPen calc(1.0s * var(--sa-speed)) linear calc(var(--sa-delay) + .6s * var(--sa-speed)) forwards; }
 .sa--play .sa-live .sa-seal   { animation: saSeal calc(.45s * var(--sa-speed)) cubic-bezier(.2,1.4,.4,1) calc(var(--sa-delay) + 2.0s * var(--sa-speed)) forwards; }
 .sa--play .sa-live .sa-key    { animation: saKey calc(.45s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + .5s * var(--sa-speed)) forwards,
                                   saKeyOut calc(.4s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.5s * var(--sa-speed)) forwards; }
 .sa--play .sa-live .sa-keyturn{ animation: saKeyTurn calc(.4s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.0s * var(--sa-speed)) forwards; }
-.sa--play .sa-live .sa-door   { animation: saDoor calc(.7s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.5s * var(--sa-speed)) forwards; }
+.sa--play .sa-live .sa-door   { animation: saShow calc(.25s * var(--sa-speed)) linear calc(var(--sa-delay) + .3s * var(--sa-speed)) forwards,
+                                  saDoor calc(.7s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.5s * var(--sa-speed)) forwards; }
 .sa--play .sa-live .sa-light  { animation: saLight calc(.6s * var(--sa-speed)) var(--ease) calc(var(--sa-delay) + 1.7s * var(--sa-speed)) forwards; }
 
-@keyframes saDraw   { to { stroke-dashoffset: 0; } }
+@keyframes saDraw   { from { opacity: 1; } to { stroke-dashoffset: 0; opacity: 1; } }
+@keyframes saShow   { to { opacity: 1; } }
+@keyframes saGhostOut { to { opacity: 0; } }
 @keyframes saRise   { to { transform: none; opacity: 1; } }
-@keyframes saSend   { to { transform: translateX(10px); opacity: 0; } }
+@keyframes saSend   { from { opacity: 1; } to { transform: translateX(10px); opacity: 0; } }
 @keyframes saGlide  { to { transform: translateY(14px); } }
 @keyframes saHand   { to { transform: rotate(120deg); } }
 @keyframes saPen    { from { transform: translate(0, 0); opacity: 1; } to { transform: translate(37px, 0); opacity: 1; } }
@@ -324,7 +355,7 @@ p { max-width: var(--maxw-prose); }
 @keyframes saLight  { to { opacity: .22; } }
 
 /* last frame, drawn: reduced motion, or no scripting */
-.sa--static .sa-live .sa-draw, .sa-ghost .sa-draw { stroke-dashoffset: 0; }
+.sa--static .sa-live .sa-draw, .sa-ghost .sa-draw { stroke-dashoffset: 0; opacity: 1; }
 .sa--static .sa-live .sa-rise, .sa-ghost .sa-rise{ transform: none; opacity: 1; }
 .sa--static .sa-live .sa-send, .sa-ghost .sa-send{ opacity: 0; }
 .sa--static .sa-live .sa-glide, .sa-ghost .sa-glide{ transform: translateY(14px); }
@@ -333,22 +364,22 @@ p { max-width: var(--maxw-prose); }
 .sa--static .sa-live .sa-seal, .sa-ghost .sa-seal{ transform: scale(1); opacity: 1; }
 .sa--static .sa-live .sa-key, .sa-ghost .sa-key{ transform: translateX(28px); opacity: 0; }
 .sa--static .sa-live .sa-keyturn, .sa-ghost .sa-keyturn{ transform: rotate(80deg); }
-.sa--static .sa-live .sa-door, .sa-ghost .sa-door{ transform: skewY(-7deg) scaleX(.18); }
+.sa--static .sa-live .sa-door, .sa-ghost .sa-door{ transform: skewY(-7deg) scaleX(.18); opacity: 1; }
 .sa--static .sa-live .sa-light, .sa-ghost .sa-light{ opacity: .22; }
 
 @media (prefers-reduced-motion: reduce) {
   .sa * { animation: none !important; }
   .sa-ghost { display: none; }
-  .sa .sa-draw, .sa .sa-sig { stroke-dashoffset: 0; }
+  .sa .sa-live .sa-draw { stroke-dashoffset: 0; opacity: 1; }
   .sa .sa-live .sa-rise { transform: none; opacity: 1; }
-  .sa .sa-send { opacity: 0; }
+  .sa .sa-live .sa-send { opacity: 0; }
   .sa .sa-live .sa-glide { transform: translateY(14px); }
   .sa .sa-live .sa-hand { transform: rotate(120deg); }
   .sa .sa-live .sa-pen { transform: translate(37px, 0); opacity: 1; }
   .sa .sa-live .sa-seal { transform: scale(1); opacity: 1; }
   .sa .sa-live .sa-key { transform: translateX(28px); opacity: 0; }
   .sa .sa-live .sa-keyturn { transform: rotate(80deg); }
-  .sa .sa-live .sa-door { transform: skewY(-7deg) scaleX(.18); }
+  .sa .sa-live .sa-door { transform: skewY(-7deg) scaleX(.18); opacity: 1; }
   .sa .sa-live .sa-light { opacity: .22; }
 }
 

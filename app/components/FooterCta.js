@@ -14,7 +14,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useI18n } from "../i18n/LanguageProvider";
 
 const PHOTO = "/images/footer-home.jpg";
@@ -23,23 +23,56 @@ export default function FooterCta() {
   const { t } = useI18n();
   const c = t.footerCta;
   const pathname = usePathname();
-  const [photoFailed, setPhotoFailed] = useState(false);
+  // "optimised" is the resized copy from the image optimiser. If that request
+  // fails, the band falls back to the file as uploaded before it gives up: a
+  // single bad response used to take the photograph away for the whole visit,
+  // because the footer lives in the layout and keeps its state across pages.
+  const [source, setSource] = useState("optimised"); // optimised | original | none
+  // Lazy until the page itself has finished loading, then fetched while the
+  // browser is idle. Lazy alone meant the request only started once the band
+  // was nearly on screen, so anyone who scrolled straight to the bottom met a
+  // bare navy band while the photograph was still on its way.
+  const [warm, setWarm] = useState(false);
   const onContact = pathname === "/contact";
+
+  useEffect(() => {
+    let idle = 0;
+    let timer = 0;
+    const start = () => {
+      if (typeof window.requestIdleCallback === "function") {
+        idle = window.requestIdleCallback(() => setWarm(true), { timeout: 2500 });
+      } else {
+        timer = window.setTimeout(() => setWarm(true), 800);
+      }
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => {
+      window.removeEventListener("load", start);
+      if (idle && typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(idle);
+      if (timer) window.clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <section className="fcta" aria-labelledby="fcta-line">
-      {!photoFailed && (
+      {source !== "none" && (
         <Image
+          // A new element per source, so the fallback starts from a clean
+          // <img> rather than one that has already reported an error.
+          key={source}
           src={PHOTO}
           alt=""
           fill
           sizes="100vw"
           quality={74}
+          unoptimized={source === "original"}
           // Below the fold on every page, so it must never compete with the
-          // hero for bandwidth.
-          loading="lazy"
+          // hero for bandwidth: nothing is requested before the page's own
+          // load has finished.
+          loading={warm ? "eager" : "lazy"}
           className="fcta__photo"
-          onError={() => setPhotoFailed(true)}
+          onError={() => setSource((s) => (s === "optimised" ? "original" : "none"))}
         />
       )}
       <div className="fcta__scrim" aria-hidden="true" />
