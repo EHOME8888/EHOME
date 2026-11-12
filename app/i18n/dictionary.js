@@ -274,6 +274,24 @@ export const dict = {
       eyebrow: "For international students",
       title: "A UK rent guarantor for international students",
       intro: "Most UK landlords ask for a guarantor who owns property in the UK. If your family is overseas, that is a requirement you cannot meet — however strong your finances are. Ehome steps into that role.",
+      // The twenty-second animation under the heading (StudentStory.js).
+      // Five captions, one per four-second beat, in the order they play.
+      story: {
+        title: "Winnie gets her keys",
+        desc: "A 20-second animation with a voiceover and subtitles. It plays without sound until you turn the sound on. Winnie, a student, arrives at a navy front door with her suitcase and hands her rental application to the landlord, Arthur. Passport, university offer and proof of funds are ticked, but the UK guarantor box is empty. Alex from Ehome arrives with a guarantee letter and hands it to Arthur. The empty box turns gold, Arthur hands Winnie the keys, and the door opens.",
+        captions: [
+          "Found the flat. The landlord asks for a UK guarantor.",
+          "Family overseas cannot fill that box. It is routine, not a judgement on you.",
+          "Ehome steps in as your guarantor.",
+          "The landlord receives the guarantee letter.",
+          "Keys in hand. Welcome home.",
+        ],
+        stillAlt: "Winnie holds up her new keys beside Arthur, the landlord, who holds the guarantee letter. Alex from Ehome waves, and the navy front door stands open.",
+        play: "Play animation",
+        pause: "Pause animation",
+        soundOn: "Turn sound on",
+        soundOff: "Turn sound off",
+      },
       whyTitle: "Why landlords ask for a guarantor",
       why: [
         { t: "It is the default, not a judgement", d: "Letting agents apply the same rule to every applicant. It is not about you or your means — it is a box on their form." },
@@ -634,6 +652,22 @@ export const dict = {
       eyebrow: "致留学生",
       title: "为留学生提供的英国租房担保",
       intro: "英国房东通常要求提供在英国拥有房产的担保人。如果你的家人在海外，无论经济状况多好，这个条件都无法满足。易家正是来承担这个角色。",
+      story: {
+        title: "Winnie 拿到钥匙",
+        desc: "20 秒动画，配有旁白和字幕，默认静音播放，可手动开启声音。留学生 Winnie 拖着行李箱来到一扇深蓝色的门前，把租房申请材料交给房东 Arthur。护照、大学录取通知书和资金证明都已打勾，只有「英国担保人」一栏空着。易家顾问 Alex 带着担保函到来，交给 Arthur。空着的那一栏变成金色，Arthur 把钥匙交给 Winnie，门打开了。",
+        captions: [
+          "找到了喜欢的房子，但房东要求英国担保人。",
+          "家人在海外，这一栏填不上。这是惯例，不是对你的评价。",
+          "易家来承担担保人的角色。",
+          "房东收到担保函，放心了。",
+          "拿到钥匙，安心入住。",
+        ],
+        stillAlt: "Winnie 举起新钥匙，身旁的房东 Arthur 拿着担保函，易家顾问 Alex 在一旁挥手，深蓝色的门已经打开。",
+        play: "播放动画",
+        pause: "暂停动画",
+        soundOn: "开启声音",
+        soundOff: "关闭声音",
+      },
       whyTitle: "房东为什么要求担保人",
       why: [
         { t: "这是惯例，不是对你的评价", d: "中介对每位申请人都套用同一条规则，与你本人或你的经济能力无关，只是表格上的一栏。" },

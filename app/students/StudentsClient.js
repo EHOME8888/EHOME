@@ -4,10 +4,9 @@ import Link from "next/link";
 import { useI18n } from "../i18n/LanguageProvider";
 import Reveal from "../components/Reveal";
 import IconDisc from "../components/IconDisc";
-import { IconDocument, IconFinance, IconFee, IconSign, IconBilingual, IconPeople } from "../components/icons";
+import StudentStory from "../components/StudentStory";
+import { IconDocument, IconSign, IconBilingual, IconPeople } from "../components/icons";
 
-// Why landlords ask: a box on their form, foreign income, paying up front.
-const WHY_ICONS = [IconDocument, IconFinance, IconFee];
 // What Ehome does: a formal deed, your existing documents, two languages,
 // dealing with us directly.
 const DO_ICONS = [IconSign, IconDocument, IconBilingual, IconPeople];
@@ -20,23 +19,20 @@ export default function Students() {
     <>
       <section className="section">
         <div className="container">
-          <Reveal className="sec-head">
+          <Reveal className="sec-head stu-head">
             <p className="eyebrow">{s.eyebrow}</p>
             <h1>{s.title}</h1>
             <p className="lead">{s.intro}</p>
           </Reveal>
+        </div>
 
-          <Reveal><h2 className="stu-h">{s.whyTitle}</h2></Reveal>
-          <div className="stu-grid">
-            {s.why.map((w, i) => (
-              <Reveal key={w.t} delay={i * 70} className="stu-card">
-                <IconDisc icon={WHY_ICONS[i % WHY_ICONS.length]} size="md" className="stu-card__icon" />
-                <h3>{w.t}</h3>
-                <p>{w.d}</p>
-              </Reveal>
-            ))}
-          </div>
+        {/* The twenty-second story, as one panel across the whole page:
+            a wide cut on desktop, a tall cut on a phone. */}
+        <div className="stu-film">
+          <StudentStory />
+        </div>
 
+        <div className="container">
           <Reveal className="stu-do">
             <h2 className="stu-h">{s.doTitle}</h2>
             <ul className="stu-list">
@@ -59,23 +55,22 @@ export default function Students() {
 
       <style dangerouslySetInnerHTML={{ __html: `
         .sec-head h1 { margin-top: 12px; }
+        .stu-head { max-width: 62ch; margin-bottom: var(--sp-7); }
+        .stu-film { padding: 0 var(--sp-5); margin-bottom: var(--sp-9); }
         .stu-h { font-size: 1.5rem; margin: 56px 0 24px; }
-        .stu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .stu-card { background: var(--surface); border: 1px solid var(--line);
-          border-radius: var(--radius); padding: 24px; }
-        .stu-card h3 { color: var(--brand); margin-bottom: 8px; }
-        .stu-card p { color: var(--muted); }
-        .stu-do { margin-top: 16px; background: var(--surface); border: 1px solid var(--line);
+        .stu-do { background: var(--surface); border: 1px solid var(--line);
           border-radius: var(--radius); padding: 8px 28px 28px; }
         .stu-do .stu-h { margin-top: 28px; }
-        .stu-card__icon { margin-bottom: 16px; }
         .stu-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; max-width: 72ch; }
         .stu-list li { display: flex; align-items: flex-start; gap: 14px; }
         .stu-list li .icon-disc { margin-top: -2px; }
         .stu-note { margin-top: 20px; font-size: 0.86rem; color: var(--muted);
           border-left: 2px solid var(--gold-soft); padding-left: 12px; }
         .stu-cta { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; }
-        @media (max-width: 820px) { .stu-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 820px) {
+          .stu-head { margin-bottom: var(--sp-6); }
+          .stu-film { padding: 0 16px; margin-bottom: var(--sp-8); }
+        }
       ` }} />
     </>
   );
