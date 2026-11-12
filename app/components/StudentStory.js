@@ -6,29 +6,37 @@
 // line is the one she cannot fill, Ehome takes that role, the landlord is
 // satisfied, the student moves in. Five beats of four seconds each.
 //
-// The picture is a silent, looping film drawn with the Ehome cast (Winnie,
-// Alex, Arthur). It is one large panel across the page, and there are four
-// files of it: a wide cut (16:9) for desktop and a tall cut (4:5) for
-// phones, each in English and in Chinese, because the paperwork Winnie
-// hands over can be read. The component picks the file from the viewport
-// and the site language and swaps it, keeping its place, when either
-// changes. The five captions are still real text, in the bar under the
-// picture, taken from the dictionary.
+// The picture is a film drawn with the Ehome cast (Winnie, Alex, Arthur),
+// with a voiceover and its subtitles burned into the picture. It is one
+// large panel across the page, and there are four files of it: a wide cut
+// (16:9) for desktop and a tall cut (4:5) for phones, each in English and
+// in Chinese, because the voice, the subtitles and the paperwork Winnie
+// hands over are all in one language. The component picks the file from
+// the viewport and the site language and swaps it, keeping its place, when
+// either changes.
 //
 // Playback is the component's business, not the page's:
-//   · plays when a third of it is on screen, pauses when it is not
+//   · plays, muted and looping, when a third of it is on screen; pauses
+//     when it is not
 //   · a visible pause / play button; a pause the reader chose is kept
-//   · no sound: the files have no audio track and the element is muted
+//   · sound is never started by the page. The "sound on" button unmutes
+//     and plays the story from the top; with sound on it plays once and
+//     stops on the last frame. Scrolling it off screen mutes it again, so
+//     it never starts talking by itself on the way back.
 //   · prefers-reduced-motion: no video at all. The final frame is shown as
 //     a still and the five captions are listed beneath it. CSS hides the
 //     moving parts before any script runs; the script never adds a source.
 //   · autoplay refused (some in-app browsers): the first frame stays as the
 //     poster and the button reads "play"
 //
+// The five captions from the dictionary are no longer shown under the
+// picture, because the film carries its own subtitles. They are still in
+// the page as a list for screen readers, and they are what is shown under
+// reduced motion.
+//
 // Nothing here can move the page: the panel holds its 16:9 or 4:5 box in
 // CSS before anything loads, the poster is the film's own first frame, and
-// the five captions are stacked in one grid cell so the tallest sets the
-// height.
+// the bar under it has a fixed height.
 //
 // Wording rule for anything added here: this is a guarantee. Not insurance,
 // and nothing in the picture suggests it (no shield, umbrella, coin or note).
@@ -59,6 +67,7 @@ export default function StudentStory({ className = "" }) {
   const [shape, setShape] = useState(null); // "wide" | "tall"
   const [still, setStill] = useState(false); // reduced motion
   const [playing, setPlaying] = useState(false);
+  const [sound, setSound] = useState(false);
   const [beat, setBeat] = useState(0);
 
   useEffect(() => {
@@ -83,7 +92,16 @@ export default function StudentStory({ className = "" }) {
     const video = videoRef.current;
     if (!video || userPaused.current || reducedMotion()) return;
     const p = video.play();
-    if (p && typeof p.catch === "function") p.catch(() => {}); // autoplay refused: the poster stays
+    if (!p || typeof p.catch !== "function") return;
+    p.catch((err) => {
+      // Muted and still refused: the poster stays. With sound and refused
+      // (no tap to allow it): carry on without sound instead of stopping.
+      if (video.muted || err?.name !== "NotAllowedError") return;
+      video.muted = true;
+      setSound(false);
+      const q = video.play();
+      if (q && typeof q.catch === "function") q.catch(() => {});
+    });
   };
 
   // Play on screen, pause off screen.
@@ -99,8 +117,17 @@ export default function StudentStory({ className = "" }) {
       (entries) => {
         entries.forEach((e) => {
           inView.current = e.isIntersecting;
-          if (e.isIntersecting) start();
-          else videoRef.current?.pause();
+          if (e.isIntersecting) {
+            start();
+            return;
+          }
+          const video = videoRef.current;
+          if (!video) return;
+          video.pause();
+          if (!video.muted) {
+            video.muted = true;
+            setSound(false);
+          }
         });
       },
       { threshold: 0.35 }
@@ -130,16 +157,24 @@ export default function StudentStory({ className = "" }) {
     if (!video) return;
     const onPlay = () => setPlaying(true);
     const onPause = () => setPlaying(false);
+    // Only reached with sound on (muted, the film loops): it has been heard
+    // once, so it waits on its last frame for the button.
+    const onEnded = () => {
+      userPaused.current = true;
+      setPlaying(false);
+    };
     video.addEventListener("play", onPlay);
     video.addEventListener("pause", onPause);
+    video.addEventListener("ended", onEnded);
     return () => {
       video.removeEventListener("play", onPlay);
       video.removeEventListener("pause", onPause);
+      video.removeEventListener("ended", onEnded);
     };
   }, []);
 
-  // Caption follows the picture. Read once a frame while playing; React
-  // only re-renders on the five moments the beat changes.
+  // The five marks follow the picture. Read once a frame while playing;
+  // React only re-renders on the five moments the beat changes.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -159,13 +194,30 @@ export default function StudentStory({ className = "" }) {
   const toggle = () => {
     const video = videoRef.current;
     if (!video) return;
-    if (video.paused) {
+    if (video.paused || video.ended) {
       userPaused.current = false;
       start();
     } else {
       userPaused.current = true;
       video.pause();
     }
+  };
+
+  // Sound is the reader's choice, made with a tap, which is also what
+  // browsers require before they will play anything out loud.
+  const toggleSound = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (!video.muted) {
+      video.muted = true;
+      setSound(false);
+      return;
+    }
+    video.muted = false;
+    setSound(true);
+    try { video.currentTime = 0; } catch (e) { /* nothing loaded yet: it starts from the top anyway */ }
+    userPaused.current = false;
+    start();
   };
 
   return (
@@ -177,8 +229,8 @@ export default function StudentStory({ className = "" }) {
         <video
           ref={videoRef}
           className="ss__video"
-          muted
-          loop
+          muted={!sound}
+          loop={!sound}
           playsInline
           preload="none"
           disablePictureInPicture
@@ -209,19 +261,25 @@ export default function StudentStory({ className = "" }) {
           </svg>
         </button>
 
-        {/* One line at a time, in step with the picture. Screen readers get the list below instead. */}
-        <div className="ss__caps" aria-hidden="true">
-          {s.captions.map((c, i) => (
-            <p key={c} className={i === beat ? "is-on" : ""}>{c}</p>
-          ))}
-        </div>
+        <button type="button" className={`ss__snd${sound ? " is-on" : ""}`} onClick={toggleSound}>
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+            <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="currentColor" />
+            {sound ? (
+              <path d="M15 9a4.2 4.2 0 0 1 0 6M17.6 6.4a8 8 0 0 1 0 11.2" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            ) : (
+              <path d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            )}
+          </svg>
+          <span>{sound ? s.soundOff : s.soundOn}</span>
+        </button>
+
         <div className="ss__steps" aria-hidden="true">
           {s.captions.map((c, i) => (
             <span key={c} className={i <= beat ? "is-on" : ""} />
           ))}
         </div>
 
-        {/* All five. Hidden from sight while the film plays, shown as the caption list under reduced motion. */}
+        {/* All five. The film has its own subtitles, so these are for screen readers, and are the caption list under reduced motion. */}
         <ol className="ss__all">
           {s.captions.map((c) => (
             <li key={c}>{c}</li>
@@ -242,20 +300,22 @@ export default function StudentStory({ className = "" }) {
         .ss__poster, .ss__video, .ss__still { position: absolute; inset: 0; width: 100%; height: 100%;
           object-fit: cover; display: block; }
 
-        .ss__bar { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
-          align-items: center; column-gap: 18px; padding: 14px 22px 14px 16px;
+        .ss__bar { position: relative; display: grid; grid-template-columns: auto auto minmax(0, 1fr);
+          align-items: center; column-gap: 12px; padding: 14px 22px 14px 16px;
           border-top: 1px solid var(--line); }
         .ss__btn { width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border: 0;
           border-radius: 50%; background: var(--brand); color: #fff; cursor: pointer;
           transition: background-color 160ms var(--ease); }
         .ss__btn:hover { background: var(--navy-lift); }
         .ss__btn:focus-visible { border-radius: 50%; }
-        .ss__caps { display: grid; }
-        .ss__caps p { grid-area: 1 / 1; margin: 0; color: var(--brand);
-          font-size: clamp(1rem, 0.3vw + 0.95rem, 1.2rem); line-height: 1.45; font-weight: 500;
-          opacity: 0; transition: opacity 220ms var(--ease); }
-        .ss__caps p.is-on { opacity: 1; }
-        .ss__steps { display: flex; gap: 6px; }
+        .ss__snd { height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 0 18px 0 14px;
+          border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--brand);
+          font: inherit; font-size: 0.95rem; font-weight: 500; line-height: 1; white-space: nowrap; cursor: pointer;
+          transition: background-color 160ms var(--ease), border-color 160ms var(--ease); }
+        .ss__snd:hover, .ss__snd.is-on { border-color: var(--brand); }
+        .ss__snd.is-on { background: rgba(20, 33, 61, 0.06); }
+        .ss__snd:focus-visible { border-radius: 999px; }
+        .ss__steps { display: flex; gap: 6px; justify-self: end; }
         .ss__steps span { width: 28px; height: 3px; border-radius: 2px; background: var(--line);
           transition: background-color 200ms var(--ease); }
         .ss__steps span.is-on { background: var(--brand); }
@@ -269,15 +329,15 @@ export default function StudentStory({ className = "" }) {
           @supports not (aspect-ratio: 1) {
             .ss__frame { padding-top: 125%; }
           }
-          .ss__bar { grid-template-columns: auto minmax(0, 1fr); row-gap: 12px; column-gap: 14px;
+          .ss__bar { grid-template-columns: auto minmax(0, 1fr); row-gap: 12px; column-gap: 10px;
             padding: 12px 16px 14px 12px; }
-          .ss__caps { align-items: center; }
-          .ss__steps { grid-column: 1 / -1; }
+          .ss__snd { justify-self: start; }
+          .ss__steps { grid-column: 1 / -1; justify-self: stretch; }
           .ss__steps span { flex: 1; width: auto; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .ss__poster, .ss__video, .ss__btn, .ss__caps, .ss__steps { display: none; }
+          .ss__poster, .ss__video, .ss__btn, .ss__snd, .ss__steps { display: none; }
           .ss__bar { display: block; padding: 18px 22px 20px; }
           .ss__all { position: static; width: auto; height: auto; margin: 0; padding: 0 0 0 1.4em;
             overflow: visible; clip: auto; clip-path: none; white-space: normal;
