@@ -120,6 +120,24 @@ export const IconAssess = (p) => (
   </Svg>
 );
 
+/** A magnifier with a tick inside — the case has been looked at and passed. */
+export const IconAssessCheck = (p) => (
+  <Svg {...p}>
+    <circle cx="10.6" cy="10.6" r="6" />
+    <path d="m15.2 15.2 5 5" />
+    <path d="m8 10.8 1.9 1.9 3.5-3.7" />
+  </Svg>
+);
+
+/** A key — the last step, and the only thing the student came for. */
+export const IconKey = (p) => (
+  <Svg {...p}>
+    <circle cx="7.8" cy="16.2" r="3.8" />
+    <path d="m10.5 13.5 9-9" />
+    <path d="m15.4 8.6 2.6 2.6M18.2 5.8l2.2 2.2" />
+  </Svg>
+);
+
 /** A pen on a line — we sign. */
 export const IconSign = (p) => (
   <Svg {...p}>
