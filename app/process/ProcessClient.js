@@ -48,7 +48,9 @@ export default function Process() {
       </section>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .proc-h { font-size: 1.5rem; margin: 28px 0 24px; }
+        /* Two classes, so the size holds against the site's larger section
+           headings: these two cards sit below the thread, not beside it. */
+        .proc-card .proc-h { font-size: var(--step-3); line-height: 1.2; margin: 28px 0 24px; }
         .proc-cols { margin-top: var(--sp-9); display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
         .proc-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 28px 28px; }
         .proc-checks { display: flex; flex-direction: column; gap: 22px; }
