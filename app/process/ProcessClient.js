@@ -20,7 +20,8 @@ export default function Process() {
           {/* The thread: title, four steps, what to have ready, two buttons. */}
           <ProcessThread heading="h1" />
 
-          {/* Beneath it: the checks we run, and how the data is handled. */}
+          {/* Beneath it: the checks we run, laid out side by side, then how
+              the data is handled, each card the full width of the page. */}
           <div className="proc-cols">
             <Reveal className="proc-card">
               <h2 className="proc-h">{p.checksTitle}</h2>
@@ -49,19 +50,26 @@ export default function Process() {
 
       <style dangerouslySetInnerHTML={{ __html: `
         /* Two classes, so the size holds against the site's larger section
-           headings: these two cards sit below the thread, not beside it. */
+           headings: these two cards sit below the thread, one above the other. */
         .proc-card .proc-h { font-size: var(--step-3); line-height: 1.2; margin: 28px 0 24px; }
-        .proc-cols { margin-top: var(--sp-9); display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+        .proc-cols { margin-top: var(--sp-9); display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
         .proc-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 28px 28px; }
-        .proc-checks { display: flex; flex-direction: column; gap: 22px; }
-        .proc-check { display: flex; gap: 16px; align-items: flex-start; }
+        /* Four checks in one row, icon above its text. */
+        .proc-checks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+        .proc-check { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
         .proc-check h3 { color: var(--brand); margin-bottom: 4px; }
         .proc-check p { color: var(--muted); }
         .proc-data__head { display: flex; align-items: center; gap: 14px; }
         .proc-data__head .icon-disc { margin-top: 4px; }
-        .proc-data p { color: var(--muted); }
+        .proc-data p { color: var(--muted); max-width: 78ch; }
 
-        @media (max-width: 820px) { .proc-cols { grid-template-columns: 1fr; margin-top: var(--sp-8); } }
+        /* Narrower screens: two by two, then one column with the icon beside the text. */
+        @media (max-width: 1000px) { .proc-checks { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 28px; } }
+        @media (max-width: 820px) { .proc-cols { margin-top: var(--sp-8); } }
+        @media (max-width: 560px) {
+          .proc-checks { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+          .proc-check { flex-direction: row; gap: 16px; }
+        }
       ` }} />
     </>
   );
