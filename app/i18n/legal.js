@@ -8,6 +8,8 @@
 // "**" marks bold inline, as in the source documents.
 // -----------------------------------------------------------------------------
 
+import { ICO_REGISTRATION } from "../lib/company";
+
 export const legal = {
   en: {
     prevails: "The English version prevails in case of any discrepancy.",
@@ -22,7 +24,7 @@ export const legal = {
           "Company: EHOME Properties Limited, registered in England & Wales, company number **17343697**.",
           "Our registered office address is available on the Companies House public register.",
           "We are the **controller** of the personal data described in this notice.",
-          "ICO registration number: **CSN1405657**.",
+          `ICO registration number: **${ICO_REGISTRATION}**.`,
           "Contact for privacy questions and to exercise your rights: **privacy@ehomeproperties.com**.",
         ] },
 
@@ -207,7 +209,7 @@ export const legal = {
           "公司：EHOME Properties Limited，于英格兰及威尔士注册，公司注册号 **17343697**。",
           "我们的注册办公地址可在英国公司注册处（Companies House）公开登记册查询。",
           "就本声明所述的个人数据而言，我们是**数据控制者**。",
-          "ICO 注册号：**CSN1405657**。",
+          `ICO 注册号：**${ICO_REGISTRATION}**。`,
           "隐私问题咨询及行使权利请联系：**privacy@ehomeproperties.com**。",
         ] },
 

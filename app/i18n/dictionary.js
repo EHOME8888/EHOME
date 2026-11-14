@@ -3,6 +3,8 @@
 // The [PLACEHOLDER] markers are things to replace with your real details.
 // -----------------------------------------------------------------------------
 
+import { ICO_REGISTRATION } from "../lib/company";
+
 export const dict = {
   en: {
     langLabel: "中文", // button shows the OTHER language
@@ -131,7 +133,7 @@ export const dict = {
         { q: "What documents will I need?", a: "Typically your passport or national ID, proof of study (university offer, CAS, or student ID), your tenancy or property details, and financial evidence — either yours or your sponsor's. We'll give you a clear checklist when you apply." },
         { q: "Can my parents in China support my application?", a: "Yes — this is common. Many of our students are supported by a parent or family member in China. We can review your sponsor as part of your application, and we support your family in Chinese throughout." },
         { q: "Do I need a UK bank account or a UK-based relative?", a: "No. You don't need a UK guarantor, a UK credit history, or a UK relative. That's exactly the gap Ehome fills." },
-        { q: "Is my personal information safe?", a: "We collect only what we need to make a fair decision, always with your consent, and handle it securely and confidentially. Ehome is registered with the UK Information Commissioner's Office (ICO) under registration number CSN1405657." },
+        { q: "Is my personal information safe?", a: `We collect only what we need to make a fair decision, always with your consent, and handle it securely and confidentially. Ehome is registered with the UK Information Commissioner's Office (ICO) under registration number ${ICO_REGISTRATION}.` },
         { q: "Do you cover house shares, HMOs, and student halls?", a: "We work across common student tenancy types, including shared houses and student accommodation. If you're unsure whether your tenancy qualifies, just ask — we'll tell you honestly." },
         { q: "What happens if my application isn't approved?", a: "We'll explain why wherever we can, and where possible suggest what might help. Not every application can be approved, but we aim to be clear and quick either way." },
       ],
@@ -175,7 +177,7 @@ export const dict = {
         { t: "Fraud checks", d: "We cross-check documents and details for consistency." },
       ],
       dataTitle: "Your data, handled with care",
-      dataBody: "We collect only what we need to make a fair decision, always with your consent, and handle it securely and confidentially. Ehome is registered with the UK Information Commissioner's Office (ICO) under registration number CSN1405657.",
+      dataBody: `We collect only what we need to make a fair decision, always with your consent, and handle it securely and confidentially. Ehome is registered with the UK Information Commissioner's Office (ICO) under registration number ${ICO_REGISTRATION}.`,
     },
 
     partners: {
@@ -305,7 +307,7 @@ export const dict = {
       why: [
         { t: "It is the default, not a judgement", d: "Letting agents apply the same rule to every applicant. It is not about you or your means — it is a box on their form." },
         { t: "Overseas income does not satisfy it", d: "Agents are rarely set up to assess foreign payslips, tax records or bank statements, so they fall back on the UK-guarantor rule." },
-        { t: "The alternative is paying up front", d: "Without a guarantor you are usually asked for six or twelve months' rent in advance, which ties up money you may need for fees and living costs." },
+        { t: "Without one, the answer is often no", d: "A student who cannot offer a UK guarantor is often turned down for the flat they want, whatever their family's means." },
       ],
       doTitle: "What Ehome does",
       do: [
@@ -386,7 +388,7 @@ export const dict = {
       getInTouch: "Get in touch",
       rights: "All rights reserved.",
       built: "Built with Next.js",
-      ico: "Registered with the ICO — registration CSN1405657",
+      ico: `Registered with the ICO — registration ${ICO_REGISTRATION}`,
       legal: "EHOME Properties Limited · Company No. 17343697 · Registered in England & Wales",
     },
   },
@@ -518,7 +520,7 @@ export const dict = {
         { q: "需要准备哪些材料？", a: "通常包括护照或身份证、在读证明（大学 offer、CAS 或学生证）、房源或租约信息，以及财力证明（你本人或担保人的）。申请时我们会提供清晰的材料清单。" },
         { q: "我在国内的父母可以作为支持吗？", a: "可以，这也很常见。许多学生由国内父母或家人提供资金支持。我们会在审核中一并评估担保人，并全程以中文为你的家人提供协助。" },
         { q: "需要英国银行账户或英国本地亲属吗？", a: "不需要。你无需英国担保人、英国信用记录或英国亲属——这正是易家为你填补的空白。" },
-        { q: "我的个人信息安全吗？", a: "我们只在你同意的前提下收集作出公平判断所必需的信息，并安全、保密地处理。易家已在英国信息专员办公室（ICO）注册，注册号 CSN1405657。" },
+        { q: "我的个人信息安全吗？", a: `我们只在你同意的前提下收集作出公平判断所必需的信息，并安全、保密地处理。易家已在英国信息专员办公室（ICO）注册，注册号 ${ICO_REGISTRATION}。` },
         { q: "合租、HMO 与学生公寓是否涵盖？", a: "我们支持常见的学生租约类型，包括合租房与学生公寓。如不确定你的租约是否符合，欢迎直接询问，我们会如实告知。" },
         { q: "如果申请未通过怎么办？", a: "我们会尽量说明原因，并在可能的情况下给出改进建议。并非每份申请都能通过，但无论结果如何，我们都力求清晰、快速地答复。" },
       ],
@@ -559,7 +561,7 @@ export const dict = {
         { t: "反欺诈核查", d: "对材料与信息进行交叉核对，确保一致。" },
       ],
       dataTitle: "妥善保管你的数据",
-      dataBody: "我们只在你同意的前提下收集作出公平判断所必需的信息，并安全、保密地处理。易家已在英国信息专员办公室（ICO）注册，注册号 CSN1405657。",
+      dataBody: `我们只在你同意的前提下收集作出公平判断所必需的信息，并安全、保密地处理。易家已在英国信息专员办公室（ICO）注册，注册号 ${ICO_REGISTRATION}。`,
     },
 
     partners: {
@@ -687,7 +689,7 @@ export const dict = {
       why: [
         { t: "这是惯例，不是对你的评价", d: "中介对每位申请人都套用同一条规则，与你本人或你的经济能力无关，只是表格上的一栏。" },
         { t: "海外收入不被接受", d: "中介通常没有能力核验国外的工资单、完税记录或银行流水，于是退回到「必须有英国担保人」这条规则。" },
-        { t: "否则就要一次性付清", d: "没有担保人，通常会被要求预付六个月或一年的房租，这会占用你本该用于学费和生活费的资金。" },
+        { t: "没有担保人，往往会被拒绝", d: "没有英国担保人的学生，无论家庭经济条件如何，往往都拿不到心仪的房源。" },
       ],
       doTitle: "易家为你做什么",
       do: [
@@ -767,7 +769,7 @@ export const dict = {
       getInTouch: "联系方式",
       rights: "版权所有。",
       built: "由 Next.js 构建",
-      ico: "已在英国 ICO 注册（注册号 CSN1405657）",
+      ico: `已在英国 ICO 注册（注册号 ${ICO_REGISTRATION}）`,
       legal: "EHOME Properties Limited · Company No. 17343697 · Registered in England & Wales",
     },
   },
