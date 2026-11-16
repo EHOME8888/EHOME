@@ -16,12 +16,14 @@ export const PORTAL_LOGIN_URL = `${PORTAL_URL}/login`;
 //
 // Every one of these is a route the portal already serves; none is invented
 // here. Sign-up carries the role in its path. Sign-in carries it as ?as=,
-// which the portal's /login reads for a landlord and for a partner. A
-// student is the portal's default door, so that link takes no parameter:
-// /login ignores a value it does not know, and a made-up ?as=student would
-// only look as though it did something.
+// which the portal's /login reads for a landlord and for a partner; a
+// student is the portal's default door and takes no ?as=.
+//
+// ?only=1 asks the portal to draw that one door and no others. Somebody who
+// pressed "Sign in" under Landlords has said who they are; the portal's own
+// /login, opened directly, still offers all four.
 export const PORTAL_ROUTES = {
-  student:  { start: PORTAL_SIGNUP_URL,               signIn: PORTAL_LOGIN_URL },
-  landlord: { start: `${PORTAL_URL}/signup/landlord`, signIn: `${PORTAL_LOGIN_URL}?as=landlord` },
-  partner:  { start: `${PORTAL_URL}/signup/partner`,  signIn: `${PORTAL_LOGIN_URL}?as=partner` },
+  student:  { start: PORTAL_SIGNUP_URL,               signIn: `${PORTAL_LOGIN_URL}?only=1` },
+  landlord: { start: `${PORTAL_URL}/signup/landlord`, signIn: `${PORTAL_LOGIN_URL}?as=landlord&only=1` },
+  partner:  { start: `${PORTAL_URL}/signup/partner`,  signIn: `${PORTAL_LOGIN_URL}?as=partner&only=1` },
 };
