@@ -170,12 +170,24 @@ function useHeroMotion(wrapRef, stageRef) {
     const header = document.querySelector(".nav");
     const next = document.getElementById("what");
     const metrics = { stick: 73, run: 1, span: 1 };
+    // The same width at which the cards stop floating and sit in a block.
+    const narrow = window.matchMedia("(max-width: 899px)");
 
     /* ---- scroll ---------------------------------------------------- */
     let scrollFrame = 0;
     let last = "";
     const play = () => {
       scrollFrame = 0;
+      // A phone or tablet gets no scene (see the stylesheet). If the window
+      // was narrowed part-way through one, put everything back in place.
+      if (narrow.matches) {
+        if (last !== "still") {
+          last = "still";
+          for (const v of ["--p", "--txt", "--fly", "--gone"]) stage.style.setProperty(v, "0");
+          stage.removeAttribute("data-away"); stage.removeAttribute("data-clear");
+        }
+        return;
+      }
       const scrolled = metrics.stick - wrap.getBoundingClientRect().top;
       // Well past the hero the stage is off screen. Leave it as it is.
       if (scrolled > metrics.span + 400) return;
@@ -609,6 +621,25 @@ export default function HeroStage() {
           .hcard__art { height: 72px; }
           .hcard__svg { height: 60px; }
           .hcard__text { font-size: 0.9rem; }
+        }
+
+        /* ---- Phones and tablets: no pinned scene ----------------------- */
+        /* On a wide screen the cards float beside the headline and there is
+           room to watch them leave. On a phone they are a block under it,
+           and the scene read as a fault: the four cards slid off sideways,
+           the headline faded, and the reader was left scrolling a screen
+           and a half of empty photograph before the next section arrived.
+           Here the hero is an ordinary section. The cards stay where they
+           are and leave the way everything else does, by being scrolled
+           past. The entrance still plays; the script sets nothing. */
+        @media (max-width: 899px) {
+          .hero::after { content: none; }
+          .hero__stage { position: relative; top: auto; }
+          .hero-next { margin-top: 0; box-shadow: none; }
+          .hero__inner { opacity: 1; transform: none; }
+          .hcard { opacity: 1; transform: rotate(var(--rot)); will-change: auto; }
+          .hero__stage[data-away] .hero__inner,
+          .hero__stage[data-clear] .hero__cards { visibility: visible; }
         }
 
         /* ---- Reduced motion: an ordinary section, everything in place --- */
