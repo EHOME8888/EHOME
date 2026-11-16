@@ -34,11 +34,29 @@ export const dict = {
       ctaGhost: "See pricing",
       bullets: [
         "Unlock more rental options — landlords say yes",
-        "Fast decisions, usually within 48 hours",
+        "Decision in as little as 6 hours",
         "Support in both Chinese and English",
         "Built specifically for international students",
       ],
       proof: "Trusted by students at universities across the UK",
+    },
+
+    // The three doors on the home page (components/AudienceCards.js).
+    // `label` is the same word in the other language, set small above the
+    // title. Where each button goes is in lib/site.js, keyed by `id`.
+    audience: {
+      title: "I'm a…",
+      cards: [
+        { id: "student", label: "学生", title: "Students",
+          tagline: "A UK guarantor, arranged with discretion.",
+          primary: "Apply", secondary: "Sign in" },
+        { id: "landlord", label: "房东", title: "Landlords",
+          tagline: "Every tenancy, backed by a guarantee in writing.",
+          primary: "Create free account", secondary: "Sign in" },
+        { id: "partner", label: "合作伙伴", title: "Partners",
+          tagline: "A trusted guarantor for your international clients.",
+          primary: "Create free account", secondary: "Sign in" },
+      ],
     },
 
     estimator: {
@@ -76,7 +94,7 @@ export const dict = {
       title: "Four steps, no surprises.",
       steps: [
         { n: "01", t: "Share your tenancy", d: "Send us the property, rent, and lease details." },
-        { n: "02", t: "Quick assessment", d: "We review your application, usually within 48 hours." },
+        { n: "02", t: "Quick assessment", d: "We review your application, with a decision in as little as 6 hours." },
         { n: "03", t: "We guarantee your lease", d: "We sign as your official guarantor to the landlord or agent." },
         { n: "04", t: "Move in", d: "Complete your tenancy and settle in with confidence." },
       ],
@@ -127,9 +145,9 @@ export const dict = {
       title: "Common questions.",
       items: [
         { q: "What is a rent guarantor?", a: "A guarantor promises the landlord that the rent will be paid, and covers it if the tenant cannot. UK landlords and letting agents almost always require a guarantor based in the UK — which most international students simply can't provide. Ehome acts as that UK-based guarantor for you, so landlords are willing to say yes." },
-        { q: "Who is eligible?", a: "We work with international students renting in the UK, whether you're moving into private housing or student accommodation. Share your course, your property, and your tenancy details, and we'll assess your application — usually within 48 hours." },
+        { q: "Who is eligible?", a: "We work with international students renting in the UK, whether you're moving into private housing or student accommodation. Share your course, your property, and your tenancy details, and we'll assess your application, with a decision in as little as 6 hours." },
         { q: "How much does it cost?", a: "Your fee is based on your annual rent and shown clearly before you commit — no hidden charges. Use the estimator on this page for an instant guide, or contact us for an exact quote for your tenancy." },
-        { q: "How fast is a decision?", a: "Most applications are assessed within 48 hours once we have your documents. If you're on a tight deadline, tell us — priority handling is available." },
+        { q: "How fast is a decision?", a: "Once we have your documents, you can have a decision in as little as 6 hours. That is the review decision; signing follows afterwards. If you're on a tight deadline, tell us — priority handling is available." },
         { q: "What documents will I need?", a: "Typically your passport or national ID, proof of study (university offer, CAS, or student ID), your tenancy or property details, and financial evidence — either yours or your sponsor's. We'll give you a clear checklist when you apply." },
         { q: "Can my parents in China support my application?", a: "Yes — this is common. Many of our students are supported by a parent or family member in China. We can review your sponsor as part of your application, and we support your family in Chinese throughout." },
         { q: "Do I need a UK bank account or a UK-based relative?", a: "No. You don't need a UK guarantor, a UK credit history, or a UK relative. That's exactly the gap Ehome fills." },
@@ -213,7 +231,7 @@ export const dict = {
           name: "Essential",
           price: "5%",
           for: "For standard tenancies.",
-          features: ["Guarantor agreement", "48-hour assessment", "Email support"],
+          features: ["Guarantor agreement", "Decision in as little as 6 hours", "Email support"],
         },
         {
           name: "Standard",
@@ -423,11 +441,26 @@ export const dict = {
       ctaGhost: "查看收费",
       bullets: [
         "解锁更多房源，房东更愿意点头",
-        "快速审核，通常 48 小时内出结果",
+        "最快6小时出审核结果",
         "中英双语全程支持",
         "专为留学生量身打造",
       ],
       proof: "众多英国高校学生的信赖之选",
+    },
+
+    audience: {
+      title: "我是…",
+      cards: [
+        { id: "student", label: "Students", title: "学生",
+          tagline: "安心租住，由我们为您担保。",
+          primary: "立即申请", secondary: "登录" },
+        { id: "landlord", label: "Landlords", title: "房东",
+          tagline: "每一份租约，皆有书面担保。",
+          primary: "免费注册", secondary: "登录" },
+        { id: "partner", label: "Partners", title: "合作伙伴",
+          tagline: "为您的国际客户，提供可信赖的担保。",
+          primary: "免费注册", secondary: "登录" },
+      ],
     },
 
     estimator: {
@@ -465,7 +498,7 @@ export const dict = {
       title: "四步办妥，全程透明。",
       steps: [
         { n: "01", t: "提交租房信息", d: "将房源、租金与租约信息发送给我们。" },
-        { n: "02", t: "快速审核", d: "我们通常在 48 小时内完成审核。" },
+        { n: "02", t: "快速审核", d: "我们审核你的申请，最快6小时出审核结果。" },
         { n: "03", t: "正式担保", d: "我们作为你的正式担保人，与房东或中介签署协议。" },
         { n: "04", t: "安心入住", d: "顺利签约，安心开启留学生活。" },
       ],
@@ -514,9 +547,9 @@ export const dict = {
       title: "常见问题解答。",
       items: [
         { q: "什么是租房担保人？", a: "担保人向房东承诺租金会按时支付，并在租客无法支付时代为承担。英国房东与中介几乎都要求提供本地担保人，而这正是大多数留学生无法满足的。易家为你担任这一本地担保人，让房东放心接受你的申请。" },
-        { q: "谁可以申请？", a: "我们服务在英国租房的留学生，无论你入住的是私人房源还是学生公寓。提交你的课程、房源与租约信息，我们通常在 48 小时内完成审核。" },
+        { q: "谁可以申请？", a: "我们服务在英国租房的留学生，无论你入住的是私人房源还是学生公寓。提交你的课程、房源与租约信息，我们随即审核，最快6小时出审核结果。" },
         { q: "费用是多少？", a: "费用按你的年租金计算，签约前会清楚告知，绝无隐藏收费。可用本页的估算器即时了解，或联系我们获取针对你租约的精确报价。" },
-        { q: "多久出结果？", a: "在收到材料后，大多数申请会在 48 小时内完成审核。如果你时间紧张，请告诉我们，可安排优先加急。" },
+        { q: "多久出结果？", a: "收到材料后，最快6小时出审核结果。这里指的是审核结果，签署在其后进行。如果你时间紧张，请告诉我们，可安排优先加急。" },
         { q: "需要准备哪些材料？", a: "通常包括护照或身份证、在读证明（大学 offer、CAS 或学生证）、房源或租约信息，以及财力证明（你本人或担保人的）。申请时我们会提供清晰的材料清单。" },
         { q: "我在国内的父母可以作为支持吗？", a: "可以，这也很常见。许多学生由国内父母或家人提供资金支持。我们会在审核中一并评估担保人，并全程以中文为你的家人提供协助。" },
         { q: "需要英国银行账户或英国本地亲属吗？", a: "不需要。你无需英国担保人、英国信用记录或英国亲属——这正是易家为你填补的空白。" },
@@ -597,7 +630,7 @@ export const dict = {
           name: "基础版",
           price: "5%",
           for: "适用于常规租约。",
-          features: ["担保协议", "48 小时审核", "邮件支持"],
+          features: ["担保协议", "最快6小时出审核结果", "邮件支持"],
         },
         {
           name: "标准版",

@@ -4,7 +4,7 @@
 // The homepage hero: a scene that answers the reader.
 //
 //   · Four paper cards float beside the headline. Each is one of the four
-//     promises, drawn rather than photographed: the key, the 48-hour clock,
+//     promises, drawn rather than photographed: the key, the six-hour clock,
 //     the two languages, the letter.
 //   · On a desktop they lean and drift with the pointer, each by its own
 //     depth, and the bridge behind them moves the other way.
@@ -78,7 +78,7 @@ function ArtKey() {
   );
 }
 
-/** A dial that has run its two days — a decision in 48 hours. */
+/** A dial with its hand swept round — a decision in as little as 6 hours. */
 function ArtClock() {
   return (
     <Art>
@@ -90,8 +90,8 @@ function ArtClock() {
         strokeWidth="3"
         pathLength="100"
       />
-      <text x="78" y="51.5" textAnchor="middle" className="hcard__num" stroke="none">48</text>
-      <text x="97.5" y="51.5" textAnchor="middle" className="hcard__unit" stroke="none">h</text>
+      <text x="74.5" y="51.5" textAnchor="middle" className="hcard__num" stroke="none">6</text>
+      <text x="88" y="51.5" textAnchor="middle" className="hcard__unit" stroke="none">h</text>
     </Art>
   );
 }

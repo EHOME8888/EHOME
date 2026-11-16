@@ -13,6 +13,7 @@ import Reveal from "./components/Reveal";
 import QuoteEstimator from "./components/QuoteEstimator";
 import Faq from "./components/Faq";
 import Marquee from "./components/Marquee";
+import AudienceCards from "./components/AudienceCards";
 
 const STAR = "M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z";
 
@@ -52,6 +53,9 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+
+      {/* ---------- I'm a…: three doors into the portal ---------- */}
+      <AudienceCards />
 
       {/* ---------- Fee estimator (own section) ---------- */}
       <section className="section estimate-sec" id="estimate">

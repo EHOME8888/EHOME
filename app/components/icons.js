@@ -57,7 +57,7 @@ export const IconBilingual = (p) => (
   </Svg>
 );
 
-/** Clock — a decision in 48 hours. */
+/** Clock — a decision in as little as 6 hours. */
 export const IconFast = (p) => (
   <Svg {...p}>
     <circle cx="12" cy="12" r="8.2" />

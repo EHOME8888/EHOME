@@ -58,7 +58,7 @@ function SceneAssess() {
         <circle className="sa-draw t2" pathLength="1" stroke={GOLD} cx="38" cy="36" r="6.5" />
         <path className="sa-draw t2" pathLength="1" stroke={GOLD} d="M43 41l5 5" />
       </g>
-      {/* 48 hours: the hand sweeps, the ring draws */}
+      {/* the review clock: the hand sweeps, the ring draws */}
       <circle className="sa-draw t3" pathLength="1" stroke={NAVY} cx="88" cy="42" r="15" />
       <path className="sa-draw sa-hand t3" pathLength="1" stroke={NAVY} d="M88 42V31" />
       <path className="sa-draw t3" pathLength="1" stroke={NAVY} d="M88 27v2M103 42h-2M88 57v-2M73 42h2" />
